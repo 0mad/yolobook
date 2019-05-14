@@ -11,7 +11,9 @@
     "sasslint:fix": "sass-lint-auto-fix -c .sass-lint.yml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["yolobook"],
+  "keywords": [
+    "yolobook"
+  ],
   "author": "0mad",
   "license": "MIT",
   "dependencies": {
