@@ -1,4 +1,5 @@
-import Layout from "../components/MyLayout";
+import Layout from "../components/Layout/Layout";
+import "../styles/base.scss";
 
 const Index = props => (
   <Layout>

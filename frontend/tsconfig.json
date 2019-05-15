@@ -16,5 +16,9 @@
     "strict": true,
     "target": "esnext",
     "plugins": [{"name": "typescript-tslint-plugin"}],
-  }
+  },
+  "exclude": [
+    "node_modules",
+    ".next"
+  ]
 }
