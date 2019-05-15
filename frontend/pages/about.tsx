@@ -1,5 +1,4 @@
 import Layout from "../components/Layout/Layout";
-import "../styles/base.scss";
 
 const About = props => (
   <Layout>
