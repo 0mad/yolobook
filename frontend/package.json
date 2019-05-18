@@ -20,7 +20,8 @@
     "express": "^4.16.4",
     "next": "^8.1.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-icons": "^3.7.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
