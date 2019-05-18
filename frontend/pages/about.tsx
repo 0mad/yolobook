@@ -1,9 +1,9 @@
-import Layout from "../components/Layout/Layout";
+import PageTemplate from "../components/common/PageTemplate";
 
 const About = props => (
-  <Layout>
-    about 페이지
-  </Layout>
+  <PageTemplate>
+    <div>about 페이지</div>
+  </PageTemplate>
 );
 
 export default About;
