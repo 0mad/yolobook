@@ -1,9 +1,11 @@
-import Layout from "../components/Layout/Layout";
+import PageTemplate from '../components/common/PageTemplate';
 
-const Index = props => (
-  <Layout>
-    index 페이지
-  </Layout>
+interface IProps {}
+
+const Index = (props: IProps) => (
+  <PageTemplate>
+    <div>index 페이지</div>
+  </PageTemplate>
 );
 
 export default Index;

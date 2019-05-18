@@ -1,9 +1,11 @@
-import Layout from "../components/Layout/Layout";
+import PageTemplate from '../components/common/PageTemplate';
 
-const About = props => (
-  <Layout>
-    about 페이지
-  </Layout>
+interface IProps {}
+
+const About = (props: IProps) => (
+  <PageTemplate>
+    <div>about 페이지</div>
+  </PageTemplate>
 );
 
 export default About;
