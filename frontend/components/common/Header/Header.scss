@@ -1,4 +1,8 @@
 .header {
+  @include media("<boundary") {
+    background-color: $oc-yellow-6;
+  }
+
   position: fixed;
   top: 0;
   width: 100%;

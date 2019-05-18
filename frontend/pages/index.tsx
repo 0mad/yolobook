@@ -1,11 +1,15 @@
+import withSizes from 'react-sizes';
 import PageTemplate from '../components/common/PageTemplate';
+import { mapSizesToProps } from '../utils/withSizes';
 
-interface IProps {}
+interface IProps {
+  isMobileMode: boolean;
+}
 
 const Index = (props: IProps) => (
   <PageTemplate>
-    <div>index 페이지</div>
+    {props.isMobileMode ? <div>모바일 페이지</div> : <div>데스크탑 페이지</div>}
   </PageTemplate>
 );
 
-export default Index;
+export default withSizes(mapSizesToProps)(Index);
