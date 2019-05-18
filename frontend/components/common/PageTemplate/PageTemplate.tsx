@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import Footer from "../Footer";
+import Footer from '../Footer';
 import Header from '../Header';
 import styles from './PageTemplate.scss';
 
@@ -17,6 +17,6 @@ const PageTemplate = (props: IProps) => {
       <Footer />
     </div>
   );
-}
+};
 
 export default PageTemplate;

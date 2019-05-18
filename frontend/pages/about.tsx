@@ -1,4 +1,4 @@
-import PageTemplate from "../components/common/PageTemplate";
+import PageTemplate from '../components/common/PageTemplate';
 
 interface IProps {}
 

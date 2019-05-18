@@ -5,9 +5,7 @@ import styles from './Header.scss';
 
 const cx = classNames.bind(styles);
 
-interface IProps {
-
-}
+interface IProps {}
 
 const Header = (props: IProps) => {
   return (
@@ -18,9 +16,9 @@ const Header = (props: IProps) => {
       <Link href="/about">
         <a>About</a>
       </Link>
-      <IoIosMenu/>
+      <IoIosMenu />
     </div>
   );
-}
+};
 
 export default Header;
