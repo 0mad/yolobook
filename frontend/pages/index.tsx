@@ -1,6 +1,8 @@
 import PageTemplate from "../components/common/PageTemplate";
 
-const Index = props => (
+interface IProps {}
+
+const Index = (props: IProps) => (
   <PageTemplate>
     <div>index 페이지</div>
   </PageTemplate>

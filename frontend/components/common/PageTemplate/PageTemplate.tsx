@@ -5,11 +5,11 @@ import styles from './PageTemplate.scss';
 
 const cx = classNames.bind(styles);
 
-interface IPageTemplateProps {
+interface IProps {
   children: any;
 }
 
-const PageTemplate = (props: IPageTemplateProps) => {
+const PageTemplate = (props: IProps) => {
   return (
     <div className={cx('page-template')}>
       <Header />

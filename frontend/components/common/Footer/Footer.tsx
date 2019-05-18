@@ -3,11 +3,11 @@ import styles from './Footer.scss';
 
 const cx = classNames.bind(styles);
 
-interface IFooterProps {
+interface IProps {
 
 }
 
-const Footer = (props: IFooterProps) => {
+const Footer = (props: IProps) => {
     return (
       <div className={cx('footer')}>
         Footer

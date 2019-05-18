@@ -5,11 +5,11 @@ import styles from './Header.scss';
 
 const cx = classNames.bind(styles);
 
-interface IHeaderProps {
+interface IProps {
 
 }
 
-const Header = (props: IHeaderProps) => {
+const Header = (props: IProps) => {
   return (
     <div className={cx('header')}>
       <Link href="/">

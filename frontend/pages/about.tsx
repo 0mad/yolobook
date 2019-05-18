@@ -1,6 +1,8 @@
 import PageTemplate from "../components/common/PageTemplate";
 
-const About = props => (
+interface IProps {}
+
+const About = (props: IProps) => (
   <PageTemplate>
     <div>about 페이지</div>
   </PageTemplate>
