@@ -1,0 +1,88 @@
+.button {
+  display: flex;
+  padding: .5rem 0;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+
+  &.inline {
+    display: inline-flex;
+    padding: .5rem .5rem;
+  }
+
+  &.green {
+    color: white;
+    background: $oc-green-7;
+    &:hover, &:active {
+      background: $oc-green-6;
+    }
+  }
+
+  &.deep-green {
+    color: white;
+    background: $oc-green-9;
+    &:hover, &:active {
+      background: $oc-green-8;
+    }
+  }
+
+  &.light-blue {
+    color: $oc-blue-8;
+    background: $oc-blue-0;
+    &:hover, &:active {
+      background: $oc-blue-1;
+    }
+  }
+
+  &.blue {
+    color: white;
+    background: $oc-blue-7;
+    &:hover, &:active {
+      background: $oc-blue-8;
+    }
+  }
+
+  &.gray {
+    color: $oc-gray-7;
+    background: $oc-gray-1;
+    border: 1px solid $oc-gray-3;
+    &:hover, &:active {
+      background: $oc-gray-2;
+    }
+  }
+
+  // 마우스 커서가 위에 있거나 활성화되면 그림자 생성
+  &:hover, &:active {
+    @include material-shadow(2, .5);
+  }
+
+  // 비활성화된 버튼
+  &.disabled {
+    color: black;
+    cursor: default;
+    background: $oc-gray-4;
+    border-color: $oc-gray-4;
+    opacity: .5;
+    &:hover, &:active {
+      color: black;
+      background: $oc-gray-4;
+      border-color: $oc-gray-4;
+      box-shadow: none;
+    }
+  }
+
+  &.half-circle {
+    padding-right: .9rem;
+    padding-left: .9rem;
+    border-radius: 18px;
+  }
+
+  // 버튼 두 개 이상이 함께 있다면 중간 여백
+  & + & {
+    margin-left: .5rem;
+  }
+}
