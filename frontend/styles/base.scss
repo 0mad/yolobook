@@ -11,10 +11,25 @@ body {
 }
 
 * {
+  padding: 0;
+  margin: 0;
   box-sizing: inherit;
 }
 
 a {
   color: inherit;
   text-decoration: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  border: none;
+  outline-style: none;
+}
+
+button {
+  border: none;
 }
