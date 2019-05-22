@@ -1,4 +1,7 @@
 .page-template {
-  margin-top: $header-height;
+  margin-top: $header-height * 2; 
   border: 1px solid $oc-lime-6;
+  &.isLogined {
+    margin-top: $header-height; 
+  }
 }
