@@ -3,11 +3,11 @@
 @import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
 
 body {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   margin: 0;
-  box-sizing: border-box;
   font-family: 'Note Sans KR', sans-serif;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
