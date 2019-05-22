@@ -10,69 +10,79 @@
   }
 
   .header {
+    @include media("<boundary") {
+      min-width: auto;
+    }
     display: flex;
     max-width: 63rem;
     max-height: inherit;
+    height: $header-height;
+    min-width: 52rem;
     padding: .35rem 0;
     margin: 0 auto;
-    
 
-    .logo {
-      font-size: 2rem;
-      color: $oc-gray-0;
-    }
-
-    .user-menus {
+    .desktop-menu-wrapper {
       display: flex;
-      padding-left: .6rem;
+      flex: 1;
 
-      .user-menu {
-        position: relative;
-        display: flex;
-        padding: 0 .8rem;
-        font-size: .8rem;
-        font-weight: 800;
-        line-height: 2rem;
+      .logo {
+        font-size: 2rem;
+        margin-left: .4rem;
         color: $oc-gray-0;
-        cursor: pointer;
-        
-        &:hover {
-          background-color: RGBA(0, 0, 0, .3);
-        }
-        
-        &::after {
-          position: absolute;
-          top: .5rem;
-          right: 0;
-          width: 1px;
-          height: 1rem;
-          line-height: 2rem;
-          border-right: 1px solid RGBA(60, 60, 60, .3);
-          content: '';
-        }
       }
-
-      .user-profile {
+  
+      .user-menu {
+        display: flex;
         position: relative;
-        padding-left: 1.5rem;
+        padding-left: .6rem;
+  
+        .user-menu-item {
+          position: relative;
+          display: flex;
+          padding: 0 .8rem;
+          font-size: .8rem;
+          font-weight: 800;
+          line-height: 2rem;
+          color: $oc-gray-0;
+          cursor: pointer;
+  
+          &:hover {
+            background-color: RGBA(0, 0, 0, .3);
+          }
+          
+          &::after {
+            position: absolute;
+            top: .5rem;
+            right: 0;
+            width: 1px;
+            height: 1rem;
+            line-height: 2rem;
+            border-right: 1px solid RGBA(60, 60, 60, .3);
+            content: '';
+          }
+        }
+  
         .user-photo {
-          position: absolute;
-          top: .2rem;
-          left: -.7rem;
           width: 1.6rem;
           height: 1.6rem;
+          margin: auto 0;
           border-radius: .8rem;
+        }
+  
+        .user-name {
+          position: relative;
+          padding-left: .5rem;
         }
       }
     }
 
-    .toggle-menus {
+    .toggle-menu {
       @include media("<boundary") {
         width: 100%;
       }
       display: flex;
   
-      .toggle-menu {
+      .toggle-menu-item {
         display: flex;
         width: $header-height;
         font-size: 1.5rem;
@@ -81,6 +91,10 @@
         flex: 1;
         justify-content: center;
         align-items: center;
+
+        &:firstOne {
+          order: 2
+        }
       }
     }
   }

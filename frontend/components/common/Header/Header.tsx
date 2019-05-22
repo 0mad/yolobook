@@ -11,8 +11,8 @@ import {
 } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../../utils/withSizes';
-import HeaderSearchbar from '../../HeaderSearchBar';
 import styles from './Header.scss';
+import HeaderSearchbar from './HeaderSearchBar';
 
 const cx = classNames.bind(styles);
 
@@ -26,43 +26,39 @@ const UnloginedHeader = () => (
 );
 
 const ToggleMenu = ({ children }) => (
-  <li className={cx('toggle-menu')}>{children}</li>
+  <li className={cx('toggle-menu-item')}>{children}</li>
 );
 
 const UserMenu = ({ children }) => (
-  <li className={cx('user-menu')}>{children}</li>
+  <li className={cx('user-menu-item')}>{children}</li>
 );
 
 const LoginedHeader = ({ isMobileMode }) => (
   <div className={cx('header')}>
     {!isMobileMode && (
-      <>
+      <div className={cx('desktop-menu-wrapper')}>
         <Link href="/">
           <IoLogoFacebook className={cx('logo')} />
         </Link>
         <HeaderSearchbar />
-        <ul className={cx('user-menus')}>
+        <ul className={cx('user-menu')}>
           <UserMenu>
-            <p className={cx('user-profile')}>
-              <img
-                className={cx('user-photo')}
-                src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c7.0.24.24a/p24x24/10354686_10150004552801856_220367501106153455_n.jpg?_nc_cat=1&_nc_ht=scontent-hkg3-1.xx&oh=bb72ec162290b45765c1e0bba5364a4c&oe=5D9EC7D1"
-              />
-              User Name
-            </p>
+            <img
+              className={cx('user-photo')}
+              src="https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c7.0.24.24a/p24x24/10354686_10150004552801856_220367501106153455_n.jpg?_nc_cat=1&_nc_ht=scontent-hkg3-1.xx&oh=bb72ec162290b45765c1e0bba5364a4c&oe=5D9EC7D1"
+            />
+            <p className={cx('user-name')}>User Name</p>
           </UserMenu>
           <UserMenu>홈</UserMenu>
           <UserMenu>친구 찾기</UserMenu>
           <UserMenu>만들기</UserMenu>
         </ul>
-      </>
+      </div>
     )}
-    <ul className={cx('toggle-menus')}>
-      {isMobileMode && (
-        <ToggleMenu>
-          <IoIosFiling />
-        </ToggleMenu>
-      )}
+    <ul className={cx('toggle-menu')}>
+      <ToggleMenu>
+        <IoIosFiling />
+      </ToggleMenu>
       <ToggleMenu>
         <IoIosContacts />
       </ToggleMenu>
