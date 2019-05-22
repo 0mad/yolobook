@@ -4,10 +4,10 @@
   font-size: .9rem;
   font-weight: 500;
   cursor: pointer;
-  user-select: none;
-  justify-content: center;
-  align-items: center;
   border-radius: 2px;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
 
   &.inline {
     display: inline-flex;

@@ -9,14 +9,15 @@
     padding-right: .5rem;
     padding-left: .5rem;
     border-radius: .2rem 0 0 .2rem;
-    flex: 1;
     -webkit-appearance: none;
+    flex: 1;
   }
   .button {
     width: 2.7rem;
     font-size: 1.3rem;
     line-height: 2.1rem;
     color: $oc-gray-7;
+    cursor: pointer;
     background: $oc-gray-3;
     border-radius: 0 .2rem .2rem 0;
   }

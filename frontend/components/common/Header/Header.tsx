@@ -15,6 +15,7 @@ import styles from './Header.scss';
 import HeaderSearchbar from './HeaderSearchBar';
 
 const cx = classNames.bind(styles);
+const isBrowser = process.browser;
 
 interface IProps {
   isLogined: boolean;
@@ -35,8 +36,8 @@ const UserMenu = ({ children }) => (
 
 const LoginedHeader = ({ isMobileMode }) => (
   <div className={cx('header')}>
-    {!isMobileMode && (
-      <div className={cx('desktop-menu-wrapper')}>
+    {isBrowser && !isMobileMode && (
+      <>
         <Link href="/">
           <IoLogoFacebook className={cx('logo')} />
         </Link>
@@ -53,28 +54,30 @@ const LoginedHeader = ({ isMobileMode }) => (
           <UserMenu>친구 찾기</UserMenu>
           <UserMenu>만들기</UserMenu>
         </ul>
-      </div>
+      </>
     )}
-    <ul className={cx('toggle-menu')}>
-      <ToggleMenu>
-        <IoIosFiling />
-      </ToggleMenu>
-      <ToggleMenu>
-        <IoIosContacts />
-      </ToggleMenu>
-      <ToggleMenu>
-        <IoMdChatbubbles />
-      </ToggleMenu>
-      <ToggleMenu>
-        <IoMdNotifications />
-      </ToggleMenu>
-      <ToggleMenu>
-        <IoMdSearch />
-      </ToggleMenu>
-      <ToggleMenu>
-        <IoMdMenu />
-      </ToggleMenu>
-    </ul>
+    {isBrowser && (
+      <ul className={cx('toggle-menu')}>
+        <ToggleMenu>
+          <IoIosFiling />
+        </ToggleMenu>
+        <ToggleMenu>
+          <IoIosContacts />
+        </ToggleMenu>
+        <ToggleMenu>
+          <IoMdChatbubbles />
+        </ToggleMenu>
+        <ToggleMenu>
+          <IoMdNotifications />
+        </ToggleMenu>
+        <ToggleMenu>
+          <IoMdSearch />
+        </ToggleMenu>
+        <ToggleMenu>
+          <IoMdMenu />
+        </ToggleMenu>
+      </ul>
+    )}
   </div>
 );
 
