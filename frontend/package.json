@@ -9,7 +9,9 @@
     "start": "NODE_ENV=production node server.js",
     "sasslint": "sass-lint -v -c .sass-lint.yml",
     "sasslint:fix": "sass-lint-auto-fix -c .sass-lint.yml",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "build-storybook": "build-storybook -c .storybook"
   },
   "keywords": [
     "yolobook"
@@ -28,12 +30,19 @@
     "react-sizes": "^2.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-backgrounds": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
     "@types/classnames": "^2.2.7",
     "@types/next": "^8.0.5",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
+    "babel-loader": "^8.0.6",
     "classnames": "^2.2.6",
     "include-media": "^1.4.9",
     "node-sass": "^4.12.0",
