@@ -47,7 +47,7 @@
   }
 
   &.gray {
-    color: $oc-gray-7;
+    color: $oc-gray-9;
     background: $oc-gray-1;
     border: 1px solid $oc-gray-3;
     &:hover, &:active {
@@ -57,7 +57,7 @@
 
   // 마우스 커서가 위에 있거나 활성화되면 그림자 생성
   &:hover, &:active {
-    @include material-shadow(2, .5);
+    @include material-shadow(1, .5);
   }
 
   // 비활성화된 버튼
