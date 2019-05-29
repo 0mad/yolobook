@@ -1,0 +1,73 @@
+.editor {
+  background-color: white;
+  border: solid 1px $oc-gray-3;
+  border-radius: 3px;
+  .header {
+    @include media("<boundary") {
+      background-color: transparent;
+    }
+    padding: 5px 7px;
+    background-color: $oc-gray-0;
+    span {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 14px;
+      color: $oc-gray-9;
+    }
+  }
+  .content {
+    padding: 8px 12px;
+    .wrap-textarea {
+      @include media("<boundary") {
+        border-bottom: 0;
+      }
+      display: flex;
+      border-bottom: 1px solid $oc-gray-3;
+      .profile {
+        .profile-img {
+          @include media("<boundary") {
+            width: 48px;
+            height: 48px;
+          }
+          width: 40px;
+          height: 40px;
+          border-radius: 100%;
+        }
+      }
+      .textarea {
+        @include media("<boundary") {
+          height: 35px;
+          padding: 8px 12px;
+          margin: 6px 7px;
+          border: 1px solid $oc-gray-3;
+          border-radius: 18px;
+        }
+        width: 100%;
+        margin: 12px 48px 13px 12px;
+        font-size: 14px;
+        border: 0;
+      }
+    }
+    .more {
+      margin-top: 8px;
+      .more-icon{
+        font-size: 16px;
+      }
+    }
+  }
+  .footer {
+    @include media("<boundary") {
+      background-color: transparent; 
+    }
+    padding: 5px 7px;
+    text-align: right;
+    background-color: $oc-gray-0;
+  }
+  .header + .content,
+  .content + .footer {
+    @include media("<boundary") {
+      border-top: 0;
+    }
+    border-top: solid 1px $oc-gray-3;
+  }
+}
