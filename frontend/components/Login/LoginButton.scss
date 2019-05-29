@@ -1,0 +1,50 @@
+
+.button-list {
+  width: 100%;
+
+  li + li {
+    margin-top: 2rem;
+  }
+}
+
+.login-button {
+  height: 4rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid $oc-gray-3;
+  border-radius: .2rem;
+
+  .button-icon {
+    width: 1.6rem;
+    font-size: 2rem;
+    vertical-align: middle;
+  }
+
+  .button-text {
+    padding-left: 1.3rem;
+  }
+
+  &.google {
+    background-color: rgb(241, 40, 40);
+    &:hover {
+      @include material-shadow(3, .5);
+    }
+  }
+  &.kakao {
+    background-color: rgb(255, 204, 0);
+    &:hover {
+      @include material-shadow(3, .5);
+    }
+  }
+
+  &.naver {
+    background-color: rgba(24, 199, 60, 1);
+    &:hover {
+      @include material-shadow(3, .5);
+    }
+  }
+}
