@@ -1,0 +1,118 @@
+.post {
+  padding: .8rem 0;
+  background-color: white;
+}
+
+.post-header {
+  padding: 0 .8rem;
+  .user-photo {
+    width: 3rem;
+    height: 3rem;
+    vertical-align: top;
+    cursor: pointer;
+    border-radius: 2rem;
+  }
+  .meta-data {
+    display: inline-flex;
+    height: 3rem;
+    padding: 0 .5rem;
+    flex-direction: column;
+    
+    .user-name {
+      height: 50%;
+      font-weight: 800;
+      line-height: 1.5;
+      color: $oc-indigo-9;
+    
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .created-time {
+      height: 50%;
+      font-size: .8rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: $oc-gray-8;
+
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.post-body {
+  .post-content {
+    width: 100%;
+    padding: .8rem;
+    white-space: normal;
+    border: none;
+  }
+}
+
+.post-footer {
+  padding: 0 .7rem;
+  color: $oc-gray-8;
+  border-bottom: 1px solid $oc-gray-4;
+  
+  .score-board {
+    height: 2.5rem;
+    line-height: 2.5;
+    border-bottom: 1px solid $oc-gray-4;
+
+    .score-like {
+      float: left;
+      cursor: pointer;
+    }
+    .score-comment {
+      float: right;
+      margin-right: .5rem;
+      cursor: pointer;
+    }
+    .score-share {
+      float: right;
+      cursor: pointer;
+    }
+  }
+
+  .interaction {
+    display: flex;
+    height: 2.5rem;
+    line-height: 2.5;
+    
+    svg {
+      margin-right: .2rem;
+      font-size: 1.4rem;
+      vertical-align: middle;
+    }
+
+    text-align: center;
+    .button-like {
+      cursor: pointer;
+      flex: 1;
+      &:hover {
+        background-color: $oc-gray-1;
+      }
+    }
+    .button-comment {
+      cursor: pointer;
+      flex: 1;
+      &:hover {
+        background-color: $oc-gray-1;
+      }
+    }
+    .button-share {
+      cursor: pointer;
+      flex: 1;
+      &:hover {
+        background-color: $oc-gray-1;
+      }
+    }
+  }
+}
+
+
+
