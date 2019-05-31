@@ -4,7 +4,8 @@ import '../styles/base.scss';
 // global pre setting
 addParameters({
   backgrounds: [
-    { name: 'white', value: '#ffffff', default: true },
+    { name: 'gray', value: 'gray', default: true },
+    { name: 'white', value: '#ffffff' },
     { name: 'black', value: '#000000' },
   ],
 });
