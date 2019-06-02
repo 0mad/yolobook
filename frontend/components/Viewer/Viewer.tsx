@@ -1,11 +1,11 @@
 import classNames from 'classnames/bind';
 import {
-  IoIosClose,
   IoIosArrowBack,
-  IoIosArrowForward,
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
+  IoIosArrowForward,
   IoIosArrowRoundBack,
+  IoIosClose,
 } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../utils/withSizes';
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   isMobileMode: boolean;
-  images: Array<string>;
+  images: string[];
 }
 
 const Viewer = ({ isMobileMode, images }: IProps) => {
