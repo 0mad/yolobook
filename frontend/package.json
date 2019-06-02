@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.4",
     "mobx-react-devtools": "^6.1.1",
