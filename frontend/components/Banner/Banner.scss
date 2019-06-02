@@ -1,0 +1,223 @@
+.banner {
+  position: relative;
+  background-color: $oc-gray-0;
+  border: solid 1px $oc-gray-3;
+  border-radius: 3px;
+  .background {
+    @include media("<boundary") {
+      position: relative;
+      height: 200px;
+    }
+    height: 315px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .background-edit {
+      position: absolute;
+      top: 0;
+      display: flex;
+      margin-top: 12px;
+      margin-left: 12px;
+      color: $oc-gray-0;
+      cursor: pointer;
+      align-items: center;
+      svg {
+        font-size: 30px;
+      }
+      .background-edit-content {
+        display: none;
+      }
+      &-hover {
+        height: 30px;
+        padding-right: 11px;
+        padding-left: 8px;
+        background-color: $oc-gray-9;
+        border: solid 1px $oc-gray-0;
+        border-radius: 3px;
+        svg {
+          font-size: 22px;
+        }
+        .background-edit-content {
+          display: inline-block;
+          margin-left: 5px;
+          span {
+            font-size: 13px;
+          }
+        }
+      }
+      @include media("<boundary") {
+        top: auto;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        padding: 2px 8px;
+        margin: 0;
+        color: $oc-gray-9;
+        background-color: $oc-gray-3;
+        border-top-left-radius: 3px;
+        opacity: .8;
+        svg {
+          font-size: 23px;
+        }
+        .background-edit-content {
+          display: block;
+          margin-left: 5px;
+          font-size: 13px;
+        }
+        &:hover {
+          opacity: .9;
+        }
+      }
+    }
+  }
+  .profile {
+    @include media("<boundary") {
+      top: 131px;
+      right: auto;
+      left: auto;
+      width: 100%;
+      text-align: center;
+      cursor: default;
+      .wrap-profile-edit {
+        position: relative;
+        display: inline-block;
+        line-height: 0;
+      }
+    }
+    position: absolute;
+    bottom: 7px;
+    left: 12px;
+    cursor: pointer;
+    img {
+      @include media("<boundary") {
+        width: 131px;
+        height: 131px;
+        border: solid 2px $oc-gray-0;
+        border-radius: 3px;
+      }
+      width: 170px;
+      height: 170px;
+      border: solid 5px $oc-gray-0;
+      border-radius: 100%;
+    }
+    .profile-edit {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      display: none;
+      width: 170px;
+      height: 87px;
+      color: $oc-gray-0;
+      text-align: center;
+      background-color: $oc-gray-9;
+      border-bottom-right-radius: 87px;
+      border-bottom-left-radius: 87px;
+      opacity: .9;
+      .profile-edit-content {
+        margin-top:26px;
+        line-height: 0;
+        svg {
+          font-size: 22px;
+          opacity: .8;
+        }
+        .profile-edit-text {
+          margin-top: 7px;
+          span {
+            font-size: 13px;
+          }
+        }
+      }
+      &-show {
+        display: block;
+      }
+      @include media("<boundary") {
+        position: absolute;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: auto;
+        z-index: 1;
+        display: block;
+        width: auto;
+        height: auto;
+        padding: 2px 8px;
+        margin: 2px;
+        color: $oc-gray-9;
+        cursor: pointer;
+        background-color: $oc-gray-3;
+        border-radius: 0;
+        border-top-left-radius: 3px;
+        opacity: .8;
+        align-items: center;
+        .profile-edit-content {
+          display: flex;
+          margin: 0;
+          align-items: center;
+          svg {
+            font-size: 23px;
+            opacity: .8;
+          }
+          .profile-edit-text {
+            display: inline-block;
+            margin: 0;
+            margin-left: 5px;
+            span {
+              font-size: 13px;
+            }
+          }
+        }
+        &:hover {
+          opacity: .9;
+        }
+      }
+    }
+  }
+
+  .username {
+    @include media("<boundary") {
+      position: static;
+      margin: 0;
+      margin-top: 78px;
+      text-align: center;
+      h1 {
+        color: $oc-gray-9;
+      }
+    }
+    position: absolute;
+    bottom: 0px;
+    left: 201px;
+    margin-bottom: 43px;
+    color: $oc-gray-0;
+    h1 {
+      margin: 12px 0;
+      font-size: 24px;
+    }
+  }
+  .nav {
+    background: $oc-gray-0;
+    ul {
+      margin-left: 201px;
+      li {
+        display: inline-block;
+        a {
+          display: block;
+          padding: 0 17px;
+          font-size: 15px;
+          line-height: 43px;
+          color: $oc-blue-9;
+        }
+        &:hover {
+          background-color: $oc-gray-3;
+        }
+      }
+      li + li, li:first-child {
+        border-left: solid 1px $oc-gray-3;
+      }
+      li:last-child {
+        border-right: solid 1px $oc-gray-3;
+      }
+    }
+  }
+}
