@@ -1,0 +1,102 @@
+$header-height: 44px;
+
+.viewer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+  .header {
+    @include media("<boundary") {
+      position: static;
+      padding: 0;
+      text-align: center;
+      background-color: $oc-blue-8;
+      .back-btn {
+        position: absolute;
+        display: flex;
+        height: $header-height;
+        padding-left: 5px;
+        align-items: center;
+        svg {
+          font-size: 30px;
+        }
+      }
+      .title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: $header-height;
+      }
+    }
+    position: fixed;
+    padding: 20px 0 0 20px;
+    font-size: 21px;
+    color: white;
+  }
+
+  .content {
+    @include media("<boundary") {
+      height: calc(100vh - #{$header-height});
+      background-color: transparent;
+    }
+    display: flex;
+    height: 100vh;
+    padding: 3% 5%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .close-btn {
+    position: fixed;
+    top: .5rem;
+    right: .5rem;
+    font-size: 3rem;
+    color: $oc-gray-0;
+    cursor: pointer;
+    opacity: .5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .prev-btn {
+    @include media("<boundary") {
+      top: calc(50vh - 20px);
+      font-size: 40px;
+    }
+    position: fixed;
+    top: calc(50vh - 25px);
+    left: 0;
+    padding-left: 5px;
+    font-size: 50px;
+    color: $oc-gray-0;
+    cursor: pointer;
+    opacity: .5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .next-btn {
+    @include media("<boundary") {
+      top: calc(50vh - 20px);
+      font-size: 40px;
+    }
+    position: fixed;
+    top: calc(50vh - 25px);
+    right: 0;
+    padding-right: 5px;
+    font-size: 50px;
+    color: $oc-gray-0;
+    cursor: pointer;
+    opacity: .5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
