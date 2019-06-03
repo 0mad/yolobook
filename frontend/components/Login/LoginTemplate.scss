@@ -1,0 +1,14 @@
+.login-template {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    background-image: linear-gradient(rgba(253, 254, 254, 1), rgba(210, 216, 232, 1));
+  }
+}y

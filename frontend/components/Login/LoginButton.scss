@@ -1,13 +1,17 @@
 .login-button {
-  height: 4rem;
+  height: 3.6rem;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: white;
   text-align: center;
   cursor: pointer;
   border: 1px solid $oc-gray-3;
   border-radius: .2rem;
+
+  & > svg {
+    height: 100%;
+  }
 
   .button-icon {
     width: 1.6rem;

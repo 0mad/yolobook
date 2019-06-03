@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Login from './Login';
 import LoginButton from './LoginButton';
 import LoginHeader from './LoginHeader';
+import LoginFooter from './LoginFooter';
 
 const Wrapper = ({ children, style = {} }) => (
   <div style={{ display: 'block', ...style }}>{children}</div>
@@ -29,6 +30,9 @@ storiesOf('Login', module)
       />
     </Wrapper>
   ))
-  .add('로그인 헤더', () => (
+  .add('LoginHeader', () => (
     <LoginHeader/>
+  ))
+  .add('LoginFooter', () => (
+    <LoginFooter/>
   ));
