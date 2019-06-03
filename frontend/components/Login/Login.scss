@@ -16,5 +16,13 @@
     background-color: white;
     border-radius: .3rem;
     @include material-shadow(4, .5);
+
+    .button-list {
+      width: 100%;
+  
+      li + li {
+        margin-top: 1.5rem;
+      }
+    }
   }
 }
