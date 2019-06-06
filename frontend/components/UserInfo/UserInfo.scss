@@ -1,0 +1,116 @@
+.user-info {
+  background-color: white;
+
+
+  .header {
+    @include media("<boundary") {
+      padding: .8rem;
+      font-size: 1.2rem;
+    }
+    height: 100%;
+    padding: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $oc-gray-7;
+    background-color: $oc-gray-1;
+
+    & > svg {
+      @include media("<boundary") {
+        font-size: 1.8rem;
+      }
+      margin-right: .4rem;
+      font-size: 2.2rem;
+      color: $oc-gray-6;
+      vertical-align: middle;
+    }
+  }
+
+  .content {
+    max-width: 40rem;
+    padding: 1.5rem 0;
+    margin: 0 auto;
+    font-weight: 800;
+    .label {
+      display: block;
+      padding-bottom: .3rem;
+      margin: 1rem;
+      margin-bottom: 0;
+      font-size: .8rem;
+      color: $oc-gray-6;
+      border-bottom: 1px solid $oc-gray-4;
+    }
+    .item__view {
+      display: flex;
+      padding: 1rem;
+      .text {
+        font-size: .9rem;
+        font-weight: 600;
+        color: $oc-gray-8;
+        flex: 1;
+      }
+
+      .modify-button {
+        padding: .4rem;
+        margin-left: 1rem;
+        font-size: .8rem;
+        color: $oc-blue-7;
+        cursor: pointer;
+        align-self: flex-end;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        & svg {
+          margin-right: .4rem;
+        }
+      }
+    }
+  }
+
+  .edit-box {
+    background-color: $oc-gray-2;
+    .edit-area {
+      display: flex;
+      max-width: 30rem;
+      padding: .8rem;
+      margin: 0 auto;
+      border-bottom: 1px solid $oc-gray-4;
+      
+      .field-name {
+        margin-right: 1rem;
+        font-size: .9rem;
+        font-weight: 600;
+        color: $oc-gray-6;
+        text-align: right;
+        flex: 1;
+      }
+      .text__edit {
+        width: 100%;
+        padding: .5rem;
+        border: 1px solid $oc-gray-4;
+        flex: 5;
+      }
+    }
+
+    .actionbar {
+      padding: .6rem;
+      font-size: .8rem;
+      font-weight: 600;
+      text-align: center;
+
+      .apply-button {
+        display: inline-block;
+        padding: .5rem;
+        color: white;
+        background-color: $oc-blue-9;
+      }
+
+      .cancel-button {
+        display: inline-block;
+        padding: .4rem;
+      }
+
+    }
+  }
+}
