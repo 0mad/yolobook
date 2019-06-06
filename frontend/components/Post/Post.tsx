@@ -9,7 +9,7 @@ interface IProps {
   post: any;
 }
 
-const PostPresenter = (props: IProps) => {
+const Post = (props: IProps) => {
   const { post } = props;
   return (
     <div className={cx('post')}>
@@ -53,4 +53,4 @@ const PostPresenter = (props: IProps) => {
   );
 };
 
-export default PostPresenter;
+export default Post;

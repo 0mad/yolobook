@@ -2,6 +2,7 @@
 .gallery {
   display: grid;
   grid-column-gap: .5rem;
+  grid-auto-rows: minmax(10rem, auto);
 
   &.isParallel {
     grid-template-columns: repeat(2, 1fr);
