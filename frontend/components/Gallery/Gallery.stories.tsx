@@ -6,22 +6,22 @@ import Photo from './GalleryPhoto';
 const photoData = [
   {
     url:
-      'https://file.mk.co.kr/meet/neds/2017/03/image_readtop_2017_198166_14902521642820611.jpg',
+      'https://user-images.githubusercontent.com/11402468/58957574-d1441b80-87db-11e9-8d2e-411a2619188b.jpg',
   },
-  { url: 'http://www.economyj.co.kr/news/photo/201805/364_436_427.jpg' },
+  { url: 'https://user-images.githubusercontent.com/11402468/58957575-d1441b80-87db-11e9-956b-a69266304f9b.jpg' },
   {
     url:
-      'https://img.insight.co.kr/static/2017/11/13/700/ck7g3y3gn97s3g81d1j8.jpg',
-  },
-  {
-    url:
-      'http://mimgnews2.naver.net/image/109/2016/06/16/201606151731773169_57617bdba0531_99_20160616080103.jpg?type=w540',
+      'https://user-images.githubusercontent.com/11402468/58957578-d3a67580-87db-11e9-90c5-030eb934b070.jpg',
   },
   {
     url:
-      'http://photo.newsen.com/news_photo/2019/03/10/201903100903181910_1.jpg',
+      'https://user-images.githubusercontent.com/11402468/58957579-d3a67580-87db-11e9-8604-0fbe32babf1c.jpg',
   },
-  { url: 'https://image.mycelebs.com/celeb/sq/2310_sq_01.jpg' },
+  {
+    url:
+      'https://user-images.githubusercontent.com/11402468/58957581-d3a67580-87db-11e9-82de-1af94c850af6.jpg',
+  },
+  { url: 'https://user-images.githubusercontent.com/11402468/58957582-d43f0c00-87db-11e9-92db-b4037d423b88.jpg' },
 ];
 const photoWrapperStyle = {
   display: 'inline-block',

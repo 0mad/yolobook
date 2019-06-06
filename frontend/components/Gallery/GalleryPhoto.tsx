@@ -28,12 +28,12 @@ const Photo = (props: IProps) => {
       style={{ backgroundImage: `url(${url})` }}
       onClick={onClickPhoto}
     >
-      {!isMobileMode && (
+      {false/** 미구현 */ && !isMobileMode && (
         <div className={cx('edit')}>
           <IoMdCreate />
         </div>
       )}
-      <div className={cx('photo-footer')}>
+      {false/** 미구현 */ && (<div className={cx('photo-footer')}>
         {!isMobileMode && (
           <span className={cx('button-like')} onClick={onClickLike}>
             좋아요
@@ -51,7 +51,7 @@ const Photo = (props: IProps) => {
         <span className={cx('score-like')}>
           <IoIosThumbsUp />2
         </span>
-      </div>
+      </div>)}
     </div>
   );
 };
