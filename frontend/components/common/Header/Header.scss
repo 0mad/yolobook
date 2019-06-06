@@ -6,11 +6,6 @@
   max-height: $header-height;
   background-color: $oc-blue-9;
 
-  &.isUnlogined {
-    height: $header-height * 2;
-    max-height: $header-height * 2;
-  }
-
   .header {
     @include media("<boundary") {
       min-width: auto;
@@ -84,21 +79,31 @@
         font-size: 1.5rem;
         color: $oc-gray-9;
         cursor: pointer;
-        align-items: center;
-        justify-content: center;
         flex: 1;
+        justify-content: center;
+        align-items: center;
 
         &:firstOne {
           order: 2
         }
       }
     }
-  }
-}
 
-.unlogined-logo {
-  font-size: 3rem;
-  line-height: $header-height * 2;
-  color: $oc-gray-0;
-  text-align: center;
+    .unlogined-header {
+      position: relative;
+      padding-right: 1rem;
+      max-width: 63rem;
+      width: 100%;
+      text-align: right;
+      & > * {
+        position: absolute;
+        right: 0;
+        margin-right: .6rem;
+      }
+      & > svg {
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
 }

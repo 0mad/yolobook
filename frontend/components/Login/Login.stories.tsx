@@ -2,6 +2,8 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import Login from './Login';
 import LoginButton from './LoginButton';
+import LoginHeader from './LoginHeader';
+import LoginFooter from './LoginFooter';
 
 const Wrapper = ({ children, style = {} }) => (
   <div style={{ display: 'block', ...style }}>{children}</div>
@@ -19,7 +21,7 @@ storiesOf('Login', module)
       <LoginButton provider="naver" onClick={naverAction} />
     </>
   ))
-  .add('소셜 로그인', () => (
+  .add('로그인', () => (
     <Wrapper style={{ backgroundColor: 'lightgray' }}>
       <Login
         onLoginGoogle={googleAction}
@@ -27,4 +29,10 @@ storiesOf('Login', module)
         onLoginNaver={naverAction}
       />
     </Wrapper>
+  ))
+  .add('LoginHeader', () => (
+    <LoginHeader/>
+  ))
+  .add('LoginFooter', () => (
+    <LoginFooter/>
   ));

@@ -11,7 +11,7 @@ const Wrapper = ({ children, title, style = {} }) => (
 
 storiesOf('Header', module).add('로그인 하지 않은 헤더', () => (
   <div>
-    <Header />
+    <Header isLogined={false}/>
   </div>
 ));
 storiesOf('Header', module)

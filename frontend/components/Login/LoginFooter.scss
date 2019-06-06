@@ -1,0 +1,21 @@
+.login-footer {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 0;
+  font-size: 1.5rem;
+
+  .footer-content {
+    text-align: center;
+    .team {
+      text-decoration: underline;
+      cursor: pointer;
+      margin: 0 1rem;
+    }
+  
+    .github {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  
+}

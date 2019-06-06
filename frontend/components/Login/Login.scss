@@ -4,17 +4,19 @@
   max-width: 40rem;
   padding: 1rem;
 
-  .label {
-    padding-bottom: 1rem;
-    font-size: 3rem;
-    font-weight: 500;
-  }
-
   .login-box {
     padding: 2rem 1.6rem;
     text-align: right;
     background-color: white;
     border-radius: .3rem;
     @include material-shadow(4, .5);
+
+    .button-list {
+      width: 100%;
+  
+      li + li {
+        margin-top: 1.5rem;
+      }
+    }
   }
 }

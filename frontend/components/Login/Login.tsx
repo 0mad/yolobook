@@ -16,11 +16,10 @@ const lookAroundStyle = {
   marginTop: '1rem',
 };
 
-const LoginPresenter = (props: IProps) => {
+const Login = (props: IProps) => {
   const { onLoginGoogle, onLoginKakao, onLoginNaver } = props;
   return (
     <div className={cx('login')}>
-      <h2 className={cx('label')}>로그인</h2>
       <div className={cx('login-box')}>
         <ul className={cx('button-list')}>
           <li>
@@ -41,4 +40,4 @@ const LoginPresenter = (props: IProps) => {
   );
 };
 
-export default LoginPresenter;
+export default Login;
