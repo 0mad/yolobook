@@ -7,9 +7,9 @@ interface IProps {
   photoList: any;
 }
 
-const Photo = ({ url = '', key, twoSize }) => {
+const Photo = ({ url = '', id, twoSize }) => {
   return (
-    <li className={cx('photo-wrapper', { twoSize })} key={key}>
+    <li className={cx('photo-wrapper', { twoSize })} key={id}>
       <img className={cx('photo')} src={url} />
     </li>
   );

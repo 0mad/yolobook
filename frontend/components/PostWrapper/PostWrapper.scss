@@ -1,0 +1,15 @@
+.post-wrapper {
+  .post-list-label {
+    padding: 1rem 0;
+    font-size: .8rem;
+    font-weight: 700;
+    color: $oc-gray-7;
+  }
+
+  .post-list {
+
+    .post-item + .post-item {
+      margin-top: .9rem;
+    }
+  }
+}
