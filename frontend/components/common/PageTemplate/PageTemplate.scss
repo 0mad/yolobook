@@ -1,3 +1,8 @@
 .page-template {
   margin-top: $header-height; 
+  .page-content {
+    width: 100%;
+    max-width: 53rem;
+    margin: 0 auto;
+  }
 }

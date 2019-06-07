@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import React, { Component } from 'react';
-import Footer from '../Footer';
 import Header from '../Header';
 import styles from './PageTemplate.scss';
 
@@ -26,8 +25,7 @@ class PageTemplate extends Component<IProps, IState> {
     return (
       <div className={cx('page-template', { isLogined })}>
         <Header isLogined={isLogined} />
-        {children}
-        <Footer />
+        <div className={cx('page-content')}>{children}</div>
       </div>
     );
   }
