@@ -13,11 +13,12 @@ class YoloBookApp extends App {
     // Provide the store to getInitialProps of pages
     appContext.ctx.mobxStore = mobxStore;
 
-    let appProps = await App.getInitialProps(appContext);
+    const appProps = await App.getInitialProps(appContext);
 
     return {
       ...appProps,
       initialMobxState: mobxStore,
+      query: appContext.router.query,
     };
   }
 
@@ -32,12 +33,12 @@ class YoloBookApp extends App {
   }
 
   public render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, query } = this.props;
 
     return (
       <Provider {...this.mobxStore}>
         <Container>
-          <Component {...pageProps} />
+          <Component {...pageProps} query={query} />
         </Container>
       </Provider>
     );

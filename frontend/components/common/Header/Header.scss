@@ -1,6 +1,7 @@
 .header-wrapper {
   position: fixed;
   top: 0;
+  z-index: 100;
   width: 100%;
   height: $header-height;
   max-height: $header-height;
@@ -79,9 +80,9 @@
         font-size: 1.5rem;
         color: $oc-gray-9;
         cursor: pointer;
-        align-items: center;
-        justify-content: center;
         flex: 1;
+        justify-content: center;
+        align-items: center;
 
         &:firstOne {
           order: 2
