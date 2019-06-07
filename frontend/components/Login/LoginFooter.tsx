@@ -1,13 +1,13 @@
 import classNames from 'classnames/bind';
-import styles from './LoginFooter.scss';
 import { IoLogoGithub } from 'react-icons/io';
+import styles from './LoginFooter.scss';
 
 const cx = classNames.bind(styles);
 
 interface IProps {}
 
 const LoginFooter = (props: IProps) => {
-  const {  } = props;
+  const {} = props;
   return (
     <div className={cx('login-footer')}>
       <p className={cx('footer-content')}>
@@ -16,7 +16,7 @@ const LoginFooter = (props: IProps) => {
           <span className={cx('team')}>0mad</span>
         </a>
         <a href="https://github.com/0mad/yolobook">
-          <IoLogoGithub/>
+          <IoLogoGithub />
           <span className={cx('github')}>Github</span>
         </a>
       </p>

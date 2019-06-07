@@ -1,11 +1,12 @@
-import PageTemplate from '../components/common/PageTemplate';
+import { LoginTemplate } from '../components/Login';
+import LoginContainer from '../containers/LoginContainer';
 
 interface IProps {}
 
 const Login = (props: IProps) => (
-  <PageTemplate>
-    <div>login 페이지</div>
-  </PageTemplate>
+  <LoginTemplate>
+    <LoginContainer />
+  </LoginTemplate>
 );
 
 export default Login;

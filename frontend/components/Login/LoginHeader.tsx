@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
-import styles from './LoginHeader.scss';
 import Link from 'next/link';
+import styles from './LoginHeader.scss';
 
 const cx = classNames.bind(styles);
 
