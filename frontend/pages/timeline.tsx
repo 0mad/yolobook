@@ -1,10 +1,11 @@
+import { withRouter, WithRouterProps } from 'next/router';
 import ContentLayout from '../components/common/ContentLayout';
 import PageTemplate from '../components/common/PageTemplate';
 import BannerContainer from '../containers/BannerContainer';
 import EditorContainer from '../containers/EditorContainer';
 import PostContainer from '../containers/PostContainer';
 
-interface IProps {}
+interface IProps extends WithRouterProps<any> {}
 
 const Timeline = (props: IProps) => (
   <PageTemplate>
@@ -16,4 +17,4 @@ const Timeline = (props: IProps) => (
   </PageTemplate>
 );
 
-export default Timeline;
+export default withRouter(Timeline);

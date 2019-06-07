@@ -18,7 +18,6 @@ class YoloBookApp extends App {
     return {
       ...appProps,
       initialMobxState: mobxStore,
-      query: appContext.router.query,
     };
   }
 
@@ -33,12 +32,12 @@ class YoloBookApp extends App {
   }
 
   public render() {
-    const { Component, pageProps, query } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <Provider {...this.mobxStore}>
         <Container>
-          <Component {...pageProps} query={query} />
+          <Component {...pageProps} />
         </Container>
       </Provider>
     );
