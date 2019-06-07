@@ -1,4 +1,5 @@
-import { configure, addParameters } from '@storybook/react';
+import { configure, addParameters, addDecorator } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
 import '../styles/base.scss';
 
 // global pre setting
@@ -9,6 +10,8 @@ addParameters({
     { name: 'black', value: '#000000' },
   ],
 });
+
+addDecorator(withKnobs);
 
 // automatically import all files ending in *.stories.tsx
 const req = require.context('../components', true, /\.stories\.tsx$/);

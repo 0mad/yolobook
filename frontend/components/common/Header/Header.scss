@@ -79,9 +79,9 @@
         font-size: 1.5rem;
         color: $oc-gray-9;
         cursor: pointer;
-        flex: 1;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        flex: 1;
 
         &:firstOne {
           order: 2
@@ -91,9 +91,9 @@
 
     .unlogined-header {
       position: relative;
-      padding-right: 1rem;
-      max-width: 63rem;
       width: 100%;
+      max-width: 63rem;
+      padding-right: 1rem;
       text-align: right;
       & > * {
         position: absolute;
