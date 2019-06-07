@@ -7,9 +7,9 @@ interface IProps {
   photoList: any;
 }
 
-const Photo = ({ url = '', key, twoSize }) => {
+const Photo = ({ url = '', id, twoSize }) => {
   return (
-    <li className={cx('photo-wrapper', { twoSize })} key={key}>
+    <li className={cx('photo-wrapper', { twoSize })} key={id}>
       <img className={cx('photo')} src={url} />
     </li>
   );
@@ -18,7 +18,7 @@ const Photo = ({ url = '', key, twoSize }) => {
 const PostGallery = (props: IProps) => {
   const { photoList } = props;
   const isOdd = photoList.length && photoList.length % 2 !== 0;
-  const isParallel = photoList.length > 3;
+  const isParallel = photoList.length > 1;
   return (
     <ul className={cx('gallery', { isParallel })}>
       {photoList.map((photo, index) =>

@@ -8,8 +8,8 @@ const cx = classNames.bind(styles);
 interface IProps {
   user: any;
   commentData: any[];
-  onClickLike: () => void;
-  onClickReply: () => void;
+  onClickLike?: () => void;
+  onClickReply?: () => void;
 }
 
 const renderReplyList = ({ replyData, onClickLike, onClickReply, user }) => {
