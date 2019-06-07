@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import { IoIosImages } from 'react-icons/io';
 import styles from './Gallery.scss';
 import Photo from './GalleryPhoto';

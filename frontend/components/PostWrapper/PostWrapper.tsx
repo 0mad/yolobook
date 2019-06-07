@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import Comment from '../Comment';
-import PostEditor from '../Editor';
 import Post from '../Post';
 import styles from './PostWrapper.scss';
 
@@ -35,7 +34,6 @@ const PostWrapper = (props: IProps) => {
   const { posts, user } = props;
   return (
     <div className={cx('post-wrapper')}>
-      <PostEditor />
       <p className={cx('post-list-label')}>게시물</p>
       {renderPostList({ posts, user })}
     </div>
