@@ -8,20 +8,23 @@ import styles from './FriendItem.scss';
 const cx = classNames.bind(styles);
 
 export interface IProps {
+  img: string;
+  name: string;
+  cnt: string;
   isMobileMode: boolean;
 }
 
-const FriendItem = ({ isMobileMode }: IProps) => {
+const FriendItem = ({ img, name, cnt, isMobileMode }: IProps) => {
   return (
     <div className={cx('friend-item')}>
       <div className={cx('thumbnail')}>
-        <img src={'http://placekitten.com/1000/1000'} />
+        <img src={img} />
       </div>
       <div className={cx('content')}>
         <div className={cx('info')}>
-          <div className={cx('name')}>문태민</div>
+          <div className={cx('name')}>{name}</div>
           <div className={cx('friend-cnt')}>
-            {isMobileMode ? '함께 아는 친구 1000명' : '친구 1000명'}
+            {isMobileMode ? `함께 아는 친구 ${cnt}명` : `친구 ${cnt}명`}
           </div>
         </div>
         <div className={cx('more-btn')}>

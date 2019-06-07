@@ -8,8 +8,13 @@ storiesOf('Friend', module)
       <Friend />
     </div>
   ))
-  .add('프로필 친구', () => (
-    <div style={{ padding: '20px', backgroundColor: 'white' }}>
-      <FriendItem />
-    </div>
-  ));
+  .add('프로필 친구', () => {
+    const img = 'http://placekitten.com/1000/1000';
+    const name = '문태민';
+    const cnt = '1000';
+    return (
+      <div style={{ padding: '20px', backgroundColor: 'white' }}>
+        <FriendItem img={img} name={name} cnt={cnt} />
+      </div>
+    );
+  });
