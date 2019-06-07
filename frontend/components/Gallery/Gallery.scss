@@ -1,0 +1,47 @@
+.gallery {
+  width: 100%;
+  background-color: white;
+
+  .gallery-header {
+    @include media("<boundary") {
+      padding: .8rem;
+      font-size: 1.2rem;
+    }
+    height: 100%;
+    padding: 1rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: $oc-gray-7;
+    background-color: $oc-gray-1;
+
+    & > svg {
+      @include media("<boundary") {
+        font-size: 1.4rem;
+      }
+      margin-right: .4rem;
+      font-size: 2rem;
+      color: $oc-gray-6;
+      vertical-align: middle;
+    }
+  }
+}
+
+
+.album {
+  @include media("<boundary") {
+    grid-gap: .2rem;
+  }
+  display: grid;
+  width: 100%;
+  padding: .4rem;
+  background-color: white;
+  border: 1px solid $oc-gray-3;
+  grid-gap: .3rem;
+  grid-template-columns: repeat(4, 1fr);
+
+  .photo-wrapper {
+    width: 100%;
+    height: calc(24vw);
+    border: 1px solid $oc-gray-3;
+  }
+}
