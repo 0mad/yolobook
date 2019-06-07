@@ -18,7 +18,7 @@ const Photo = ({ url = '', id, twoSize }) => {
 const PostGallery = (props: IProps) => {
   const { photoList } = props;
   const isOdd = photoList.length && photoList.length % 2 !== 0;
-  const isParallel = photoList.length > 3;
+  const isParallel = photoList.length > 1;
   return (
     <ul className={cx('gallery', { isParallel })}>
       {photoList.map((photo, index) =>
