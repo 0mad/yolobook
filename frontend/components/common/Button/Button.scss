@@ -64,13 +64,13 @@
   &.disabled {
     color: black;
     cursor: default;
-    background: $oc-gray-4;
-    border-color: $oc-gray-4;
+    background: white;
+    border-color: $oc-gray-9;
     opacity: .5;
     &:hover, &:active {
       color: black;
-      background: $oc-gray-4;
-      border-color: $oc-gray-4;
+      background: white;
+      border-color: $oc-gray-9;
       box-shadow: none;
     }
   }
