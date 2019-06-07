@@ -1,0 +1,54 @@
+.friend-item {
+  @include media("<boundary") {
+    border: 0;
+  }
+  background-color: white;
+  border: solid 1px $oc-gray-3;
+  display: flex;
+  .thumbnail {
+    line-height: 0;
+    img {
+      width:100px;
+      height:100px;
+    }
+  }
+  .content {
+    width: calc(100vw - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 13px;
+    .info {
+      line-height: 17px;
+      .name {
+        font-weight: 600;
+        font-size: 15px;
+        color: $oc-indigo-9;
+      }
+      .friend-cnt {
+        font-size: 13px;
+        color: $oc-gray-7;
+      }
+    }
+    .more-btn {
+      span {
+        font-size: 13px;
+        svg {
+          font-size: 15px;
+        }
+      }
+    }
+    @include media("<boundary") {
+      flex-direction: column;
+      justify-content: center;
+      align-items: baseline;
+      margin: 0 8px;
+      .info {
+        .name {
+          font-size: 14px;
+          color: $oc-gray-9;
+        }
+      }
+    }
+  }
+}
