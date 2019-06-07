@@ -20,27 +20,26 @@ const Banner = ({
   profileImage,
   username,
 }: IProps) => {
+  let cameraEl: any;
+  let profileEl: any;
+
   const handleBannerMouseOver = () => {
     if (isMobileMode) return;
-    const cameraEl = document.querySelector('.background-edit');
     cameraEl.classList.add(cx('background-edit-hover'));
   };
 
   const handleBannerMouseOut = () => {
     if (isMobileMode) return;
-    const cameraEl = document.querySelector('.background-edit');
     cameraEl.classList.remove(cx('background-edit-hover'));
   };
 
   const handleProfileMouseEnter = () => {
     if (isMobileMode) return;
-    const profileEl = document.querySelector('.profile-edit');
     profileEl.classList.add(cx('profile-edit-show'));
   };
 
   const handleProfileMouseLeave = () => {
     if (isMobileMode) return;
-    const profileEl = document.querySelector('.profile-edit');
     profileEl.classList.remove(cx('profile-edit-show'));
   };
 
@@ -51,7 +50,12 @@ const Banner = ({
       onMouseOut={handleBannerMouseOut}
     >
       <div className={cx('background')}>
-        <div className={cx('background-edit')}>
+        <div
+          ref={ref => {
+            cameraEl = ref;
+          }}
+          className={cx('background-edit')}
+        >
           <IoIosCamera />
           <div className={cx('background-edit-content')}>
             <span>{isMobileMode ? '수정' : '커버 사진 업데이트'}</span>
@@ -66,7 +70,12 @@ const Banner = ({
       >
         <div className={cx('wrap-profile-edit')}>
           <img src={profileImage} />
-          <div className={cx('profile-edit')}>
+          <div
+            ref={ref => {
+              profileEl = ref;
+            }}
+            className={cx('profile-edit')}
+          >
             <div className={cx('profile-edit-content')}>
               <IoIosCamera />
               <div className={cx('profile-edit-text')}>
@@ -86,7 +95,7 @@ const Banner = ({
               <Link href={'/'}>타임라인</Link>
             </li>
             <li>
-              <Link href={'/'}>정보</Link>
+              <Link href={'/profile/info'}>정보</Link>
             </li>
             <li>
               <Link href={'/'}>친구</Link>
