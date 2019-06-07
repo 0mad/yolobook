@@ -13,7 +13,7 @@ class YoloBookApp extends App {
     // Provide the store to getInitialProps of pages
     appContext.ctx.mobxStore = mobxStore;
 
-    let appProps = await App.getInitialProps(appContext);
+    const appProps = await App.getInitialProps(appContext);
 
     return {
       ...appProps,
