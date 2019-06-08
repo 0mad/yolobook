@@ -11,8 +11,7 @@ interface IProps {
 
 const Picture = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout>
-      <BannerContainer />
+    <ContentLayout Banner={BannerContainer}>
       <PictureContainer />
     </ContentLayout>
   </PageTemplate>

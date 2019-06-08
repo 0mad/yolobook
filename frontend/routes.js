@@ -6,4 +6,4 @@ routes
   .add('profile-info', '/profile/info', 'profile/info')
   .add('profile-picture', '/profile/picture', 'profile/picture')
   .add('profile-friend', '/profile/friend', 'profile/friend')
-  .add('timeline-user', '/timeline/:userId', 'timeline')
+  .add('timeline-user', '/profile/timeline/:userId', 'profile/timeline')
