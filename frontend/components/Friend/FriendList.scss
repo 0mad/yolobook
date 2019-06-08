@@ -1,0 +1,72 @@
+.friend-list {
+  background-color: white;
+  .header {
+    @include media("<boundary") {
+      .title {
+        padding: 12px;
+        font-size: 13px;
+      }
+    }
+    @include media(">=boundary") {
+      display: flex;
+      height: 40px;
+      padding: 0 8px;
+      background-color: $oc-gray-0;
+      justify-content: space-between;
+      align-items: center;
+      .title {
+        display: inline-flex;
+        align-items: center;
+        & > svg {
+          font-size: 20px;
+          color: $oc-gray-6;
+        }
+        & > span {
+          margin-left: 5px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+      .search-bar {
+        border: solid 1px $oc-gray-4;
+        & > input {
+          display: inline-block;
+          width: 160px;
+          height: 22px;
+          padding: 1px 5px 2px 3px;
+          font-size: 12px;
+          vertical-align: top;
+        }
+        .search-btn {
+          display: inline-flex;
+          width: 22px;
+          height: 22px;
+          justify-content: center;
+          align-items: center;
+          & > svg {
+            font-size: 15px;
+            color:$oc-gray-6;
+          }
+        }
+      }
+    }
+  }
+  .list {
+    @include media(">=boundary") {
+      display: flex;
+      margin-top: 13px;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex-direction: row;
+      .item {
+        max-width: 47%;
+        margin: 0 0 13px 13px;
+      }
+    }
+    @include media("<boundary") {
+      .item:first-child, .item + .item {
+        border-top: solid 1px $oc-gray-3;
+      }
+    }
+  }
+}
