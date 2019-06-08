@@ -2,9 +2,9 @@
   @include media("<boundary") {
     border: 0;
   }
+  display: flex;
   background-color: white;
   border: solid 1px $oc-gray-3;
-  display: flex;
   .thumbnail {
     line-height: 0;
     img {
@@ -13,16 +13,16 @@
     }
   }
   .content {
-    width: calc(100vw - 100px);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    width: calc(100vw - 100px);
     margin: 0 13px;
+    justify-content: space-between;
+    align-items: center;
     .info {
       line-height: 17px;
       .name {
-        font-weight: 600;
         font-size: 15px;
+        font-weight: 600;
         color: $oc-indigo-9;
       }
       .friend-cnt {
@@ -39,10 +39,10 @@
       }
     }
     @include media("<boundary") {
-      flex-direction: column;
-      justify-content: center;
-      align-items: baseline;
       margin: 0 8px;
+      align-items: baseline;
+      justify-content: center;
+      flex-direction: column;
       .info {
         .name {
           font-size: 14px;
