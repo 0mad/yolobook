@@ -1,11 +1,11 @@
-.friend-request {
+.follow {
   background-color: white;
-  .request-header {
+  .follow-header {
     display: flex;
     padding: 1rem;
     line-height: 1.5;
     flex-direction: column;
-    .request-title {
+    .follow-title {
       font-size: .9rem;
       font-weight: 700;
       color: $oc-gray-8;
@@ -18,7 +18,7 @@
       }
     }
   }
-  .request-list {
+  .follow-list {
     padding: 0 1.2rem;
     border-top: 1px solid $oc-gray-3;
     border-bottom: 1px solid $oc-gray-3;
@@ -28,9 +28,9 @@
   }
 }
 
-.friend-request {
+.follow {
   @include media("<boundary") {
-    .request-header {
+    .follow-header {
       justify-content: space-between;
       align-items: center;
       flex-direction: row;
@@ -41,7 +41,7 @@
   }
 }
 
-.friend-item {
+.follow-item {
   display: flex;
   padding: .7rem 0;
   .thumbnail {
@@ -68,7 +68,7 @@
   }
 }
 
-.friend-item {
+.follow-item {
   @include media("<boundary") {
     padding: 0;
     cursor: pointer;
