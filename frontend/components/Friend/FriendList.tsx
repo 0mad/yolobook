@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import { IoIosPeople, IoIosSearch } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../utils/withSizes';
-import styles from './Friend.scss';
 import FriendItem from './FriendItem';
+import styles from './FriendList.scss';
 
 const cx = classNames.bind(styles);
 
@@ -35,9 +35,9 @@ const MobileHeader = () => (
   </div>
 );
 
-const Friend = ({ isMobileMode, friendList }: IProps) => {
+const FriendList = ({ isMobileMode, friendList }: IProps) => {
   return (
-    <div className={cx('friend')}>
+    <div className={cx('friend-list')}>
       {isMobileMode ? <MobileHeader /> : <DesktopHeader />}
       <ul className={cx('list')}>
         {friendList.map(
@@ -55,4 +55,4 @@ const Friend = ({ isMobileMode, friendList }: IProps) => {
   );
 };
 
-export default withSizes(mapSizesToProps)(Friend);
+export default withSizes(mapSizesToProps)(FriendList);

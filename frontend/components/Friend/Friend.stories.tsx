@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
-import Friend from './Friend';
 import FriendItem from './FriendItem';
+import FriendList from './FriendList';
 
 storiesOf('Friend', module)
   .add('프로필 친구 목록', () => {
@@ -14,7 +14,7 @@ storiesOf('Friend', module)
     }
     return (
       <div style={{ padding: '20px', backgroundColor: 'gray' }}>
-        <Friend friendList={friendList} />
+        <FriendList friendList={friendList} />
       </div>
     );
   })
