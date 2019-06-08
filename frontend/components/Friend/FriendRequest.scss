@@ -1,0 +1,93 @@
+.friend-request {
+  background-color: white;
+  .request-header {
+    display: flex;
+    padding: 1rem;
+    line-height: 1.5;
+    flex-direction: column;
+    .request-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: $oc-gray-8;
+    }
+    .toggle {
+      font-size: .7rem;
+      color: $oc-blue-9;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .request-list {
+    padding: 0 1.2rem;
+    border-top: 1px solid $oc-gray-3;
+    border-bottom: 1px solid $oc-gray-3;
+    li + li {
+      border-top: 1px solid $oc-gray-3;
+    }
+  }
+}
+
+.friend-request {
+  @include media("<boundary") {
+    .request-header {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      .toggle {
+        font-size: .9rem;
+      }
+    }
+  }
+}
+
+.friend-item {
+  display: flex;
+  padding: .7rem 0;
+  .thumbnail {
+    margin-right: 13px;
+    line-height: 0;
+    img {
+      width: 4.7rem;
+      height: 4.7rem;
+    }
+  }
+  .content {
+    display: flex;
+    width: calc(100vw - 100px);
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      font-size: 15px;
+      font-weight: 600;
+      color: $oc-indigo-9;
+    }
+    .more-btn {
+      font-size: 13px;
+    }
+  }
+}
+
+.friend-item {
+  @include media("<boundary") {
+    padding: 0;
+    cursor: pointer;
+    .thumbnail {
+      margin-right: 0;
+      img {
+        width: 6.25rem;
+        height: 6.25rem;
+      }
+    }
+    .content {
+      padding: .5rem;
+      align-items: flex-start;
+      flex-direction: column;
+      .more-btn {
+        display: flex;
+        width: 100%;
+        font-size: 12px;
+      }
+    }
+  }
+}
