@@ -1,15 +1,18 @@
-import withSizes from 'react-sizes';
+import { withRouter, WithRouterProps } from 'next/router';
+import ContentLayout from '../components/common/ContentLayout';
 import PageTemplate from '../components/common/PageTemplate';
-import { mapSizesToProps } from '../utils/withSizes';
+import EditorContainer from '../containers/EditorContainer';
+import PostContainer from '../containers/PostContainer';
 
-interface IProps {
-  isMobileMode: boolean;
-}
+interface IProps extends WithRouterProps<any> {}
 
-const Index = (props: IProps) => (
+const Timeline = (props: IProps) => (
   <PageTemplate>
-    {props.isMobileMode ? <div>모바일 페이지</div> : <div>데스크탑 페이지</div>}
+    <ContentLayout>
+      <EditorContainer />
+      <PostContainer />
+    </ContentLayout>
   </PageTemplate>
 );
 
-export default withSizes(mapSizesToProps)(Index);
+export default withRouter(Timeline);

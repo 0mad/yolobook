@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
+import Link from 'next/link';
 import { IoIosCamera } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../utils/withSizes';
 import styles from './Banner.scss';
-import Link from 'next/link';
 
 const cx = classNames.bind(styles);
 
@@ -92,7 +92,7 @@ const Banner = ({
         <nav className={cx('nav')}>
           <ul>
             <li>
-              <Link href={'/'}>타임라인</Link>
+              <Link href={'/profile/timeline/abc'}>타임라인</Link>
             </li>
             <li>
               <Link href={'/profile/info'}>정보</Link>

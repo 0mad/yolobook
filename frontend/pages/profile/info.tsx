@@ -11,8 +11,7 @@ interface IProps {
 
 const Info = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout>
-      <BannerContainer />
+    <ContentLayout Banner={BannerContainer}>
       <UserInfoContainer />
     </ContentLayout>
   </PageTemplate>
