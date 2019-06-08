@@ -98,10 +98,10 @@ const Banner = ({
               <Link href={'/profile/info'}>정보</Link>
             </li>
             <li>
-              <Link href={'/profile/picture'}>친구</Link>
+              <Link href={'/profile/friend'}>친구</Link>
             </li>
             <li>
-              <Link href={'/'}>사진</Link>
+              <Link href={'/profile/picture'}>사진</Link>
             </li>
           </ul>
         </nav>
