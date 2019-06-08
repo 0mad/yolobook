@@ -12,7 +12,7 @@ export interface IProps {
   type: 'receive' | 'send';
 }
 
-export const FriendRequestItem = ({ img, name, id }) => {
+export const FriendRequestItem = ({ img, name, id, type }) => {
   return (
     <li className={cx('friend-item')} key={id}>
       <div className={cx('thumbnail')}>
@@ -21,12 +21,18 @@ export const FriendRequestItem = ({ img, name, id }) => {
       <div className={cx('content')}>
         <div className={cx('name')}>{name}</div>
         <div className={cx('more-btn')}>
-          <Button inline={true} theme="blue" style={{ flex: '1' }}>
-            확인
-          </Button>
-          <Button inline={true} style={{ flex: '1' }}>
-            요청 삭제
-          </Button>
+          {type === 'receive' ? (
+            <>
+              <Button inline={true} theme="blue" style={{ flex: '1' }}>
+                수락
+              </Button>
+              <Button inline={true} style={{ flex: '1' }}>
+                요청 삭제
+              </Button>
+            </>
+          ) : (
+            <Button inline={true}>친구 요청 취소</Button>
+          )}
         </div>
       </div>
     </li>
@@ -45,7 +51,8 @@ const FriendRequest = ({ requestList, type }: IProps) => {
         </p>
       </div>
       <ul className={cx('request-list')}>
-        {requestList && requestList.map(request => FriendRequestItem(request))}
+        {requestList &&
+          requestList.map(request => FriendRequestItem({ ...request, type }))}
       </ul>
     </div>
   );

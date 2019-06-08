@@ -34,7 +34,8 @@ storiesOf('Friend', module)
     const name = '문태민';
     return (
       <div style={{ margin: '1rem', backgroundColor: 'white' }}>
-        <FriendRequestItem img={img} name={name} id={img} />
+        <FriendRequestItem img={img} name={name} id={img} type="receive" />
+        <FriendRequestItem img={img} name={name} id={img} type="send" />
       </div>
     );
   })
