@@ -1,10 +1,16 @@
-import CommonStore from './common';
+import AuthStore from './AuthStore';
+import CommonStore from './CommonStore';
+import UserStore from './UserStore';
 
 class RootStore {
-  public common: CommonStore;
+  public commonStore: CommonStore;
+  public authStore: AuthStore;
+  public userStore: UserStore;
 
   constructor(initialData = {}) {
-    this.common = new CommonStore(initialData.common);
+    this.commonStore = new CommonStore(initialData.commonStore);
+    this.authStore = new AuthStore(initialData.authStore);
+    this.userStore = new UserStore(initialData.userStore);
   }
 }
 

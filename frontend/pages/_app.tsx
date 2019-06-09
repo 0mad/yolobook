@@ -1,6 +1,7 @@
 import { Provider } from 'mobx-react';
 import App, { Container } from 'next/app';
 import React from 'react';
+import CommonContainer from '../containers/CommonContainer';
 import createStore from '../stores';
 import '../styles/base.scss';
 
@@ -37,7 +38,9 @@ class YoloBookApp extends App {
     return (
       <Provider {...this.mobxStore}>
         <Container>
-          <Component {...pageProps} />
+          <CommonContainer>
+            <Component {...pageProps} />
+          </CommonContainer>
         </Container>
       </Provider>
     );
