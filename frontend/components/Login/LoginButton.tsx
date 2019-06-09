@@ -7,7 +7,7 @@ const cx = className.bind(style);
 
 type Provider = 'google' | 'kakao' | 'naver';
 interface IProps {
-  onClick: () => void;
+  onClick?: () => void;
   provider: Provider;
 }
 
