@@ -5,6 +5,14 @@ import CommonContainer from '../containers/CommonContainer';
 import createStore from '../stores';
 import '../styles/base.scss';
 
+const LoadStyleNoCache: React.FC = () => (
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href={`/_next/static/css/styles.chunk.css?v=${Date.now()}`}
+  />
+);
+
 class YoloBookApp extends App {
   public static async getInitialProps(appContext) {
     // Get or Create the store with `undefined` as initialState
@@ -39,6 +47,7 @@ class YoloBookApp extends App {
       <Provider {...this.mobxStore}>
         <Container>
           <CommonContainer>
+            {process.env.NODE_ENV !== 'production' && <LoadStyleNoCache />}
             <Component {...pageProps} />
           </CommonContainer>
         </Container>
