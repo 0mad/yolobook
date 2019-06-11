@@ -25,7 +25,7 @@ const Login = (props: IProps) => {
         <ul className={cx('button-list')}>
           <li>
             <GoogleLogin
-              clientId="523020298734-7c3pe7ghqeeft4a0oqn7h029l11gk2et.apps.googleusercontent.com"
+              clientId={process.env.REACT_APP_GOOGLE_ID || ""}
               render={props => (
                 <LoginButton provider="google" onClick={props.onClick} />
               )}
