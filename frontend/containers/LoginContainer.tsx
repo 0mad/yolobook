@@ -31,7 +31,9 @@ class LoginContainer extends Component<any, IState> {
       console.error('로그인 실패');
     }
   };
-  public handleLoginKakao({}) {}
+  public handleLoginKakao(res) {
+    console.dir(res);
+  }
   public handleLoginNaver({}) {}
 }
 
