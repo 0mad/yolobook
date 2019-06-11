@@ -1,5 +1,6 @@
 import className from 'classnames/bind';
 import GoogleLogin from 'react-google-login';
+import KakaoLogin from 'react-kakao-login';
 import Button from '../common/Button';
 import style from './Login.scss';
 import LoginButton from './LoginButton';
@@ -25,7 +26,7 @@ const Login = (props: IProps) => {
         <ul className={cx('button-list')}>
           <li>
             <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_ID || ""}
+              clientId={process.env.REACT_APP_GOOGLE_ID || ''}
               render={props => (
                 <LoginButton provider="google" onClick={props.onClick} />
               )}
@@ -35,7 +36,15 @@ const Login = (props: IProps) => {
             />
           </li>
           <li>
-            <LoginButton provider="kakao" onClick={onLoginKakao} />
+            <KakaoLogin
+              jsKey={process.env.REACT_APP_KAKAO_ID || ''}
+              onSuccess={result => onLoginKakao(result)}
+              onFailure={result => console.log(result)}
+              render={props => (
+                <LoginButton provider="kakao" onClick={props.onClick} />
+              )}
+              getProfile="true"
+            />
           </li>
           <li>
             <LoginButton provider="naver" onClick={onLoginNaver} />
