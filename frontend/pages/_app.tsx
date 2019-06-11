@@ -1,6 +1,7 @@
 import { Provider } from 'mobx-react';
 import App, { Container } from 'next/app';
 import React from 'react';
+import { ToastContainer } from 'react-toastify';
 import CommonContainer from '../containers/CommonContainer';
 import createStore from '../stores';
 import '../styles/base.scss';
@@ -49,6 +50,7 @@ class YoloBookApp extends App {
           <CommonContainer>
             {process.env.NODE_ENV !== 'production' && <LoadStyleNoCache />}
             <Component {...pageProps} />
+            <ToastContainer draggable={true} position="bottom-center" />
           </CommonContainer>
         </Container>
       </Provider>

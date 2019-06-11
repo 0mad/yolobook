@@ -1,6 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import Router from 'next/router';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import Login from '../components/Login';
 import storage from '../lib/storage';
 
@@ -27,8 +28,9 @@ class LoginContainer extends Component<any, IState> {
       userStore.setLoggedInfo(results);
       Router.push({ pathname: '/' });
       storage.set('loggedInfo', results);
+      toast.success('로그인 성공');
     } catch (error) {
-      console.error('로그인 실패');
+      toast.error('로그인 실패');
     }
   };
   public handleLoginKakao(res) {
