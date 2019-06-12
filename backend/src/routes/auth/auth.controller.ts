@@ -3,56 +3,61 @@ import Joi from 'joi';
 import { Account } from '../../models/Account';
 
 class AuthController {
+
+  /**
+   * 사용자의 로그인 데이터를 검증
+   * @param profile
+   */
+  public validateLoginProfile(profile: any) {
+    const schema = Joi.object().keys({
+      email: Joi.string().email().allow(null),
+      snsId: Joi.string().required(),
+      thumbnail: Joi.string(),
+      username: Joi.string().required(),
+    });
+    return Joi.validate(profile, schema);
+  }
+
+  /**
+   * 유저 정보를 가져온다. 없으면 생성 한다.
+   * @param profile
+   * @param provider
+   */
+  public async getAccount(
+    profile: { email: string, snsId: string, thumbnail: string, username: string },
+    provider: 'kakao' | 'google' | 'naver'
+  ) {
+    const { email, snsId, thumbnail, username } = profile;
+    let user = await Account.findOne({ where: { snsId, provider } });
+    if (!user) {
+      user = await Account.create({
+        email,
+        provider,
+        snsId,
+        thumbnail,
+        username,
+      });
+    }
+    return user;
+  }
+
   // Google 로그인
   public googleLogin = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const {
-      username,
-      thumbnail,
-      snsId,
-      email,
-    } = req.body;
-    const schema = Joi.object().keys({
-      email: Joi.string().email().required(),
-      snsId: Joi.string().required(),
-      thumbnail: Joi.string(),
-      username: Joi.string().required(),
-    });
-
-    const result = Joi.validate({ username, thumbnail, email, snsId }, schema);
-    if (result.error) {
-      return next(result.error);
-    }
-
-    let existing = null;
-    try {
-      existing = await Account.findOne({ where: { snsId, provider: 'google' } });
-    } catch (error) {
-      return next(error);
-    }
-
-    let token = null;
-    if (existing) {
-      try {
-        token = await existing.generateToken();
-        this.setCookie(res, token);
-      } catch (error) {
-        return next(error);
-      }
-      return res.json(existing.profile);
+    const { body: { profile } } = req;
+    const validation = this.validateLoginProfile(profile);
+    if (validation.error) {
+      return next(validation.error);
     }
 
     try {
-      const newUser = await Account.create({
-        ...req.body,
-        provider: 'google'
-      });
-      token = await newUser.generateToken();
+      const user = await this.getAccount(profile, 'google');
+      const token = await user.generateToken();
       this.setCookie(res, token);
-      return res.json(newUser.profile);
+      return res.json(user.profile);
     } catch (error) {
       return next(error);
     }
@@ -64,7 +69,20 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('naver login');
+    const { body: { profile } } = req;
+    const validation = this.validateLoginProfile(profile);
+    if (validation.error) {
+      return next(validation.error);
+    }
+
+    try {
+      const user = await this.getAccount(profile, 'naver');
+      const token = await user.generateToken();
+      this.setCookie(res, token);
+      return res.json(user.profile);
+    } catch (error) {
+      return next(error);
+    }
   };
 
   // Kakao 로그인
@@ -73,7 +91,20 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('kakao login');
+    const { body: { profile } } = req;
+    const validation = this.validateLoginProfile(profile);
+    if (validation.error) {
+      return next(validation.error);
+    }
+
+    try {
+      const user = await this.getAccount(profile, 'kakao');
+      const token = await user.generateToken();
+      this.setCookie(res, token);
+      return res.json(user.profile);
+    } catch (error) {
+      return next(error);
+    }
   };
 
   // 로그아웃

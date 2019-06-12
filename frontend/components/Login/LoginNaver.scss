@@ -1,0 +1,20 @@
+.naver-login {
+  position: relative;
+  overflow: hidden;
+
+  div:first-child {
+    position: absolute;
+    height: 10rem;
+    width: 100%;
+
+    a {
+      display: block;
+      width: inherit;
+      height: inherit;
+      img {
+        display: none;
+      }
+    }
+  }
+
+}
