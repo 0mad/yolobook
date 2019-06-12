@@ -30,14 +30,16 @@ module.exports = withTypescript(
           );
         
           options.content = `${options.hashPrefix + request}+${unescape(localName)}`;
-          let test = localIdentName;
-          if(localName.startsWith('Toastify__')) {
-            test = "[local]";
+          
+          // custom source - css 파일은 cssModules가 처리되지 않도록 처리
+          const fileName = path.basename(loaderContext.resourcePath);
+          if (fileName.endsWith('.css')) {
+            localIdentName = '[local]';
           }
 
           return cssesc(
             loaderUtils
-              .interpolateName(loaderContext, test, options)
+              .interpolateName(loaderContext, localIdentName, options)
               .replace(/^((-?[0-9])|--)/, '_$1'),
             { isIdentifier: true }
           ).replace(/\\\[local\\\]/gi, localName);
