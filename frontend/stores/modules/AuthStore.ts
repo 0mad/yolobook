@@ -1,6 +1,12 @@
 import { action, observable, runInAction } from 'mobx';
 import * as AuthAPI from '../../api/auth';
 
+const loginAPI = {
+  google: AuthAPI.googleLogin,
+  kakao: AuthAPI.kakaoLogin,
+  naver: AuthAPI.naverLogin,
+};
+
 class AuthStore {
   @observable public results: any;
 
@@ -10,14 +16,17 @@ class AuthStore {
   }
 
   @action
-  public googleLogin = async (data: { email: string, googleId: string, imageUrl: string, name: string }) => {
-    const { email, googleId, imageUrl, name } = data;
+  public login = async (
+    data: { email: string, snsId: string, thumbnail: string, username: string },
+    provider: 'kakao' | 'google' | 'naver'
+  ) => {
+    const { email, snsId, thumbnail, username } = data;
     try {
-      const res = await AuthAPI.googleLogin({
+      const res = await loginAPI[provider]({
         email,
-        snsId: googleId,
-        thumbnail: imageUrl,
-        username: name,
+        snsId,
+        thumbnail,
+        username,
       });
       runInAction(() => {
         this.results = res.data;

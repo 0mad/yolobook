@@ -19,7 +19,6 @@ export class Account extends Model<Account> {
   @Column
   thumbnail?: string;
 
-  @AllowNull(false)
   @Column
   email!: string;
 
