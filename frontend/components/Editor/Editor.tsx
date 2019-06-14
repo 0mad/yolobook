@@ -6,12 +6,28 @@ import Button from '../common/Button';
 import styles from './Editor.scss';
 
 const cx = classNames.bind(styles);
+const isBrowser = process.browser;
 
 interface IProps {
   isMobileMode: boolean;
+  onTextChange: void;
+  onImgsChange: void;
+  onSubmit: void;
 }
 
-const Editor = ({ isMobileMode }: IProps) => {
+const Editor = ({
+  isMobileMode,
+  onTextChange,
+  onImgsChange,
+  onSubmit,
+}: IProps) => {
+  let uploadImgEl: any;
+
+  const handleClickUploadImgsBtn = (event: any) => {
+    event.preventDefault();
+    uploadImgEl.click();
+  };
+
   return (
     <div className={cx('editor')}>
       <div className={cx('header')}>
@@ -28,27 +44,45 @@ const Editor = ({ isMobileMode }: IProps) => {
           <textarea
             className={cx('textarea')}
             placeholder={'유주현님, 무슨 생각을 하고 계신가요?'}
+            onChange={onTextChange}
           />
         </div>
         <div className={cx('more')}>
-          <Button
-            inline={true}
-            shape={'half-circle'}
-            style={{ fontSize: '12px' }}
-          >
-            <IoIosImages className={cx('more-icon')} />
-            &nbsp; 사진
-          </Button>
+          <div className={cx('wrap-upload-imgs-btn')}>
+            <input
+              className={cx('upload-imgs-input')}
+              ref={ref => {
+                uploadImgEl = ref;
+              }}
+              type="file"
+              multiple
+              name="files"
+              accept="image/*"
+              onChange={onImgsChange}
+            />
+            <Button
+              inline={true}
+              shape={'half-circle'}
+              style={{ fontSize: '12px' }}
+              onClick={handleClickUploadImgsBtn}
+            >
+              <IoIosImages className={cx('more-icon')} />
+              &nbsp; 사진
+            </Button>
+          </div>
         </div>
       </div>
       <div className={cx('footer')}>
-        <Button
-          inline={isMobileMode ? false : true}
-          theme={'blue'}
-          style={{ fontSize: '12px' }}
-        >
-          게시
-        </Button>
+        {isBrowser && (
+          <Button
+            inline={isMobileMode ? false : true}
+            theme={'blue'}
+            style={{ fontSize: '12px' }}
+            onClick={onSubmit}
+          >
+            게시
+          </Button>
+        )}
       </div>
     </div>
   );

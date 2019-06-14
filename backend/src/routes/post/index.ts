@@ -1,12 +1,17 @@
 import express from 'express';
 import PostController from './post.controller';
+import { isLoggedIn } from '../middlewares';
 
 const post = express.Router();
 
-post.post('/img', PostController.uploadImg);
+post.post(
+  '/img',
+  PostController.multerUpload.array('imgs'),
+  PostController.uploadImg
+);
 post.get('/', PostController.getPosts);
 post.get('/:id', PostController.getPost);
-post.post('/', PostController.wrtiePost);
+post.post('/', isLoggedIn, PostController.wrtiePost);
 post.get('/hashtag', PostController.getPostsWithHashTag);
 post.get('/:id/comments', PostController.getComments);
 post.post('/:id/comment', PostController.writeComment);

@@ -1,10 +1,13 @@
 require('dotenv').config(); // .env 파일에서 환경변수 불러오기
 
+import appRoot from 'app-root-path';
 import cookieParser from 'cookie-parser';
 import express, { Express } from 'express';
+import fs from 'fs';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan = require('morgan');
+import path from 'path';
 import { jwtMiddleware } from './lib/token';
 import logger from './logger';
 import routes from './routes';
@@ -29,6 +32,15 @@ class App {
 
   private serverSetting = (): void => {
     this.app.set('port', process.env.PORT || 4000); // PORT 값이 설정되어있지 않다면 4000 을 사용합니다.
+    const uploadsDirPath = path.join(appRoot.path, 'uploads');
+    fs.readdir(uploadsDirPath, error => {
+      if (error) {
+        logger.error(
+          'The uploads directory does not exist and will be created'
+        );
+        fs.mkdirSync(uploadsDirPath);
+      }
+    });
   };
 
   private middlewares = (): void => {
@@ -39,6 +51,8 @@ class App {
     } else {
       this.app.use(morgan('dev'));
     }
+    this.app.use(express.static(path.join(appRoot.path, 'public')));
+    this.app.use('/img', express.static(path.join(appRoot.path, 'uploads')));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());

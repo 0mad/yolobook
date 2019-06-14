@@ -3,14 +3,15 @@ import Joi from 'joi';
 import { Account } from '../../models/Account';
 
 class AuthController {
-
   /**
    * 사용자의 로그인 데이터를 검증
    * @param profile
    */
   public validateLoginProfile(profile: any) {
     const schema = Joi.object().keys({
-      email: Joi.string().email().allow(null),
+      email: Joi.string()
+        .email()
+        .allow(null),
       snsId: Joi.string().required(),
       thumbnail: Joi.string(),
       username: Joi.string().required(),
@@ -24,7 +25,12 @@ class AuthController {
    * @param provider
    */
   public async getAccount(
-    profile: { email: string, snsId: string, thumbnail: string, username: string },
+    profile: {
+      email: string;
+      snsId: string;
+      thumbnail: string;
+      username: string;
+    },
     provider: 'kakao' | 'google' | 'naver'
   ) {
     const { email, snsId, thumbnail, username } = profile;
@@ -47,7 +53,9 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { body: { profile } } = req;
+    const {
+      body: { profile },
+    } = req;
     const validation = this.validateLoginProfile(profile);
     if (validation.error) {
       return next(validation.error);
@@ -69,7 +77,9 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { body: { profile } } = req;
+    const {
+      body: { profile },
+    } = req;
     const validation = this.validateLoginProfile(profile);
     if (validation.error) {
       return next(validation.error);
@@ -91,7 +101,9 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { body: { profile } } = req;
+    const {
+      body: { profile },
+    } = req;
     const validation = this.validateLoginProfile(profile);
     if (validation.error) {
       return next(validation.error);
@@ -135,8 +147,11 @@ class AuthController {
   };
 
   private setCookie(res: express.Response, token: string) {
-    res.cookie('access_token', token, { httpOnly: true, maxAge: 100 * 60 * 60 * 24 * 7 });
-  };
+    res.cookie('access_token', token, {
+      httpOnly: true,
+      maxAge: 100 * 60 * 60 * 24 * 7,
+    });
+  }
 }
 
 export default new AuthController();

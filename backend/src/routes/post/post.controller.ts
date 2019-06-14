@@ -1,13 +1,40 @@
+import appRoot from 'app-root-path';
 import express from 'express';
+import multer from 'multer';
+import path from 'path';
 
 class UserController {
+  public multerUpload = multer({
+    limits: { fileSize: 5 * 1024 * 1024 },
+    storage: multer.diskStorage({
+      destination(req, file, cb) {
+        cb(null, path.join(appRoot.path, 'uploads/'));
+      },
+      filename(req, file, cb) {
+        const ext = path.extname(file.originalname);
+        cb(
+          null,
+          path.basename(file.originalname, ext) + new Date().valueOf() + ext
+        );
+      },
+    }),
+  });
+
+  public multerUpload2 = multer();
+
   // 이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답
   public uploadImg = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답');
+    const imgs: any = req.files;
+    const urls: any = {};
+    imgs.map((img: any, idx: number) => {
+      urls[idx] = { url: `/img/${img.filename}` };
+    });
+    urls.length = imgs.length;
+    res.json({ urls });
   };
 
   // 계시글 리스트 가져오기
@@ -34,6 +61,7 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
+    console.log(req.body);
     res.send('게시글 작성');
   };
 
