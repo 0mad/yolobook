@@ -41,15 +41,11 @@ const customGetLocalIdent = (loaderContext, localIdentName, localName, options) 
 const withPlugins = require('next-compose-plugins');
 const withTypescript = require("@zeit/next-typescript");
 const withImages = require('next-images');
-const withTM = require('next-transpile-modules');
 const withCss = require('@zeit/next-css');
 const withSass = require('@zeit/next-sass');
 const plugins = [
   [ withTypescript ],
   [ withImages ],
-  // [ withTM, {
-  //   transpileModules: ['react-images-upload'],
-  // }],
   [ withCss, {
     cssModules: true,
     cssLoaderOptions: {
