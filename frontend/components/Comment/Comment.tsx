@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   user: any;
-  commentData: any[];
+  // commentData: any[];
   onClickLike?: () => void;
   onClickReply?: () => void;
 }
@@ -66,7 +66,7 @@ const Comment = (props: IProps) => {
   const { user } = props;
   return (
     <div className={cx('comment')}>
-      {renderCommentList(props)}
+      {/* {renderCommentList(props)} */}
       <CommentEditor user={user} />
     </div>
   );

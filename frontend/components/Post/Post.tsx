@@ -22,7 +22,7 @@ const Post = (props: IProps) => {
       </div>
       <div className={cx('post-body')}>
         <pre className={cx('post-content')}>{post.content}</pre>
-        <Gallery photoList={post.images} />
+        <Gallery photoList={post.imgs} />
       </div>
 
       <div className={cx('post-footer')}>

@@ -3,13 +3,15 @@ import * as PostAPI from '../../api/post';
 
 class PostStore {
   @observable public editPostForm: any;
+  @observable public posts: any;
   @observable public results: any;
 
   constructor(initialData = {}) {
-    const { editPostForm, results } = initialData;
+    const { editPostForm, posts, results } = initialData;
     this.editPostForm = !!editPostForm
       ? editPostForm
       : this.getInitEditPostFormData();
+    this.posts = !!posts ? posts : this.initPosts();
     this.results = !!results ? results : {};
   }
 
@@ -31,6 +33,16 @@ class PostStore {
   @action
   public setImgUrlsOfEditPostForm = (imgUrls: object) => {
     this.editPostForm.imgUrls = imgUrls;
+  };
+
+  @action
+  public initPosts = () => {
+    this.posts = [];
+  };
+
+  @action
+  public setPosts = (posts: object) => {
+    this.posts = posts;
   };
 
   @action

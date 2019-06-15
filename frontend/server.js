@@ -3,6 +3,11 @@ const next = require("next");
 const routes = require('./routes');
 
 const devProxy = {
+  '/img': {
+    target: 'http://localhost:4000/img/',
+    pathRewrite: { '^/img': '/' },
+    changeOrigin: true
+  },
   '/api': {
     target: 'http://localhost:4000/api/',
     pathRewrite: { '^/api': '/' },

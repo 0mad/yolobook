@@ -7,35 +7,34 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   posts: any;
-  user: any;
 }
 
-const renderPostItem = ({ post, user }) => {
+const renderPostItem = (post: object) => {
   return (
     <li className={cx('post-item')}>
       <Post post={post} />
-      <Comment user={user} commentData={post.commentData} />
+      <Comment user={post.user} />
     </li>
   );
 };
 
-const renderPostList = ({ posts, user }) => {
+const renderPostList = (posts: Array<object>) => {
   if (!posts || posts.length === 0) {
     return false;
   }
   return (
     <ul className={cx('post-list')}>
-      {posts.map(post => renderPostItem({ post, user }))}
+      {posts.map(post => renderPostItem(post))}
     </ul>
   );
 };
 
 const PostWrapper = (props: IProps) => {
-  const { posts, user } = props;
+  const { posts } = props;
   return (
     <div className={cx('post-wrapper')}>
       <p className={cx('post-list-label')}>게시물</p>
-      {renderPostList({ posts, user })}
+      {renderPostList(posts)}
     </div>
   );
 };

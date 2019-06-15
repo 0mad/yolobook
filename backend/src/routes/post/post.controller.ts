@@ -2,6 +2,9 @@ import appRoot from 'app-root-path';
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import { Account } from '../../models/Account';
+import { Post } from '../../models/Post';
+import { PostImage } from '../../models/PostImage';
 
 class UserController {
   public multerUpload = multer({
@@ -43,7 +46,15 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('계시글 리스트 가져오기');
+    const posts = await Post.findAll({
+      include: [Account, PostImage],
+      order: [['createdAt', 'DESC']],
+    });
+    const data: any = [];
+    posts.forEach((post: any) => {
+      data.push(post.info);
+    });
+    res.json(data);
   };
 
   // 특정 사용자 아이디의 게시글 리스트 가져오기
@@ -61,8 +72,27 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    console.log(req.body);
-    res.send('게시글 작성');
+    const {
+      content,
+      imgUrls,
+      user: {
+        profile: { id },
+      },
+    } = req.body;
+    try {
+      const post = await Post.create({
+        content,
+        accountId: id,
+      });
+      if (!!imgUrls) {
+        Array.from(imgUrls).forEach(async (imgUrl: any) => {
+          await PostImage.create({ img: imgUrl.url, postId: post.id });
+        });
+      }
+    } catch (error) {
+      return next(error);
+    }
+    res.sendStatus(200);
   };
 
   // 해시태그로 게시글 리스트 가져오기

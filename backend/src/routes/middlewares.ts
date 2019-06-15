@@ -5,7 +5,7 @@ export const isLoggedIn = (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { profile } = req.body;
+  const { profile } = req.body.user;
 
   if (profile) {
     return next();
@@ -21,7 +21,7 @@ export const isNotLoggedIn = (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { profile } = req.body;
+  const { profile } = req.body.user;
 
   if (!profile) {
     return next();

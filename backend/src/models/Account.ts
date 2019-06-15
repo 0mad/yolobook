@@ -2,10 +2,12 @@ import {
   AllowNull,
   Column,
   Default,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { generateToken } from '../lib/token';
+import { Post } from './Post';
 
 @Table({
   timestamps: true,
@@ -32,6 +34,9 @@ export class Account extends Model<Account> {
 
   @Column
   description?: string;
+
+  @HasMany(() => Post)
+  posts?: Post[];
 
   public get profile(): object {
     return {
