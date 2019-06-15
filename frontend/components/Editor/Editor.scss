@@ -53,12 +53,24 @@
       .more-icon{
         font-size: 16px;
       }
+      .wrap-upload-imgs-btn {
+        position: relative;
+        .upload-imgs-input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+      }
     }
   }
   .footer {
     @include media("<boundary") {
       background-color: transparent; 
     }
+    height: 40px;
     padding: 5px 7px;
     text-align: right;
     background-color: $oc-gray-0;
