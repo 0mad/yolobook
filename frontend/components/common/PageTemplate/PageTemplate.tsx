@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { Component } from 'react';
-import Header from '../Header';
+import HeaderContainer from '../../../containers/HeaderContainer';
 import styles from './PageTemplate.scss';
 
 const cx = classNames.bind(styles);
@@ -24,7 +24,7 @@ class PageTemplate extends Component<IProps, IState> {
 
     return (
       <div className={cx('page-template', { isLogined })}>
-        <Header isLogined={isLogined} />
+        <HeaderContainer isLogined={isLogined} />
         <div className={cx('page-content')}>{children}</div>
       </div>
     );

@@ -2,15 +2,22 @@ import { inject, observer } from 'mobx-react';
 import Router from 'next/router';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
+import * as AuthAPI from '../api/auth';
 import Login from '../components/Login';
 import storage from '../lib/storage';
 
 interface IState {}
 
-@inject('authStore', 'userStore')
+@inject('userStore')
 @observer
 class LoginContainer extends Component<any, IState> {
+
   public render() {
+    const { userStore } = this.props;
+    const { logged } = userStore;
+    if(logged) {
+      Router.push('/');
+    }
     return (
       <Login
         onLoginGoogle={this.handleLoginGoogle}
@@ -21,7 +28,7 @@ class LoginContainer extends Component<any, IState> {
   }
 
   public handleLoginGoogle = async ({ profileObj }) => {
-    const { authStore, userStore } = this.props;
+    const { userStore } = this.props;
     const userProfile = {
       email: profileObj.email,
       snsId: profileObj.googleId,
@@ -30,11 +37,10 @@ class LoginContainer extends Component<any, IState> {
     };
 
     try {
-      await authStore.login(userProfile, 'google');
-      const { results } = authStore;
-      userStore.setLoggedInfo(results);
+      const { data } = await AuthAPI.googleLogin(userProfile);
+      userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', results);
+      storage.set('loggedInfo', data);
       toast.success('로그인 성공');
     } catch (error) {
       toast.error('로그인 실패');
@@ -43,7 +49,7 @@ class LoginContainer extends Component<any, IState> {
 
   public handleLoginKakao = async ({ profile }) => {
     const { properties } = profile;
-    const { authStore, userStore } = this.props;
+    const { userStore } = this.props;
     const userProfile = {
       email: null,
       snsId: profile.id.toString(),
@@ -51,17 +57,17 @@ class LoginContainer extends Component<any, IState> {
       username: properties.nickname,
     };
     try {
-      await authStore.login(userProfile, 'kakao');
-      const { results } = authStore;
-      userStore.setLoggedInfo(results);
+      const { data } = await AuthAPI.kakaoLogin(userProfile);
+      userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', results);
+      storage.set('loggedInfo', data);
+      toast.success('로그인 성공');
     } catch (error) {
       console.error('로그인 실패');
     }
   }
   public handleLoginNaver = async (profile) => {
-    const { authStore, userStore } = this.props;
+    const { userStore } = this.props;
     const userProfile = {
       email: profile.email,
       snsId: profile.id,
@@ -69,11 +75,11 @@ class LoginContainer extends Component<any, IState> {
       username: profile.name,
     };
     try {
-      await authStore.login(userProfile, 'naver');
-      const { results } = authStore;
-      userStore.setLoggedInfo(results);
+      const { data } = await AuthAPI.naverLogin(userProfile);
+      userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', results);
+      storage.set('loggedInfo', data);
+      toast.success('로그인 성공');
     } catch (error) {
       console.error('로그인 실패');
     }

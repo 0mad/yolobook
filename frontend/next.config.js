@@ -72,7 +72,6 @@ const NextAppConfig = ({
       ...config.plugins,
       new Dotenv({
         path: path.join(__dirname, './.env'),
-        defaults: true
       })
     ]
     return config;

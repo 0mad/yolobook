@@ -6,17 +6,22 @@ class UserStore {
   @observable public logged: boolean; // 현재 로그인중인지 알려준다
   @observable public validated: boolean; // 이 값은 현재 로그인중인지 아닌지 한번 서버측에 검증했음을 의미
 
-  constructor(initialData = {}) {
-    const { loggedInfo, logged, validated } = initialData;
-    this.loggedInfo = !!loggedInfo ? loggedInfo : this.initLoggedInfo();
-    this.logged = !!logged ? logged : false;
-    this.validated = !!validated ? validated : false;
+  constructor(initialData) {
+    if (initialData) {
+      const { loggedInfo, logged, validated } = initialData;
+      this.loggedInfo = loggedInfo;
+      this.logged = logged;
+      this.validated = validated;
+    } else {
+      this.setDefaultData();
+    }
   }
 
   @action
   public setLoggedInfo = (loggedInfo: any) => {
     this.loggedInfo = loggedInfo;
     this.logged = true;
+    this.validated = true;
   }
 
   @action
@@ -25,26 +30,22 @@ class UserStore {
   }
 
   @action
-  public checkStatus = async () => {
-    try {
-      const res = await AuthAPI.checkStatus();
-      this.loggedInfo = res;
-      this.validated = true;
-    } catch (error) {
-      this.loggedInfo = this.initLoggedInfo();
-      this.validated = false;
-      this.logged = false;
+  public logout = async () => {
+    const { status } = await AuthAPI.logout();
+    if (status === 204) {
+      this.setDefaultData();
     }
   }
 
-  @action
-  public logout = async () => await AuthAPI.logout();
-
-  private initLoggedInfo = () => ({
-    id: null,
-    thumbnail: null,
-    username: null
-  });
+  private setDefaultData = () => {
+    this.loggedInfo = {
+      id: -1,
+      thumbnail: 'http://placekitten.com/40/40',
+      username: '손님'
+    };
+    this.validated = false;
+    this.logged = false;
+  }
 }
 
 export default UserStore;

@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind';
+import { RouterProps, withRouter } from 'next/router';
 import React from 'react';
 import styles from './LoginNaver.scss';
 
 const cx = classNames.bind(styles);
 
-interface IProps {
+interface IProps extends RouterProps {
   clientId: string;
   callbackUrl: string;
   render: any;
@@ -13,7 +14,8 @@ interface IProps {
 }
 interface IState {}
 
-const initLoginButton = ({ clientId, callbackUrl, onSuccess, onFailure }) => {
+const initLoginButton = ({ router, clientId, callbackUrl, onSuccess, onFailure }) => {
+  const { query: { naver }} = router;
   const naverLogin = new window.naver.LoginWithNaverId(
     {
       callbackUrl,
@@ -27,7 +29,7 @@ const initLoginButton = ({ clientId, callbackUrl, onSuccess, onFailure }) => {
 
   window.addEventListener('load', () => {
     naverLogin.getLoginStatus(status => {
-      if (status) {
+      if (status && naver) {
         onSuccess(naverLogin.user);
       } else {
         onFailure(status);
@@ -64,4 +66,4 @@ class LoginNaver extends React.Component<IProps, IState> {
   }
 }
 
-export default LoginNaver;
+export default withRouter(LoginNaver);
