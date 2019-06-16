@@ -89,10 +89,16 @@ class UserController {
           await PostImage.create({ img: imgUrl.url, postId: post.id });
         });
       }
+      const newPost: any = await Post.findOne({
+        include: [Account, PostImage],
+        where: {
+          id: post.id,
+        },
+      });
+      res.json(newPost.info);
     } catch (error) {
-      return next(error);
+      next(error);
     }
-    res.sendStatus(200);
   };
 
   // 해시태그로 게시글 리스트 가져오기
