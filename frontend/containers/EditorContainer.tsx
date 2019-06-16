@@ -1,13 +1,12 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
-import Editor from '../components/Editor';
 import * as PostAPI from '../api/post';
+import Editor from '../components/Editor';
 
-interface IProps {}
-
-@inject('postStore')
+@inject('postStore', 'userStore')
 @observer
 class EditorContainer extends Component<IProps> {
+
   componentWillUnmount() {
     const { postStore } = this.props;
     postStore.initEditPostForm();
@@ -15,7 +14,6 @@ class EditorContainer extends Component<IProps> {
 
   public handleTextChange = (event: React.ChangeEvent) => {
     const { value } = event.target;
-    console.log(value);
     const { postStore } = this.props;
     postStore.setContentOfEditPostForm(value);
   };
@@ -43,6 +41,7 @@ class EditorContainer extends Component<IProps> {
   public handleSubmit = async () => {
     const { postStore } = this.props;
     const { editPostForm } = postStore;
+   
     if (editPostForm.content.length < 1) {
       return;
     }
@@ -55,11 +54,13 @@ class EditorContainer extends Component<IProps> {
   };
 
   public render() {
+    const { userStore: { loggedInfo}} = this.props;
     return (
       <Editor
         onTextChange={this.handleTextChange}
         onImgsChange={this.handleImgsChange}
         onSubmit={this.handleSubmit}
+        profile={loggedInfo}
       />
     );
   }

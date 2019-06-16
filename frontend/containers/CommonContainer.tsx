@@ -1,24 +1,29 @@
 import { inject, observer } from 'mobx-react';
 import React from 'react';
+import * as AuthAPI from '../api/auth';
 import storage from '../lib/storage';
 
 interface IProps {
   children: any;
 }
 
-@inject('userStore')
+@inject( 'userStore')
 @observer
-class CommonContainer extends React.Component<IProps, IState> {
+class CommonContainer extends React.Component<IProps> {
   initializeUserInfo = async () => {
-    const loggedInfo = storage.get('loggedInfo'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
-    if (!loggedInfo) return; // 로그인 정보가 없다면 여기서 멈춥니다.
     const { userStore } = this.props;
-    userStore.setLoggedInfo(loggedInfo);
+    const { logged, validated } = userStore;
+    if(logged && validated) {
+      return;
+    }
+
     try {
-      await userStore.checkStatus();
+      const { data } = await AuthAPI.checkStatus();
+      userStore.setLoggedInfo(data);
+      storage.set('loggedInfo', data);
     } catch (error) {
+      userStore.logout();
       storage.remove('loggedInfo');
-      window.location.href = '/auth/login?expired';
     }
   };
 

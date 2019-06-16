@@ -138,7 +138,7 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { profile } = req.body;
+    const { user: { profile } } = req.body;
 
     if (!profile) {
       return next();

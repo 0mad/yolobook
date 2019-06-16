@@ -15,11 +15,18 @@ storiesOf('Header', module).add('로그인 하지 않은 헤더', () => (
   </div>
 ));
 storiesOf('Header', module)
-  .add('로그인 한 헤더', () => (
-    <div>
-      <Header isLogined={true} />
-    </div>
-  ))
+  .add('로그인 한 헤더', () => {
+    const profile = {
+      id: 98,
+      thumbnail: 'http://placekitten.com/40/40',
+      username: '욜로욜로',
+    };
+    return (
+      <div>
+        <Header isLogined={true} profile={profile}/>
+      </div>
+    )
+  })
   .add('HeaderSearchBar', () => (
     <div>
       <Wrapper title="default" style={{ backgroundColor: 'gray' }}>
