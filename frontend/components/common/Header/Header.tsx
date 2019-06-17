@@ -66,7 +66,7 @@ const LoginedHeader = ({ isMobileMode, profile, onLogout }) => (
             <IoIosFiling />
           </ToggleMenu>
         )}
-        <ToggleMenu href="/follow/receive">
+        <ToggleMenu href="/follow/follower">
           <IoIosContacts />
         </ToggleMenu>
         {isMobileMode && (

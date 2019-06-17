@@ -1,4 +1,5 @@
 import express from 'express';
+import { Account } from '../../models/Account';
 
 class UserController {
   // 특정 사용자 정보 가져오기
@@ -19,39 +20,20 @@ class UserController {
     res.send('나의 정보 수정');
   };
 
-  // 특정 사용자 팔로우
-  public followUser = async (
+  // 사용자의 프로필 리스트를 가져온다. 검색하기에 사용하는데, 현재는 모든 사용자를 가져온다.
+  public getUserProfileList = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('특정 사용자 팔로우');
-  };
-
-  // 특정 사용자 팔로우 취소
-  public cancelFollowUser = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    res.send('특정 사용자 팔로우 취소');
-  };
-
-  // 팔로우 한사람 사용자 정보 모두 가져오기
-  public getFollowList = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    res.send('팔로우 한사람 사용자 정보 모두 가져오기');
-  };
-
-  // 나를 팔로우하는 사용자 정보 리스트 가져오기
-  public getFollowingList = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
+    try {
+      const userProfileList = await Account.findAll({
+        attributes: ['id', 'username', 'thumbnail']
+      });
+      res.json(userProfileList);
+    } catch (error) {
+      return next(error);
+    }
     res.send('나를 팔로우하는 사용자 정보 리스트 가져오기');
   };
 }

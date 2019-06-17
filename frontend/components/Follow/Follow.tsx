@@ -8,30 +8,33 @@ import styles from './Follow.scss';
 const cx = classNames.bind(styles);
 
 export interface IProps {
-  requestList: any[];
-  type: 'receive' | 'send';
+  followList: any[];
+  type: 'follower' | 'following';
+  onAccept: void;
+  onReject: void;
+  onCancel: void;
 }
 
-export const FollowItem = ({ img, name, id, type }) => {
+export const FollowItem = ({ id, profile, type, onAccept, onReject , onCancel }) => {
   return (
     <li className={cx('follow-item')} key={id}>
       <div className={cx('thumbnail')}>
-        <img src={img} />
+        <img src={profile.thumbnail} />
       </div>
       <div className={cx('content')}>
-        <div className={cx('name')}>{name}</div>
+        <div className={cx('name')}>{profile.username}</div>
         <div className={cx('more-btn')}>
-          {type === 'receive' ? (
+          {type === 'follower' ? (
             <>
-              <Button inline={true} theme="blue" style={{ flex: '1' }}>
+              <Button inline={true} theme="blue" style={{ flex: '1' }} onClick={() => onAccept(id)}>
                 수락
               </Button>
-              <Button inline={true} style={{ flex: '1' }}>
+              <Button inline={true} style={{ flex: '1' }} onClick={() => onReject(id)}>
                 요청 삭제
               </Button>
             </>
           ) : (
-            <Button inline={true}>친구 요청 취소</Button>
+            <Button inline={true} onClick={() => onCancel(id)}>친구 요청 취소</Button>
           )}
         </div>
       </div>
@@ -39,20 +42,20 @@ export const FollowItem = ({ img, name, id, type }) => {
   );
 };
 
-const Follow = ({ requestList, type }: IProps) => {
+const Follow = ({ followList, type, onAccept, onReject , onCancel }: IProps) => {
   return (
     <div className={cx('follow')}>
       <div className={cx('follow-header')}>
         <h2 className={cx('follow-title')}>친구 요청</h2>
         <p className={cx('toggle')}>
-          <Link href={type === 'receive' ? '/follow/send' : '/follow/receive'}>
-            {type === 'receive' ? `전송한 요청 보기` : '수신한 요청 보기'}
+          <Link href={type === 'follower' ? '/follow/following' :  '/follow/follower'}>
+            {type === 'follower' ? `전송한 요청 보기` : '수신한 요청 보기'}
           </Link>
         </p>
       </div>
       <ul className={cx('follow-list')}>
-        {requestList &&
-          requestList.map(request => FollowItem({ ...request, type }))}
+        {followList &&
+          followList.map(follow => FollowItem({ ...follow, type, onAccept, onReject , onCancel }))}
       </ul>
     </div>
   );

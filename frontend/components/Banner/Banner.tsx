@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind';
 import Link from 'next/link';
-import { IoIosCamera } from 'react-icons/io';
+import { IoIosCamera, IoIosPersonAdd } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../utils/withSizes';
+import Button from '../common/Button';
 import styles from './Banner.scss';
 
 const cx = classNames.bind(styles);
@@ -12,6 +13,7 @@ interface IProps {
   backgroundImage: string;
   profileImage: string;
   username: string;
+  onClickFollow?: void;
 }
 
 const Banner = ({
@@ -19,6 +21,7 @@ const Banner = ({
   backgroundImage,
   profileImage,
   username,
+  onClickFollow,
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
@@ -87,6 +90,12 @@ const Banner = ({
       </div>
       <div className={cx('username')}>
         <h1>{username}</h1>
+      </div>
+      <div className={cx('follow-button')}>
+        <Button inline onClick={onClickFollow}>
+          <IoIosPersonAdd/>
+          <span>친구 추가</span>
+        </Button>
       </div>
       {!isMobileMode && (
         <nav className={cx('nav')}>
