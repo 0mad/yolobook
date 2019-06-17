@@ -23,7 +23,7 @@ class App {
   }
 
   public start = async () => {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
 
     this.app.listen(this.app.get('port'), () => {
       logger.info(`${this.app.get('port')}번 포트에서 대기중`);

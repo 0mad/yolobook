@@ -45,7 +45,7 @@ const Editor = ({
           <textarea
             className={cx('textarea')}
             placeholder={`${profile.username}님, 무슨 생각을 하고 계신가요?`}
-            content={content}
+            value={content}
             onChange={onTextChange}
           />
         </div>
