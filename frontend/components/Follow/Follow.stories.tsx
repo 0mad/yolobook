@@ -3,12 +3,15 @@ import Follow, { FollowItem } from '../Follow/Follow';
 
 storiesOf('Follow', module)
   .add('FollowItem - 친구 요청 아이템', () => {
-    const thumbnail = 'http://placekitten.com/1000/1000';
-    const username = '문태민';
+    const profile = {
+      thumbnail: 'http://placekitten.com/1000/1000',
+      username: '문태민',
+      id: 12
+    }
     return (
       <div style={{ margin: '1rem', backgroundColor: 'white' }}>
-        <FollowItem thumbnail={thumbnail} username={username} id={username} type="following" />
-        <FollowItem thumbnail={thumbnail} username={username} id={username} type="follower" />
+        <FollowItem id={1} profile={profile} type="following" />
+        <FollowItem id={2} profile={profile} type="follower" />
       </div>
     );
   })
@@ -25,10 +28,13 @@ storiesOf('Follow', module)
       '제이홉',
       '슈가',
     ];
-    const followList = names.map(username => ({
-      id: username,
-      thumbnail: `http://placekitten.com/${randomNum()}/${randomNum()}`,
-      username,
+    const followList = names.map((username, index) => ({
+      id: index,
+      profile: {
+        id: name,
+        thumbnail: `http://placekitten.com/${randomNum()}/${randomNum()}`,
+        username,
+      }
     }));
     return (
       <div style={{ margin: '20px' }}>
@@ -49,10 +55,13 @@ storiesOf('Follow', module)
       '제이홉',
       '슈가',
     ];
-    const followList = names.map(username => ({
-      id: name,
-      thumbnail: `http://placekitten.com/${randomNum()}/${randomNum()}`,
-      username,
+    const followList = names.map((username, index) => ({
+      id: index,
+      profile: {
+        id: name,
+        thumbnail: `http://placekitten.com/${randomNum()}/${randomNum()}`,
+        username,
+      }
     }));
     return (
       <div style={{ margin: '20px' }}>
