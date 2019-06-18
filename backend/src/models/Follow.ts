@@ -12,6 +12,7 @@ import { Account } from './Account';
 @Table({
   timestamps: true,
 })
+
 export class Follow extends Model<Follow> {
 
   @Default('REQUESTING')

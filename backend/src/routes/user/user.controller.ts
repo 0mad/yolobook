@@ -26,15 +26,20 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
+    let userProfileList;
     try {
-      const userProfileList = await Account.findAll({
+      userProfileList = await Account.findAll({
         attributes: ['id', 'username', 'thumbnail']
       });
-      res.json(userProfileList);
     } catch (error) {
       return next(error);
     }
-    res.send('나를 팔로우하는 사용자 정보 리스트 가져오기');
+    if (userProfileList) {
+      res.json(userProfileList);
+    } else {
+      res.json([]);
+    }
+    return res;
   };
 }
 

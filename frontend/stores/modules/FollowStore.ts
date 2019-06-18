@@ -49,7 +49,6 @@ class FollowStore {
       })));
   }
 
-
   public get followingList() {
     return toJS(this.follows
       .filter(follow => follow.follower.id === this.userId && follow.status === 'REQUESTING')

@@ -2,8 +2,6 @@ import express from 'express';
 import { Op } from "sequelize";
 import { Follow } from '../../models/Follow';
 
-const profileFormat = ['id', 'username', 'thumbnail'];
-
 class FollowController {
 
   // 특정 사용자 팔로우
@@ -13,17 +11,17 @@ class FollowController {
     next: express.NextFunction
   ) => {
     const { user: { profile } } = req.body;
-    const target = parseInt(req.params.target);
+    const targetId = parseInt(req.params.targetId);
     const me = profile.id;
-    if (me === target) {
+    if (me === targetId) {
       res.sendStatus(500);
     }
     try {
       const existing = await Follow.findOne({
         where: {
           [Op.or]: [
-            { followingId: target, followerId: me },
-            { followingId: me, followerId: target },
+            { followingId: targetId, followerId: me },
+            { followingId: me, followerId: targetId },
           ]
         }
       });
@@ -37,7 +35,7 @@ class FollowController {
     try {
       await Follow.create({
         followerId: me,
-        followingId: target
+        followingId: targetId
       });
     } catch (error) {
       next(error);
@@ -83,24 +81,19 @@ class FollowController {
     return res.sendStatus(200);
   };
 
-
-  // 팔로우 수락 
+  // 팔로우 거절
   public rejectFollow = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { user: { profile } } = req.body;
     const followId = parseInt(req.params.followId);
-    const me = profile.id;
 
     let follow;
     try {
       follow = await Follow.findOne({
         where: {
-          followingId: me,
           id: followId,
-          status: "REQUESTING"
         }
       });
     } catch (error) {
@@ -159,8 +152,8 @@ class FollowController {
       followList = await Follow.findAll({
         attributes: ['id', 'status', 'createdAt'],
         include: [
-          { association: 'following', attributes: profileFormat },
-          { association: 'follower', attributes: profileFormat }
+          { association: 'following', attributes: ['id', 'username', 'thumbnail'] },
+          { association: 'follower', attributes: ['id', 'username', 'thumbnail'] }
         ],
         where: {
           [Op.or]: [
