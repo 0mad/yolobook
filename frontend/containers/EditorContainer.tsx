@@ -32,7 +32,7 @@ class EditorContainer extends Component<IProps> {
       toast.success('이미지 업로드 성공');
     } catch (error) {
       postStore.initImgUrlsOfEditPostForm();
-      toast.success('이미지 업로드 실패');
+      toast.error('이미지 업로드 실패');
     }
   };
 
