@@ -32,12 +32,11 @@ class UserController {
     next: express.NextFunction
   ) => {
     const imgs: any = req.files;
-    const urls: any = {};
-    imgs.map((img: any, idx: number) => {
-      urls[idx] = { url: `/img/${img.filename}` };
+    const data: Array<object> = [];
+    imgs.map((img: any) => {
+      data.push({ url: `/img/${img.filename}` });
     });
-    urls.length = imgs.length;
-    res.json({ urls });
+    res.json(data);
   };
 
   // 계시글 리스트 가져오기
@@ -85,14 +84,20 @@ class UserController {
         accountId: id,
       });
       if (!!imgUrls) {
-        Array.from(imgUrls).forEach(async (imgUrl: any) => {
+        for (const imgUrl of imgUrls) {
           await PostImage.create({ img: imgUrl.url, postId: post.id });
-        });
+        }
       }
+      const newPost: any = await Post.findOne({
+        include: [PostImage, Account],
+        where: {
+          id: post.id,
+        },
+      });
+      res.json(newPost.info);
     } catch (error) {
-      return next(error);
+      next(error);
     }
-    res.sendStatus(200);
   };
 
   // 해시태그로 게시글 리스트 가져오기

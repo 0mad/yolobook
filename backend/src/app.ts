@@ -23,7 +23,7 @@ class App {
   }
 
   public start = async () => {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
 
     this.app.listen(this.app.get('port'), () => {
       logger.info(`${this.app.get('port')}번 포트에서 대기중`);
@@ -51,7 +51,7 @@ class App {
     } else {
       this.app.use(morgan('dev'));
     }
-    this.app.use(express.static(path.join(appRoot.path, 'public')));
+    this.app.use('/static', express.static(path.join(appRoot.path, 'public')));
     this.app.use('/img', express.static(path.join(appRoot.path, 'uploads')));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));

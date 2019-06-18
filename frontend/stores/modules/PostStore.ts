@@ -4,15 +4,13 @@ import * as PostAPI from '../../api/post';
 class PostStore {
   @observable public editPostForm: any;
   @observable public posts: any;
-  @observable public results: any;
 
   constructor(initialData = {}) {
-    const { editPostForm, posts, results } = initialData;
+    const { editPostForm, posts } = initialData;
     this.editPostForm = !!editPostForm
       ? editPostForm
       : this.getInitEditPostFormData();
     this.posts = !!posts ? posts : this.initPosts();
-    this.results = !!results ? results : {};
   }
 
   @action
@@ -46,6 +44,11 @@ class PostStore {
   };
 
   @action
+  public addPost = (post: object) => {
+    this.posts.splice(0, 1, post);
+  };
+
+  @action
   public uploadImgs = async (imgs: any) => {
     if (imgs.length < 1) {
       throw new Error('The size of the array is 0');
@@ -56,10 +59,7 @@ class PostStore {
       formData.append('imgs', img);
     }
     try {
-      const res = await PostAPI.uploadImgs(formData);
-      runInAction(() => {
-        this.results = res.data;
-      });
+      return await PostAPI.uploadImgs(formData);
     } catch (error) {
       throw error;
     }
@@ -67,7 +67,7 @@ class PostStore {
 
   private getInitEditPostFormData = () => ({
     content: '',
-    imgUrls: {},
+    imgUrls: [],
   });
 }
 

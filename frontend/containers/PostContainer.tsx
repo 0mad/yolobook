@@ -30,8 +30,7 @@ class PostContainer extends Component<IProps, IState> {
     const {
       postStore: { posts },
     } = this.props;
-
-    return <PostWrapper posts={posts} />;
+    return !!posts && !!posts.length ? <PostWrapper posts={posts} /> : false;
   }
 }
 

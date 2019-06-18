@@ -3,6 +3,11 @@ const next = require("next");
 const routes = require('./routes');
 
 const devProxy = {
+  '/static': {
+    target: 'http://localhost:4000/static/',
+    pathRewrite: { '^/static': '/' },
+    changeOrigin: true
+  },
   '/img': {
     target: 'http://localhost:4000/img/',
     pathRewrite: { '^/img': '/' },
@@ -29,6 +34,7 @@ app
 
     // Set up the proxy.
     if (dev && devProxy) {
+    // if (devProxy) {
       const proxyMiddleware = require('http-proxy-middleware')
       Object.keys(devProxy).forEach(function (context) {
         server.use(proxyMiddleware(context, devProxy[context]))

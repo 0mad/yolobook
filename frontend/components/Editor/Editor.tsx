@@ -13,6 +13,7 @@ interface IProps {
   onTextChange: void;
   onImgsChange: void;
   onSubmit: void;
+  content: any;
   profile: any;
 }
 
@@ -21,6 +22,7 @@ const Editor = ({
   onTextChange,
   onImgsChange,
   onSubmit,
+  content,
   profile,
 }: IProps) => {
   let uploadImgEl: any;
@@ -38,14 +40,12 @@ const Editor = ({
       <div className={cx('content')}>
         <div className={cx('wrap-textarea')}>
           <div className={cx('profile')}>
-            <img
-              className={cx('profile-img')}
-              src={profile.thumbnail}
-            />
+            <img className={cx('profile-img')} src={profile.thumbnail} />
           </div>
           <textarea
             className={cx('textarea')}
             placeholder={`${profile.username}님, 무슨 생각을 하고 계신가요?`}
+            value={content}
             onChange={onTextChange}
           />
         </div>
