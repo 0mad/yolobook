@@ -40,7 +40,7 @@ export class Account extends Model<Account> {
   posts?: Post[];
 
   @HasMany(() => Follow)
-  follows!: Follow[];
+  follows?: Follow[];
 
   public get profile(): object {
     return {

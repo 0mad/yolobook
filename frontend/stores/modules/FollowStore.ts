@@ -40,24 +40,24 @@ class FollowStore {
   }
 
   public get followerList() {
-    return toJS(this.follows)
+    return toJS(this.follows
       .filter(follow => follow.following.id === this.userId && follow.status === 'REQUESTING')
       .map(follow => ({
         id: follow.id,
         createdAt: follow.createdAt,
         profile: follow.follower
-      }));
+      })));
   }
 
 
   public get followingList() {
-    return toJS(this.follows)
+    return toJS(this.follows
       .filter(follow => follow.follower.id === this.userId && follow.status === 'REQUESTING')
       .map(follow => ({
         id: follow.id,
         createdAt: follow.createdAt,
         profile: follow.follower
-      }));
+      })));
   }
 }
 

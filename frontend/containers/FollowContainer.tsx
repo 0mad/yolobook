@@ -1,5 +1,6 @@
 import { RouterProps, withRouter } from 'next/router';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import * as followAPI from '../api/follow';
 import Follow from '../components/Follow';
 import { inject, observer } from 'mobx-react';
@@ -47,6 +48,7 @@ class FollowContainer extends Component<IProps, IState> {
       if (status === 200) {
         const { followStore } = this.props;
         followStore.updateFollow(followId, 'ACCEPTED');
+        toast.success('친구요청을 수락하였습니다.');
       }
     } catch (error) {
       console.error(error);
@@ -59,6 +61,7 @@ class FollowContainer extends Component<IProps, IState> {
       if (status === 200) {
         const { followStore } = this.props;
         followStore.updateFollow(followId, 'REJECTED');
+        toast.success('친구요청을 삭제하였습니다.');
       }
     } catch (error) {
       console.error(error);
@@ -71,6 +74,7 @@ class FollowContainer extends Component<IProps, IState> {
       if (status === 200) {
         const { followStore } = this.props;
         followStore.removeFollow(followId);
+        toast.success('친구요청을 취소하였습니다.');
       }
     } catch (error) {
       console.error(error);

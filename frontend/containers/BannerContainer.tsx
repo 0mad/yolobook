@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as userAPI from '../api/user';
+import * as followAPI from '../api/follow';
 import Banner from '../components/Banner';
 
 class BannerContainer extends Component<any> {
@@ -20,7 +20,7 @@ class BannerContainer extends Component<any> {
   }
 
   public handleFollow(followingId) {
-    userAPI.follow(followingId);
+    followAPI.follow(followingId);
   }
 }
 
