@@ -7,4 +7,5 @@ routes
   .add('profile-picture', '/profile/picture', 'profile/picture')
   .add('profile-friend', '/profile/friend', 'profile/friend')
   .add('timeline-user', '/profile/timeline/:userId', 'profile/timeline')
-  .add('follow', '/follow/:type', 'follow') // type(send|receive)
+  .add('my follower', '/follow/follower', 'follow')
+  .add('i follow', '/follow/following', 'follow')

@@ -7,6 +7,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { generateToken } from '../lib/token';
+import { Follow } from './Follow';
 import { Post } from './Post';
 
 @Table({
@@ -37,6 +38,9 @@ export class Account extends Model<Account> {
 
   @HasMany(() => Post)
   posts?: Post[];
+
+  @HasMany(() => Follow)
+  follows?: Follow[];
 
   public get profile(): object {
     return {

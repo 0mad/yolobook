@@ -195,6 +195,21 @@
       font-size: 24px;
     }
   }
+
+  .follow-button {
+    @include media("<boundary") {
+      bottom: 24px;
+      left: 24px;
+    }
+    position: absolute;
+    right: 108px;
+    bottom: 54px;
+    display: inline;
+    svg {
+      font-size: 20px;
+    }
+  }
+
   .nav {
     background: $oc-gray-0;
     ul {

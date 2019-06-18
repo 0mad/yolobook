@@ -1,35 +1,84 @@
 import { RouterProps, withRouter } from 'next/router';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
+import * as followAPI from '../api/follow';
 import Follow from '../components/Follow';
+import { inject, observer } from 'mobx-react';
 
 interface IProps extends RouterProps<any> {}
-interface IState {}
 
+@inject('followStore')
+@observer
 class FollowContainer extends Component<IProps, IState> {
+
+  constructor(props) {
+    super(props);
+    this.handleFollowAccept = this.handleFollowAccept.bind(this);
+    this.handleRejectFollow = this.handleRejectFollow.bind(this);
+    this.handleCancelFollow = this.handleCancelFollow.bind(this);
+  }
+
+  async componentDidMount() {
+    const { followStore } = this.props;
+    const { data: { followList, id} } = await followAPI.getFollowList();
+    followStore.setUserId(id);
+    followStore.setFollowList(followList);
+  }
+
   public render() {
-    const {
-      router: {
-        query: { type },
-      },
-    } = this.props;
-    const randomNum = () => 500 + Math.floor(Math.random() * Math.floor(100));
-    const names = [
-      '문태민',
-      '유주현',
-      'V',
-      '정국',
-      '지민',
-      'RM',
-      '진',
-      '제이홉',
-      '슈가',
-    ];
-    const requestList = names.map(name => ({
-      id: name,
-      img: `http://placekitten.com/${randomNum()}/${randomNum()}`,
-      name,
-    }));
-    return <Follow requestList={requestList} type={type} />;
+    const { followStore, router } = this.props;
+    const { asPath } = router;
+    const { followingList, followerList } = followStore;
+    const type = asPath.split('/').pop();
+    const followList = type === 'follower' ? followerList : followingList;
+    return (
+      <Follow 
+        followList={followList} 
+        type={type} 
+        onAccept={this.handleFollowAccept}
+        onReject={this.handleRejectFollow}
+        onCancel={this.handleCancelFollow}
+      />
+    );
+  }
+
+  async handleFollowAccept(followId) {
+    try {
+      const { status } = await followAPI.acceptFollow(followId);
+      if (status === 200) {
+        const { followStore } = this.props;
+        followStore.updateFollow(followId, 'ACCEPTED');
+        toast.success('친구요청을 수락하였습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async handleRejectFollow(followId) {
+    try {
+      const { status } = await followAPI.rejectFollow(followId);
+      if (status === 200) {
+        const { followStore } = this.props;
+        followStore.updateFollow(followId, 'REJECTED');
+        toast.success('친구요청을 삭제하였습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async handleCancelFollow(followId) {
+    try {
+      const { status } = await followAPI.cancelFollow(followId);
+      if (status === 200) {
+        const { followStore } = this.props;
+        followStore.removeFollow(followId);
+        toast.success('친구요청을 취소하였습니다.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
