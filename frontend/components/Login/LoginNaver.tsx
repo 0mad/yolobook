@@ -1,21 +1,22 @@
 import classNames from 'classnames/bind';
-import { RouterProps, withRouter } from 'next/router';
+import { withRouter, WithRouterProps } from 'next/router';
 import React from 'react';
 import styles from './LoginNaver.scss';
 
 const cx = classNames.bind(styles);
 
-interface IProps extends RouterProps {
+interface IProps extends WithRouterProps {
   clientId: string;
   callbackUrl: string;
-  render: any;
-  onSuccess: any;
-  onFailure: any;
+  render: () => React.ComponentElement<any, any> | Element | JSX.Element;
+  onSuccess: (result: any) => void;
+  onFailure: (result: any) => void;
 }
 interface IState {}
 
-const initLoginButton = ({ router, clientId, callbackUrl, onSuccess, onFailure }) => {
-  const { query: { naver }} = router;
+const initLoginButton = (props: IProps) => {
+  const { router, clientId, callbackUrl, onSuccess, onFailure } = props;
+  const { query: { naver } } = router;
   const naverLogin = new window.naver.LoginWithNaverId(
     {
       callbackUrl,
@@ -47,7 +48,7 @@ class LoginNaver extends React.Component<IProps, IState> {
       script.async = true;
       this.ref.appendChild(script);
       const initLoop = setInterval(() => {
-        if(window.naver) {
+        if('naver' in window) {
           initLoginButton(this.props)
           clearInterval(initLoop);
         }

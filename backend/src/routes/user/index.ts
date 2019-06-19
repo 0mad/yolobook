@@ -3,7 +3,8 @@ import UserController from './user.controller';
 
 const user = express.Router();
 
-user.get('/search', UserController.getUserProfileList);
+user.get('/search/:search', UserController.getUserProfileList);
+user.get('/search/', UserController.getUserProfileList);
 user.get('/:id', UserController.getUserInfo);
 user.patch('/', UserController.modifyMyUserInfo);
 

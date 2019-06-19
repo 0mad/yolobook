@@ -9,9 +9,9 @@ import LoginNaver from './LoginNaver';
 const cx = className.bind(style);
 
 interface IProps {
-  onLoginGoogle: void;
-  onLoginKakao: void;
-  onLoginNaver: void;
+  onLoginGoogle: (profile: any) => Promise<void>;
+  onLoginKakao: (profile: any) => Promise<void>;
+  onLoginNaver: (profile: any) => Promise<void>;
 }
 
 const lookAroundStyle = {
@@ -28,7 +28,7 @@ const Login = (props: IProps) => {
           <li>
             <GoogleLogin
               clientId={process.env.REACT_APP_GOOGLE_ID || ''}
-              render={props => (
+              render={(props: any) => (
                 <LoginButton provider="google" onClick={props.onClick} />
               )}
               onSuccess={result => onLoginGoogle(result)}
@@ -41,10 +41,10 @@ const Login = (props: IProps) => {
               jsKey={process.env.REACT_APP_KAKAO_ID || ''}
               onSuccess={result => onLoginKakao(result)}
               onFailure={result => console.log(result)}
-              render={props => (
+              render={(props: any) => (
                 <LoginButton provider="kakao" onClick={props.onClick} />
               )}
-              getProfile="true"
+              getProfile={true}
             />
           </li>
           <li>
@@ -52,8 +52,8 @@ const Login = (props: IProps) => {
               clientId={process.env.REACT_APP_NAVER_ID || ''}
               callbackUrl={process.env.REACT_APP_NAVER_REDIRECT || ''}
               render={() => <LoginButton provider="naver"/>}
-              onSuccess={result => onLoginNaver(result)}
-              onFailure={result => console.log(result)}
+              onSuccess={(result: any) => onLoginNaver(result)}
+              onFailure={(result: any) => console.log(result)}
             />
           </li>
         </ul>

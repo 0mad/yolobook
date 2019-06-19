@@ -5,48 +5,57 @@ import styles from './HeaderSearchBar.scss';
 
 const cx = classNames.bind(styles);
 
-export interface IAppProps {}
-
-export interface IAppState {
-  value: string;
+export interface IProps {
+  userList?: any[];
+  search: string;
+  onInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  searchActive: boolean;
+  isMobileMode: boolean;
 }
 
-class HeaderSearchBar extends React.Component<IAppProps, IAppState> {
-  constructor(props: IAppProps) {
-    super(props);
+const ResultItem = ({ profile }) => {
+  return (
+    <li className={cx('result-item')} key={profile.id}>
+      <a href={`/profile/timeline/${profile.id}`}>
+        <img src={profile.thumbnail}/>
+        <span className={cx('username')}>{profile.username}</span>
+      </a>
+    </li>
+  );
+}
 
-    this.state = {
-      value: '',
-    };
+const HeaderSearchBar = (props: IProps) => {
+  const { 
+    search, 
+    userList, 
+    onInputChange, 
+    isMobileMode, 
+    searchActive, 
+  } = props;
+  if(isMobileMode && !searchActive) {
+    return <></>;
   }
-
-  public render() {
-    const { value } = this.state;
-    return (
-      <form className={cx('searchbar')}>
-        <input
-          className={cx('input')}
-          type="text"
-          placeholder="검색"
-          value={value}
-          name="value"
-          onChange={this.onInputChange}
-        />
+  return (
+    <form className={cx('searchbar', {isMobileMode})}>
+      <input
+        className={cx('input')}
+        type="text"
+        placeholder="검색"
+        value={search}
+        name="search"
+        onChange={onInputChange}
+        autoComplete="off"
+      />
+      { false /** 비활성 처리 */ && (
         <button className={cx('button')} onSubmit={() => {}}>
           <IoMdSearch />
         </button>
-      </form>
-    );
-  }
-
-  public onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { name, value },
-    } = event;
-    this.setState({
-      [name]: value,
-    } as any);
-  };
+      )}
+      <ul className={cx('search-result')}>
+        {userList && userList.map(profile => <ResultItem profile={profile}/>)}
+      </ul>
+    </form>
+  );
 }
 
 export default HeaderSearchBar;

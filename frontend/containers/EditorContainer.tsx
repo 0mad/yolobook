@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as PostAPI from '../api/post';
 import Editor from '../components/Editor';
+
+interface IProps {
+  postStore?: any;
+  userStore?: any;
+}
+
 @inject('postStore', 'userStore')
 @observer
 class EditorContainer extends Component<IProps> {

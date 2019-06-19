@@ -7,15 +7,21 @@ import styles from './Follow.scss';
 
 const cx = classNames.bind(styles);
 
-export interface IProps {
-  followList: any[];
+interface IFollowItemProps {
+  id: number;
+  profile: any;
   type: 'follower' | 'following';
-  onAccept: void;
-  onReject: void;
-  onCancel: void;
+  onAccept: (followId: number) => Promise<void>;
+  onReject: (followId: number) => Promise<void>;
+  onCancel: (followId: number) => Promise<void>;
 }
 
-export const FollowItem = ({ id, profile, type, onAccept, onReject , onCancel }) => {
+interface IProps extends IFollowItemProps {
+  followList: any[];
+}
+
+export const FollowItem = (props: IFollowItemProps) => {
+  const { id, profile, type, onAccept, onReject , onCancel } = props;
   return (
     <li className={cx('follow-item')} key={id}>
       <div className={cx('thumbnail')}>
@@ -49,7 +55,7 @@ const Follow = ({ followList, type, onAccept, onReject , onCancel }: IProps) => 
         <h2 className={cx('follow-title')}>친구 요청</h2>
         <p className={cx('toggle')}>
           <Link href={type === 'follower' ? '/follow/following' :  '/follow/follower'}>
-            {type === 'follower' ? `전송한 요청 보기` : '수신한 요청 보기'}
+            <span>{type === 'follower' ? `전송한 요청 보기` : '수신한 요청 보기'}</span>
           </Link>
         </p>
       </div>

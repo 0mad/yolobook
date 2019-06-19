@@ -10,11 +10,11 @@ const isBrowser = process.browser;
 
 interface IProps {
   isMobileMode: boolean;
-  onTextChange: void;
-  onImgsChange: void;
   onSubmit: void;
   content: any;
   profile: any;
+  onTextChange: (event: React.ChangeEvent<Element>) => void;
+  onImgsChange: (event: React.ChangeEvent<Element>) => void;
 }
 
 const Editor = ({

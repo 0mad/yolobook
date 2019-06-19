@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import UserInfo from '../components/UserInfo';
 
-class UserInfoContainer extends Component<any> {
+interface IProps {}
+
+class UserInfoContainer extends Component<IProps> {
   public render() {
     const data = {
       introduction: `나는 해적왕이 될 사람이다.

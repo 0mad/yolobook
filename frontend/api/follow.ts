@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const follow = (target) => axios.post(`/api/follow/${target}`);
+export const follow = (targetId) => axios.post(`/api/follow/${targetId}`);
 export const acceptFollow = (followId) => axios.patch(`/api/follow/${followId}/accept`);
 export const rejectFollow = (followId) => axios.patch(`/api/follow/${followId}/reject`);
 export const cancelFollow = (followId) => axios.delete(`/api/follow/${followId}`);

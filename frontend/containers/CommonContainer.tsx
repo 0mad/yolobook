@@ -5,6 +5,7 @@ import storage from '../lib/storage';
 
 interface IProps {
   children: any;
+  userStore?: any;
 }
 
 @inject( 'userStore')

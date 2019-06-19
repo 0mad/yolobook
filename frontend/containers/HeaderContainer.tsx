@@ -1,20 +1,28 @@
 import { inject, observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { Component, ChangeEventHandler } from 'react';
 import Header from '../components/common/Header';
+import * as userAPI from '../api/user';
 
-interface IState {}
+interface IProps {
+  commonStore?: any;
+  userStore?: any;
+}
 
-@inject('userStore')
+@inject('commonStore', 'userStore')
 @observer
-class HeaderContainer extends Component<any, IState> {
+class HeaderContainer extends Component<IProps> {
+  searchInputRef: any;
 
-  constructor(props) {
-    super(props);
-    this.handleLogout = this.handleLogout.bind(this);
+  async componentDidMount() {
+    const { commonStore } = this.props;
+    const { data } = await userAPI.getUserSearchList('');
+    
+    commonStore.setUserList(data);
   }
 
   public render() {
-    const { userStore } = this.props;
+    const { commonStore, userStore } = this.props;
+    const { searchActive, searchText, userList, toggleSearch } = commonStore;
     const { logged, loggedInfo } = userStore;
 
     return (
@@ -22,17 +30,34 @@ class HeaderContainer extends Component<any, IState> {
         isLogined={logged}
         profile={loggedInfo}
         onLogout={this.handleLogout}
+        searchText={searchText}
+        userList={userList}
+        onSearchTextChange={this.handleSearchChange}
+        searchActive={searchActive}
+        toggleSearch={() => this.handleToggleSearch(toggleSearch)}
       />
     );
   }
 
-  async handleLogout() {
+  handleLogout = async () => {
     const { userStore } = this.props;
     try {
       await userStore.logout();
     } catch(error){
       throw error;
     }
+  }
+
+  handleToggleSearch = (toggle: () => boolean) => {
+    if(toggle()) {
+      //TODO 검색에 포커싱 처리
+    }
+  }
+
+  handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { target: { value } } = event;
+    const { commonStore } = this.props;
+    commonStore.setSearchText(value);
   }
 }
 
