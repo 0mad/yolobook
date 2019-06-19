@@ -46,9 +46,11 @@ const HeaderSearchBar = (props: IProps) => {
         onChange={onInputChange}
         autoComplete="off"
       />
-      <button className={cx('button')} onSubmit={() => {}}>
-        <IoMdSearch />
-      </button>
+      { false /** 비활성 처리 */ && (
+        <button className={cx('button')} onSubmit={() => {}}>
+          <IoMdSearch />
+        </button>
+      )}
       <ul className={cx('search-result')}>
         {userList && userList.map(profile => <ResultItem profile={profile}/>)}
       </ul>

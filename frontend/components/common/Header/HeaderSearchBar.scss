@@ -19,8 +19,8 @@
     padding-right: .5rem;
     padding-left: .5rem;
     border-radius: .2rem 0 0 .2rem;
-    flex: 1;
     -webkit-appearance: none;
+    flex: 1;
     &:focus ~ .search-result {
       visibility: visible;
     }
@@ -39,7 +39,9 @@
     position: absolute;
     top: 1.7rem;
     width: 100%;
+    max-height: 22rem;
     padding: .5rem 0;
+    overflow: auto;
     background-color: white;
     border-bottom-right-radius: .3rem;
     border-bottom-left-radius: .3rem;
