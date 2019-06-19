@@ -1,5 +1,8 @@
 .searchbar {
-  
+  @include media("<boundary") {
+    margin: 0;
+    height: 30px;
+  }
   position: relative;
   display: flex;
   margin: 0 .2rem;
@@ -36,6 +39,9 @@
   }
 
   .search-result {
+    @include media("<boundary") {
+      top: 1.8rem;
+    }
     position: absolute;
     top: 1.7rem;
     width: 100%;

@@ -10,7 +10,7 @@ class UserStore {
     if (initialData) {
       const { loggedInfo, logged, validated } = initialData;
       this.loggedInfo = loggedInfo;
-      this.logged = logged
+      this.logged = logged;
       this.validated = validated;
     } else {
       this.setDefaultData();
@@ -21,23 +21,23 @@ class UserStore {
     this.loggedInfo = {
       id: -1,
       thumbnail: 'http://placekitten.com/40/40',
-      username: '손님'
+      username: '손님',
     };
     this.validated = false;
     this.logged = false;
-  }
+  };
 
   @action
   public setLoggedInfo = (loggedInfo: any) => {
     this.loggedInfo = loggedInfo;
     this.logged = true;
     this.validated = true;
-  }
+  };
 
   @action
   public setValidated = (validated: boolean) => {
     this.validated = validated;
-  }
+  };
 
   @action
   public logout = async () => {
@@ -45,7 +45,7 @@ class UserStore {
     if (status === 204) {
       this.setDefaultData();
     }
-  }
+  };
 }
 
 export default UserStore;
