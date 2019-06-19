@@ -1,15 +1,17 @@
-import { RouterProps, withRouter } from 'next/router';
+import { WithRouterProps, withRouter } from 'next/router';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as followAPI from '../api/follow';
 import Follow from '../components/Follow';
 import { inject, observer } from 'mobx-react';
 
-interface IProps extends RouterProps<any> {}
+interface IProps extends WithRouterProps {
+  followStore: any;
+}
 
 @inject('followStore')
 @observer
-class FollowContainer extends Component<IProps, IState> {
+class FollowContainer extends Component<IProps> {
 
   constructor(props) {
     super(props);
@@ -42,7 +44,7 @@ class FollowContainer extends Component<IProps, IState> {
     );
   }
 
-  async handleFollowAccept(followId) {
+  async handleFollowAccept(followId: number) {
     try {
       const { status } = await followAPI.acceptFollow(followId);
       if (status === 200) {
@@ -55,7 +57,7 @@ class FollowContainer extends Component<IProps, IState> {
     }
   }
 
-  async handleRejectFollow(followId) {
+  async handleRejectFollow(followId: number) {
     try {
       const { status } = await followAPI.rejectFollow(followId);
       if (status === 200) {
@@ -68,7 +70,7 @@ class FollowContainer extends Component<IProps, IState> {
     }
   }
 
-  async handleCancelFollow(followId) {
+  async handleCancelFollow(followId: number) {
     try {
       const { status } = await followAPI.cancelFollow(followId);
       if (status === 200) {

@@ -34,9 +34,8 @@ class CommonStore {
   }
 
   @action
-  onSearchTextChange = (event) => {
-    const { target } = event;
-    this.searchText = target.value;
+  setSearchText = (searchText: string) => {
+    this.searchText = searchText;
   }
 
   @computed

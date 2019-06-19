@@ -4,7 +4,7 @@ class FollowStore {
   @observable follows!: any[];
   userId!: number;
 
-  constructor(initialData) {
+  constructor(initialData: any) {
     if (initialData) {
       const { follows, userId } = initialData;
       this.follows = follows;

@@ -6,11 +6,13 @@ import * as AuthAPI from '../api/auth';
 import Login from '../components/Login';
 import storage from '../lib/storage';
 
-interface IState {}
+interface IProps {
+  userStore?: any;
+}
 
 @inject('userStore')
 @observer
-class LoginContainer extends Component<any, IState> {
+class LoginContainer extends Component<IProps> {
 
   public render() {
     const { userStore } = this.props;

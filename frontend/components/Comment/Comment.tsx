@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   user: any;
-  // commentData: any[];
+  commentData?: any[];
   onClickLike?: () => void;
   onClickReply?: () => void;
 }

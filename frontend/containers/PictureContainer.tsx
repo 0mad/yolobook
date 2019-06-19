@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Gallery from '../components/Gallery';
 
-class UserInfoContainer extends Component<any> {
+interface IProps {}
+
+class UserInfoContainer extends Component<IProps> {
   public render() {
     const photoData = [
       {

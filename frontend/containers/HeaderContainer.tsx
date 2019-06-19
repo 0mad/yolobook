@@ -1,18 +1,17 @@
 import { inject, observer } from 'mobx-react';
-import React, { Component } from 'react';
+import React, { Component, ChangeEventHandler } from 'react';
 import Header from '../components/common/Header';
 import * as userAPI from '../api/user';
 
+interface IProps {
+  commonStore?: any;
+  userStore?: any;
+}
+
 @inject('commonStore', 'userStore')
 @observer
-class HeaderContainer extends Component{
+class HeaderContainer extends Component<IProps> {
   searchInputRef: any;
-
-  constructor(props) {
-    super(props);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.handdleToggleSearch = this.handdleToggleSearch.bind(this);
-  }
 
   async componentDidMount() {
     const { commonStore } = this.props;
@@ -23,7 +22,7 @@ class HeaderContainer extends Component{
 
   public render() {
     const { commonStore, userStore } = this.props;
-    const { searchActive, searchText, userList, onSearchTextChange, toggleSearch } = commonStore;
+    const { searchActive, searchText, userList, toggleSearch } = commonStore;
     const { logged, loggedInfo } = userStore;
 
     return (
@@ -33,14 +32,14 @@ class HeaderContainer extends Component{
         onLogout={this.handleLogout}
         searchText={searchText}
         userList={userList}
-        onSearchTextChange={onSearchTextChange}
+        onSearchTextChange={this.handleSearchChange}
         searchActive={searchActive}
-        toggleSearch={() => this.handdleToggleSearch(toggleSearch)}
+        toggleSearch={() => this.handleToggleSearch(toggleSearch)}
       />
     );
   }
 
-  async handleLogout() {
+  handleLogout = async () => {
     const { userStore } = this.props;
     try {
       await userStore.logout();
@@ -49,10 +48,16 @@ class HeaderContainer extends Component{
     }
   }
 
-  handdleToggleSearch(toggle) {
+  handleToggleSearch = (toggle: () => boolean) => {
     if(toggle()) {
       //TODO 검색에 포커싱 처리
     }
+  }
+
+  handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { target: { value } } = event;
+    const { commonStore } = this.props;
+    commonStore.setSearchText(value);
   }
 }
 

@@ -9,7 +9,7 @@ interface IProps {}
 const LoginHeader = (props: IProps) => {
   return (
     <div className={cx('login-header')}>
-      <Link href={'/'}>yolobook</Link>
+      <Link href={'/'}><span>yolobook</span></Link>
     </div>
   );
 };

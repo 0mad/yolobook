@@ -3,7 +3,9 @@ import PostWrapper from '../components/PostWrapper';
 import { observer, inject } from 'mobx-react';
 import * as PostAPI from '../api/post';
 
-interface IProps {}
+interface IProps {
+  postStore?: any;
+}
 interface IState {
   user: any;
   posts: any[];
@@ -12,9 +14,6 @@ interface IState {
 @inject('postStore')
 @observer
 class PostContainer extends Component<IProps, IState> {
-  constructor(props) {
-    super(props);
-  }
 
   async componentDidMount() {
     const { postStore } = this.props;

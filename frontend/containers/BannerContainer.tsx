@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import * as followAPI from '../api/follow';
 import Banner from '../components/Banner';
 
-class BannerContainer extends Component<any> {
+interface IProps {}
+
+class BannerContainer extends Component<IProps> {
   public render() {
     const backgroundImage = 'http://placekitten.com/1000/1000';
     const profileImage = 'http://placekitten.com/200/200';
@@ -19,7 +21,7 @@ class BannerContainer extends Component<any> {
     );
   }
 
-  public handleFollow(followingId) {
+  public handleFollow(followingId: number) {
     followAPI.follow(followingId);
   }
 }

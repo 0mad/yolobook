@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FriendList from '../components/Friend';
 
-class FriendContainer extends Component<any> {
+class FriendContainer extends Component{
   public render() {
     const friendList = [];
     for (let i = 0; i < 30; i++) {
