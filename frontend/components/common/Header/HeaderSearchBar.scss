@@ -1,16 +1,29 @@
 .searchbar {
+  
+  position: relative;
   display: flex;
-  padding: .2rem;
+  margin: 0 .2rem;
   line-height: 1.6rem;
   flex: 1;
+
+  &.isMobileMode {
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    width: 100%;
+    @include material-shadow(2, .5);
+  }
 
   .input {
     padding-top: .2rem;
     padding-right: .5rem;
     padding-left: .5rem;
-    border-radius: .2rem 0 0 .2rem;
+    border-radius: .2rem;
     -webkit-appearance: none;
     flex: 1;
+    &:focus ~ .search-result {
+      visibility: visible;
+    }
   }
   .button {
     width: 2.7rem;
@@ -20,5 +33,43 @@
     cursor: pointer;
     background: $oc-gray-3;
     border-radius: 0 .2rem .2rem 0;
+  }
+
+  .search-result {
+    position: absolute;
+    top: 1.7rem;
+    width: 100%;
+    max-height: 22rem;
+    padding: .5rem 0;
+    overflow: auto;
+    background-color: white;
+    border-bottom-right-radius: .3rem;
+    border-bottom-left-radius: .3rem;
+    visibility: hidden;
+    @include material-shadow(2, .5);
+    &:hover {
+      visibility: visible;
+    }
+
+    .result-item {
+      padding: .3rem .5rem;
+      &:hover {
+        background-color: $oc-indigo-0;
+      }
+      a {
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+
+        .username {
+          padding-left: .5rem;
+        }
+      }
+    }
   }
 } 

@@ -6,14 +6,13 @@ import {
   IoIosFiling,
   IoIosLogOut,
   IoLogoFacebook,
-  IoMdMenu,
   IoMdSearch,
 } from 'react-icons/io';
 import withSizes from 'react-sizes';
 import { mapSizesToProps } from '../../../utils/withSizes';
 import Button from '../Button';
 import styles from './Header.scss';
-import HeaderSearchbar from './HeaderSearchBar';
+import HeaderSearchBar from './HeaderSearchBar';
 
 const cx = classNames.bind(styles);
 const isBrowser = process.browser;
@@ -23,10 +22,15 @@ interface IProps {
   isMobileMode: boolean;
   profile: any;
   onLogout: void;
+  searchText: string;
+  userList: any[];
+  onSearchTextChange: void;
+  searchActive: boolean;
+  toggleSearch?: void;
 }
 
-const ToggleMenu = ({ children, href, onLogout }) => (
-  <li className={cx('toggle-menu-item')} onClick={onLogout}>
+const ToggleMenu = ({ children, href, onClick }) => (
+  <li className={cx('toggle-menu-item')} onClick={onClick}>
     <Link href={href}>{children}</Link>
   </li>
 );
@@ -37,14 +41,29 @@ const UserMenu = ({ children, href }) => (
   </li>
 );
 
-const LoginedHeader = ({ isMobileMode, profile, onLogout }) => (
+const LoginedHeader = ({ 
+  isMobileMode, 
+  profile, 
+  onLogout, 
+  searchActive, 
+  searchText, 
+  userList, 
+  onSearchTextChange, 
+  toggleSearch,
+}) => (
   <>
+    <HeaderSearchBar 
+      isMobileMode={isMobileMode} 
+      searchActive={searchActive} 
+      search={searchText} 
+      userList={userList} 
+      onInputChange={onSearchTextChange}
+    />
     {!isMobileMode && (
       <>
         <Link href="/">
           <IoLogoFacebook className={cx('logo')} />
         </Link>
-        <HeaderSearchbar />
         <ul className={cx('user-menu')}>
           <UserMenu href="/profile/timeline">
             <img
@@ -58,33 +77,28 @@ const LoginedHeader = ({ isMobileMode, profile, onLogout }) => (
     )}
     {
       <ul className={cx('toggle-menu')}>
-        <ToggleMenu onLogout={onLogout}>
+        <ToggleMenu onClick={onLogout}>
           <IoIosLogOut />
         </ToggleMenu>
         {isMobileMode && (
-          <ToggleMenu href="/">
-            <IoIosFiling />
-          </ToggleMenu>
+          <>
+            <ToggleMenu>
+              <IoIosFiling />
+            </ToggleMenu>
+            <ToggleMenu onClick={toggleSearch}>
+              <IoMdSearch />
+            </ToggleMenu>
+          </>
         )}
         <ToggleMenu href="/follow/follower">
           <IoIosContacts />
         </ToggleMenu>
-        {isMobileMode && (
-          <ToggleMenu href="/">
-            <IoMdSearch />
-          </ToggleMenu>
-        )}
-        {isMobileMode && (
-          <ToggleMenu href="/">
-            <IoMdMenu />
-          </ToggleMenu>
-        )}
       </ul>
     }
   </>
 );
 
-const UnLoginHeader = ({ isMobileMode }) => (
+const UnLoginedHeader = ({ isMobileMode }) => (
   <div className={cx('unlogined-header', isMobileMode)}>
     <Link href="/">
       <IoLogoFacebook className={cx('logo')} />
@@ -97,15 +111,15 @@ const UnLoginHeader = ({ isMobileMode }) => (
   </div>
 );
 
-const Header = ({ isLogined, isMobileMode, profile, onLogout }: IProps) => (
+const Header = (props: IProps) => (
   <div className={cx('header-wrapper')}>
     <div className={cx('header')}>
       {isBrowser && (
         <>
-          {isLogined ? (
-            <LoginedHeader isMobileMode={isMobileMode} profile={profile} onLogout={onLogout}/>
+          {props.isLogined ? (
+            <LoginedHeader {...props}/>
           ) : (
-            <UnLoginHeader isMobileMode={isMobileMode} />
+            <UnLoginedHeader isMobileMode={props.isMobileMode} />
           )}
         </>
       )}
