@@ -22,9 +22,8 @@ class FollowContainer extends Component<IProps> {
 
   async componentDidMount() {
     const { followStore } = this.props;
-    const { data: { followList, id} } = await followAPI.getFollowList();
-    followStore.setUserId(id);
-    followStore.setFollowList(followList);
+    const { data } = await followAPI.getFollowList();
+    followStore.setFollowList(data);
   }
 
   public render() {
@@ -49,7 +48,7 @@ class FollowContainer extends Component<IProps> {
       const { status } = await followAPI.acceptFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
-        followStore.updateFollow(followId, 'ACCEPTED');
+        followStore.acceptFollow(followId);
         toast.success('친구요청을 수락하였습니다.');
       }
     } catch (error) {
@@ -62,7 +61,7 @@ class FollowContainer extends Component<IProps> {
       const { status } = await followAPI.rejectFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
-        followStore.updateFollow(followId, 'REJECTED');
+        followStore.rejectFollow(followId);
         toast.success('친구요청을 삭제하였습니다.');
       }
     } catch (error) {
@@ -75,7 +74,7 @@ class FollowContainer extends Component<IProps> {
       const { status } = await followAPI.cancelFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
-        followStore.removeFollow(followId);
+        followStore.cancelFollow(followId);
         toast.success('친구요청을 취소하였습니다.');
       }
     } catch (error) {

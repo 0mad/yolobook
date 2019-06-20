@@ -159,16 +159,30 @@ class FollowController {
           [Op.or]: [
             { followerId: profile.id },
             { followingId: profile.id }
-          ]
+          ],
+          status: 'REQUESTING'
         }
       });
     } catch (error) {
       next(error);
     }
-    res.status(200);
+
+    const followerList: any[] = [];
+    const followingList: any[] = [];
+
+    if (followList) {
+      followList.forEach(follow => {
+        if (follow.follower.id === profile.id) {
+          followingList.push(follow);
+        } else {
+          followerList.push(follow);
+        }
+      });
+    }
+
     res.send({
-      followList: followList || [],
-      id: profile.id
+      followerList,
+      followingList
     });
     return res;
   }
