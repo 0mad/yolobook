@@ -1,13 +1,15 @@
 import { action, observable, toJS } from 'mobx';
 
 class FollowStore {
-  @observable follows!: any[];
+  @observable followerList!: any[];
+  @observable followingList!: any[];
   userId!: number;
 
   constructor(initialData: any) {
     if (initialData) {
-      const { follows, userId } = initialData;
-      this.follows = follows;
+      const { followerList, followingList, userId } = initialData;
+      this.followerList = followerList;
+      this.followingList = followingList;
       this.userId = userId;
     } else {
       this.initialize();
@@ -15,48 +17,38 @@ class FollowStore {
   }
 
   private initialize() {
-    this.follows = [];
+    this.followerList = [];
+    this.followingList = [];
     this.userId = -1;
   }
 
   @action
-  updateFollow = (followId: number, status) => {
-    const follow = this.follows.find(follow => follow.id === followId);
-    follow.status = status;
+  acceptFollow = (followId: number) => {
+    this.followerList = this.followerList.filter(follow => follow.id !== followId);
+  };
+
+  rejectFollow = (followId: number) => {
+    this.followerList = this.followerList.filter(follow => follow.id !== followId);
   };
 
   @action
-  removeFollow = (followId: number) => {
-    this.follows = this.follows.filter(follow => follow.id !== followId);
+  cancelFollow = (followId: number) => {
+    this.followingList = this.followingList.filter(follow => follow.id !== followId);
   };
 
   @action
-  setFollowList = (followList) => {
-    this.follows = followList;
-  }
-
-  setUserId = (userId) => {
-    this.userId = userId;
-  }
-
-  public get followerList() {
-    return toJS(this.follows
-      .filter(follow => follow.following.id === this.userId && follow.status === 'REQUESTING')
-      .map(follow => ({
-        id: follow.id,
-        createdAt: follow.createdAt,
-        profile: follow.follower
-      })));
-  }
-
-  public get followingList() {
-    return toJS(this.follows
-      .filter(follow => follow.follower.id === this.userId && follow.status === 'REQUESTING')
-      .map(follow => ({
-        id: follow.id,
-        createdAt: follow.createdAt,
-        profile: follow.follower
-      })));
+  setFollowList = (data: { followingList: any[], followerList: any[] }) => {
+    const { followingList, followerList } = data;
+    this.followerList = followerList.map(follow => ({
+      id: follow.id,
+      createdAt: follow.createdAt,
+      profile: follow.follower
+    }));
+    this.followingList = followingList.map(follow => ({
+      id: follow.id,
+      createdAt: follow.createdAt,
+      profile: follow.following
+    }));
   }
 }
 
