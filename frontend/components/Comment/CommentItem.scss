@@ -40,7 +40,7 @@ $profile-size: 2.7rem;
   border-radius: 1rem;
   .author-name {
     margin-right: .5rem;
-    color: $oc-blue-9;
+    color: $oc-violet-9;
   }
   .content {
     font-size: .9rem;
@@ -79,7 +79,7 @@ $profile-size: 2.7rem;
   font-size: .8rem;
 
   .button-like {
-    color: $oc-blue-9;
+    color: $oc-violet-9;
     cursor: pointer;
     &:hover {
       text-decoration: underline;
@@ -92,7 +92,7 @@ $profile-size: 2.7rem;
     }
   }
   .button-reply {
-    color: $oc-blue-9;
+    color: $oc-violet-9;
     cursor: pointer;
     &::after {
       display: inline-block;

@@ -9,9 +9,10 @@
     }
     @include media(">=boundary") {
       display: flex;
-      height: 40px;
-      padding: 0 8px;
-      background-color: $oc-gray-0;
+      height: 55px;
+      padding: 0 1rem;
+      background-color: $oc-gray-1;
+      color: $oc-gray-7;
       justify-content: space-between;
       align-items: center;
       .title {

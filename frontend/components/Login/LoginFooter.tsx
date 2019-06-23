@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
-import { IoLogoGithub } from 'react-icons/io';
 import styles from './LoginFooter.scss';
+import Link from 'next/link';
 
 const cx = classNames.bind(styles);
 
@@ -11,14 +11,10 @@ const LoginFooter = (props: IProps) => {
   return (
     <div className={cx('login-footer')}>
       <p className={cx('footer-content')}>
-        Provided
-        <a href="https://github.com/orgs/0mad/dashboard">
-          <span className={cx('team')}>0mad</span>
-        </a>
-        <a href="https://github.com/0mad/yolobook">
-          <IoLogoGithub />
-          <span className={cx('github')}>Github</span>
-        </a>
+        Provided By&nbsp;
+        <Link href="https://github.com/0mad/yolobook">
+          <span className={cx('github')}>0mad</span>
+        </Link>
       </p>
     </div>
   );

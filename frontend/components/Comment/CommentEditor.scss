@@ -39,10 +39,11 @@ $profile-size: 2.7rem;
   }
 
   .button-send {
-    height: 2.7rem;
+    height: 38px;
     padding: 0 .6rem;
     margin: 0 .7rem;
     border: 1px solid $oc-gray-6;
     border-radius: .2rem;
+    font-size: 14px;
   }
 }

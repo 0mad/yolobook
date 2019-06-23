@@ -15,7 +15,7 @@ interface IProps {
 }
 
 const lookAroundStyle = {
-  fontSize: '1.2rem',
+  fontSize: '15px',
   marginTop: '1rem',
 };
 

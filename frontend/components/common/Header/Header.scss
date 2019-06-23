@@ -5,7 +5,7 @@
   width: 100%;
   height: $header-height;
   max-height: $header-height;
-  background-color: $oc-blue-9;
+  background-color: $oc-violet-9;
 
   .header {
     @include media("<boundary") {
@@ -21,10 +21,13 @@
 
     .logo {
       margin-left: .4rem;
+      margin-right: .4rem;
       font-size: 2rem;
       color: $oc-gray-0;
       cursor: pointer;
       order: -1;
+      height: 32px;
+      width: 32px;
     }
 
     .user-menu {
@@ -109,9 +112,16 @@
         right: 0;
         margin-right: .6rem;
       }
-      & > svg {
+      & > img {
+        @include media("<boundary") {
+          height: 28px;
+          width: 28px;
+          margin-top: 2px;
+        }
         position: absolute;
         left: 0;
+        height: 32px;
+        width: 32px;
       }
     }
   }
