@@ -47,14 +47,6 @@
           }
         }
       }
-      .upload-cover-img-input {
-        position: absolute;
-        top:0;
-        left:0;
-        width: 0;
-        height: 0;
-        opacity: 0;
-      }
       @include media("<boundary") {
         top: auto;
         right: 0;
@@ -190,6 +182,7 @@
       margin: 0;
       margin-top: 78px;
       text-align: center;
+      text-shadow: none;
       h1 {
         color: $oc-gray-9;
       }
@@ -199,7 +192,7 @@
     left: 201px;
     margin-bottom: 43px;
     color: $oc-gray-0;
-    text-shadow: 0 0 1px $oc-gray-5;
+    text-shadow: 0 0 2px $oc-gray-9;
     h1 {
       margin: 12px 0;
       font-size: 24px;
@@ -244,5 +237,14 @@
         border-right: solid 1px $oc-gray-3;
       }
     }
+  }
+
+  .upload-img-input {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 0;
+    height: 0;
+    opacity: 0;
   }
 }

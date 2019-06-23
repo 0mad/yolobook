@@ -89,6 +89,39 @@ class UserController {
       next(error);
     }
   };
+
+  // 썸네일 이미지 수정
+  public modifyThumbnailImg = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const { id } = req.body;
+    const thumbnailImg: any = req.file;
+    if (!thumbnailImg) {
+      return next(new Error('Not exist cover image'));
+    }
+
+    try {
+      let user: Account | null;
+      user = await Account.findOne({
+        where: {
+          id,
+        },
+      });
+      if (!user) {
+        return next(new Error('Not exist account'));
+      }
+      user.update({
+        thumbnail: `/img/${thumbnailImg.filename}`,
+      });
+      const token = await user.generateToken();
+      setCookie(res, token);
+      res.json(user.profile);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default new UserController();

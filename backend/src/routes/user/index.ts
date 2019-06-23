@@ -15,5 +15,11 @@ user.patch(
   multerUpload.single('cover-img'),
   UserController.modifyCoverImg
 );
+user.patch(
+  '/thumbnail',
+  isLoggedIn,
+  multerUpload.single('thumbnail-img'),
+  UserController.modifyThumbnailImg
+);
 
 export default user;

@@ -37,6 +37,27 @@ class BannerContainer extends Component<IProps> {
     }
   };
 
+  handleChangeThumbnailImg = async (event: React.ChangeEvent) => {
+    event.preventDefault();
+    const { userStore, profileStore } = this.props;
+    const {
+      userInfo: { id },
+    } = profileStore;
+    const file = event.target.files[0];
+    const formData: FormData = new FormData();
+    formData.append('thumbnail-img', file);
+    formData.append('id', id);
+    try {
+      const res = await UserAPI.modifyThumbnailImg(formData);
+      profileStore.setUserInfo(res.data);
+      userStore.setLoggedInfo(res.data);
+      toast.success('썸네일 이미지 변경 성공');
+    } catch (error) {
+      toast.error('썸네일 이미지 변경 실패');
+      throw error;
+    }
+  };
+
   componentDidMount = async () => {
     const {
       router: {
@@ -71,8 +92,9 @@ class BannerContainer extends Component<IProps> {
         userInfo: { id, username, thumbnail, coverImg },
       },
     } = this.props;
-    if (!!userId && userId == loggedId) {
-      console.log('같음');
+    let isMyProfile = false;
+    if (!userId || userId == loggedId) {
+      isMyProfile = true;
     }
 
     return (
@@ -80,8 +102,10 @@ class BannerContainer extends Component<IProps> {
         backgroundImage={coverImg}
         profileImage={thumbnail}
         username={username}
+        isMyProfile={isMyProfile}
         onClickFollow={() => this.handleFollow(id)}
         onCoverImgsChange={this.handleChangeCoverImg}
+        onThumbnailImgsChange={this.handleChangeThumbnailImg}
       />
     );
   }

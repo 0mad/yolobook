@@ -7,3 +7,5 @@ export const getUserSearchList = (search: any) =>
   axios.get(`/api/user/search/${search}`);
 export const modifyCoverImg = (formData: any) =>
   axios.patch(`/api/user/cover`, formData);
+export const modifyThumbnailImg = (formData: any) =>
+  axios.patch(`/api/user/thumbnail`, formData);

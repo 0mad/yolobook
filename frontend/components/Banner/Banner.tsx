@@ -13,8 +13,10 @@ interface IProps {
   backgroundImage: string;
   profileImage: string;
   username: string;
+  isMyProfile: boolean;
   onClickFollow?: void;
   onCoverImgsChange?: void;
+  onThumbnailImgsChange?: void;
 }
 
 const Banner = ({
@@ -22,35 +24,42 @@ const Banner = ({
   backgroundImage,
   profileImage,
   username,
+  isMyProfile,
   onClickFollow,
   onCoverImgsChange,
+  onThumbnailImgsChange,
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
   let uploadCoverImgEl: any;
+  let uploadThumbnailImgEl: any;
 
   const handleBannerMouseOver = () => {
     if (isMobileMode) return;
-    cameraEl.classList.add(cx('background-edit-hover'));
+    !!cameraEl && cameraEl.classList.add(cx('background-edit-hover'));
   };
 
   const handleBannerMouseOut = () => {
     if (isMobileMode) return;
-    cameraEl.classList.remove(cx('background-edit-hover'));
+    !!cameraEl && cameraEl.classList.remove(cx('background-edit-hover'));
   };
 
   const handleProfileMouseEnter = () => {
     if (isMobileMode) return;
-    profileEl.classList.add(cx('profile-edit-show'));
+    !!profileEl && profileEl.classList.add(cx('profile-edit-show'));
   };
 
   const handleProfileMouseLeave = () => {
     if (isMobileMode) return;
-    profileEl.classList.remove(cx('profile-edit-show'));
+    !!profileEl && profileEl.classList.remove(cx('profile-edit-show'));
   };
 
   const handleCameraClick = () => {
     uploadCoverImgEl.click();
+  };
+
+  const handleThumbnailClick = () => {
+    uploadThumbnailImgEl.click();
   };
 
   return (
@@ -60,27 +69,30 @@ const Banner = ({
       onMouseOut={handleBannerMouseOut}
     >
       <div className={cx('background')}>
-        <div
-          ref={ref => {
-            cameraEl = ref;
-          }}
-          className={cx('background-edit')}
-          onClick={handleCameraClick}
-        >
-          <input
-            className={cx('upload-cover-img-input')}
+        {isMyProfile && (
+          <div
             ref={ref => {
-              uploadCoverImgEl = ref;
+              cameraEl = ref;
             }}
-            type="file"
-            accept="image/*"
-            onChange={onCoverImgsChange}
-          />
-          <IoIosCamera />
-          <div className={cx('background-edit-content')}>
-            <span>{isMobileMode ? '수정' : '커버 사진 업데이트'}</span>
+            className={cx('background-edit')}
+            onClick={handleCameraClick}
+          >
+            <input
+              className={cx('upload-img-input')}
+              ref={ref => {
+                uploadCoverImgEl = ref;
+              }}
+              type="file"
+              accept="image/*"
+              onChange={onCoverImgsChange}
+            />
+            <IoIosCamera />
+            <div className={cx('background-edit-content')}>
+              <span>{isMobileMode ? '수정' : '커버 사진 업데이트'}</span>
+            </div>
           </div>
-        </div>
+        )}
+        ;
         <img src={backgroundImage} />
       </div>
       <div
@@ -90,30 +102,45 @@ const Banner = ({
       >
         <div className={cx('wrap-profile-edit')}>
           <img src={profileImage} />
-          <div
-            ref={ref => {
-              profileEl = ref;
-            }}
-            className={cx('profile-edit')}
-          >
-            <div className={cx('profile-edit-content')}>
-              <IoIosCamera />
-              <div className={cx('profile-edit-text')}>
-                <span>{isMobileMode ? '수정' : '업데이트'}</span>
+          {isMyProfile && (
+            <div
+              ref={ref => {
+                profileEl = ref;
+              }}
+              className={cx('profile-edit')}
+              onClick={handleThumbnailClick}
+            >
+              <div className={cx('profile-edit-content')}>
+                <input
+                  className={cx('upload-img-input')}
+                  ref={ref => {
+                    uploadThumbnailImgEl = ref;
+                  }}
+                  type="file"
+                  accept="image/*"
+                  onChange={onThumbnailImgsChange}
+                />
+                <IoIosCamera />
+                <div className={cx('profile-edit-text')}>
+                  <span>{isMobileMode ? '수정' : '업데이트'}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
+          ;
         </div>
       </div>
       <div className={cx('username')}>
         <h1>{username}</h1>
       </div>
-      <div className={cx('follow-button')}>
-        <Button inline onClick={onClickFollow}>
-          <IoIosPersonAdd />
-          <span>친구 추가</span>
-        </Button>
-      </div>
+      {!isMyProfile && (
+        <div className={cx('follow-button')}>
+          <Button inline onClick={onClickFollow}>
+            <IoIosPersonAdd />
+            <span>친구 추가</span>
+          </Button>
+        </div>
+      )}
       {!isMobileMode && (
         <nav className={cx('nav')}>
           <ul>
