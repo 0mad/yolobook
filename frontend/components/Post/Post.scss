@@ -51,10 +51,12 @@
     padding: .8rem;
     white-space: normal;
     border: none;
+    font-size: 14px;
   }
 }
 
 .post-footer {
+  font-size: 12px;
   padding: 0 .7rem;
   color: $oc-gray-8;
   border-bottom: 1px solid $oc-gray-4;
@@ -83,6 +85,8 @@
     display: flex;
     height: 2.5rem;
     line-height: 2.5;
+    align-items: center;
+    font-size: 13px;
     
     svg {
       margin-right: .2rem;
@@ -94,6 +98,7 @@
     .button-like {
       cursor: pointer;
       flex: 1;
+      height: 100%;
       &:hover {
         background-color: $oc-gray-1;
       }
@@ -101,6 +106,7 @@
     .button-comment {
       cursor: pointer;
       flex: 1;
+      height: 100%;
       &:hover {
         background-color: $oc-gray-1;
       }
@@ -108,6 +114,7 @@
     .button-share {
       cursor: pointer;
       flex: 1;
+      height: 100%;
       &:hover {
         background-color: $oc-gray-1;
       }

@@ -31,18 +31,18 @@
   }
 
   &.light-blue {
-    color: $oc-blue-8;
-    background: $oc-blue-0;
+    color: $oc-violet-8;
+    background: $oc-violet-0;
     &:hover, &:active {
-      background: $oc-blue-1;
+      background: $oc-violet-1;
     }
   }
 
   &.blue {
     color: white;
-    background: $oc-blue-7;
+    background: $oc-violet-7;
     &:hover, &:active {
-      background: $oc-blue-8;
+      background: $oc-violet-8;
     }
   }
 

@@ -1,7 +1,7 @@
 .login-button {
   height: 3.6rem;
   padding: 1rem;
-  font-size: 1.4rem;
+  font-size: 18px;
   font-weight: 600;
   color: white;
   text-align: center;
@@ -24,20 +24,20 @@
   }
 
   &.google {
-    background-color: rgb(241, 40, 40);
+    background-color: $oc-red-6;
     &:hover {
       @include material-shadow(3, .5);
     }
   }
   &.kakao {
-    background-color: rgb(255, 204, 0);
+    background-color: $oc-yellow-5;
     &:hover {
       @include material-shadow(3, .5);
     }
   }
 
   &.naver {
-    background-color: rgba(24, 199, 60, 1);
+    background-color: $oc-teal-5;
     &:hover {
       @include material-shadow(3, .5);
     }

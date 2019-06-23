@@ -1,9 +1,10 @@
 .login-header {
   height: $header-height * 2;
-  font-size: $header-height;
+  font-size: 2.4rem;
+  font-family: cursive;
   font-weight: 600;
   line-height: $header-height *2;
   color: white;
   text-align: center;
-  background-color: $oc-blue-9;
+  background-color: $oc-violet-9;
 }

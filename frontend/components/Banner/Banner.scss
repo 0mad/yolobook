@@ -1,8 +1,6 @@
 .banner {
   position: relative;
   background-color: $oc-gray-0;
-  border: solid 1px $oc-gray-3;
-  border-radius: 3px;
   .background {
     @include media("<boundary") {
       position: relative;
@@ -224,7 +222,7 @@
           padding: 0 17px;
           font-size: 15px;
           line-height: 43px;
-          color: $oc-blue-9;
+          color: $oc-violet-9;
         }
         &:hover {
           background-color: $oc-gray-3;

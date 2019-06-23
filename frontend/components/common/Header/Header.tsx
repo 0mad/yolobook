@@ -5,7 +5,6 @@ import {
   IoIosContacts,
   IoIosFiling,
   IoIosLogOut,
-  IoLogoFacebook,
   IoMdSearch,
 } from 'react-icons/io';
 import withSizes from 'react-sizes';
@@ -13,6 +12,7 @@ import { mapSizesToProps } from '../../../utils/withSizes';
 import Button from '../Button';
 import styles from './Header.scss';
 import HeaderSearchBar from './HeaderSearchBar';
+import Logo from '../../../static/images/logo.png';
 
 const cx = classNames.bind(styles);
 const isBrowser = process.browser;
@@ -81,7 +81,7 @@ const LoginedHeader = (props: IProps) => {
       {!isMobileMode && (
         <>
           <Link href="/">
-            <IoLogoFacebook className={cx('logo')} />
+            <img className={cx('logo')} src={Logo}/>
           </Link>
           <ul className={cx('user-menu')}>
             <UserMenu href="/profile/timeline">
@@ -120,7 +120,7 @@ const UnLoginedHeader = (props: { isMobileMode: boolean }) => {
   return (
     <div className={cx('unlogined-header', isMobileMode)}>
       <Link href="/">
-        <IoLogoFacebook className={cx('logo')} />
+        <img className={cx('logo')} src={Logo}/>
       </Link>
       <Link href="/login">
         <Button inline={true} style={{ height: '100%' }}>
