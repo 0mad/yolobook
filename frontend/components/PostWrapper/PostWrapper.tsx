@@ -10,8 +10,9 @@ interface IProps {
 }
 
 const renderPostItem = (post: object) => {
+  const { id } = post;
   return (
-    <li className={cx('post-item')}>
+    <li key={id} className={cx('post-item')}>
       <Post post={post} />
       <Comment user={post.user} />
     </li>

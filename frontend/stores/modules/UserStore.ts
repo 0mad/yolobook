@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 import * as AuthAPI from '../../api/auth';
+import storage from '../../lib/storage';
 
 class UserStore {
   @observable public loggedInfo: any; // 현재 로그인중인 유저의 정보
@@ -22,6 +23,7 @@ class UserStore {
       id: -1,
       thumbnail: 'http://placekitten.com/40/40',
       username: '손님',
+      coverImg: null,
     };
     this.validated = false;
     this.logged = false;
@@ -32,6 +34,7 @@ class UserStore {
     this.loggedInfo = loggedInfo;
     this.logged = true;
     this.validated = true;
+    storage.set('loggedInfo', loggedInfo);
   };
 
   @action
@@ -44,6 +47,7 @@ class UserStore {
     const { status } = await AuthAPI.logout();
     if (status === 204) {
       this.setDefaultData();
+      storage.remove('loggedInfo');
     }
   };
 }

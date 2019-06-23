@@ -10,19 +10,25 @@ interface IProps {
 }
 
 const Post = (props: IProps) => {
-  const { post } = props;
+  const {
+    post: {
+      content,
+      imgs,
+      user: { thumbnail, username },
+    },
+  } = props;
   return (
     <div className={cx('post')}>
       <div className={cx('post-header')}>
-        <img className={cx('user-photo')} src="http://placekitten.com/40/40" />
+        <img className={cx('user-photo')} src={thumbnail} />
         <div className={cx('meta-data')}>
-          <a className={cx('user-name')}>문태민</a>
+          <a className={cx('user-name')}>{username}</a>
           <span className={cx('created-time')}>10시간</span>
         </div>
       </div>
       <div className={cx('post-body')}>
-        <pre className={cx('post-content')}>{post.content}</pre>
-        <Gallery photoList={post.imgs} />
+        <pre className={cx('post-content')}>{content}</pre>
+        <Gallery photoList={imgs} />
       </div>
 
       <div className={cx('post-footer')}>

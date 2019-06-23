@@ -1,30 +1,9 @@
-import appRoot from 'app-root-path';
 import express from 'express';
-import multer from 'multer';
-import path from 'path';
 import { Account } from '../../models/Account';
 import { Post } from '../../models/Post';
 import { PostImage } from '../../models/PostImage';
 
 class UserController {
-  public multerUpload = multer({
-    limits: { fileSize: 5 * 1024 * 1024 },
-    storage: multer.diskStorage({
-      destination(req, file, cb) {
-        cb(null, path.join(appRoot.path, 'uploads/'));
-      },
-      filename(req, file, cb) {
-        const ext = path.extname(file.originalname);
-        cb(
-          null,
-          path.basename(file.originalname, ext) + new Date().valueOf() + ext
-        );
-      },
-    }),
-  });
-
-  public multerUpload2 = multer();
-
   // 이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답
   public uploadImg = async (
     req: express.Request,

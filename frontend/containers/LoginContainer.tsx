@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as AuthAPI from '../api/auth';
 import Login from '../components/Login';
-import storage from '../lib/storage';
 
 interface IProps {
   userStore?: any;
@@ -13,11 +12,10 @@ interface IProps {
 @inject('userStore')
 @observer
 class LoginContainer extends Component<IProps> {
-
   public render() {
     const { userStore } = this.props;
     const { logged } = userStore;
-    if(logged) {
+    if (logged) {
       Router.push('/');
     }
     return (
@@ -35,14 +33,13 @@ class LoginContainer extends Component<IProps> {
       email: profileObj.email,
       snsId: profileObj.googleId,
       thumbnail: profileObj.imageUrl,
-      username: profileObj.name
+      username: profileObj.name,
     };
 
     try {
       const { data } = await AuthAPI.googleLogin(userProfile);
       userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', data);
       toast.success('로그인 성공');
     } catch (error) {
       toast.error('로그인 실패');
@@ -62,13 +59,12 @@ class LoginContainer extends Component<IProps> {
       const { data } = await AuthAPI.kakaoLogin(userProfile);
       userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', data);
       toast.success('로그인 성공');
     } catch (error) {
       console.error('로그인 실패');
     }
-  }
-  public handleLoginNaver = async (profile) => {
+  };
+  public handleLoginNaver = async (profile: object) => {
     const { userStore } = this.props;
     const userProfile = {
       email: profile.email,
@@ -80,12 +76,11 @@ class LoginContainer extends Component<IProps> {
       const { data } = await AuthAPI.naverLogin(userProfile);
       userStore.setLoggedInfo(data);
       Router.push({ pathname: '/' });
-      storage.set('loggedInfo', data);
       toast.success('로그인 성공');
     } catch (error) {
       console.error('로그인 실패');
     }
-  }
+  };
 }
 
 export default LoginContainer;

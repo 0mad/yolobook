@@ -2,6 +2,7 @@ import { inject, observer } from 'mobx-react';
 import React, { Component, ChangeEventHandler } from 'react';
 import Header from '../components/common/Header';
 import * as userAPI from '../api/user';
+import Router from 'next/router';
 
 interface IProps {
   commonStore?: any;
@@ -16,7 +17,7 @@ class HeaderContainer extends Component<IProps> {
   async componentDidMount() {
     const { commonStore } = this.props;
     const { data } = await userAPI.getUserSearchList('');
-    
+
     commonStore.setUserList(data);
   }
 
@@ -43,22 +44,25 @@ class HeaderContainer extends Component<IProps> {
     const { userStore } = this.props;
     try {
       await userStore.logout();
-    } catch(error){
+      Router.push({ pathname: '/' });
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
   handleToggleSearch = (toggle: () => boolean) => {
-    if(toggle()) {
+    if (toggle()) {
       //TODO 검색에 포커싱 처리
     }
-  }
+  };
 
-  handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { target: { value } } = event;
+  handleSearchChange: ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value },
+    } = event;
     const { commonStore } = this.props;
     commonStore.setSearchText(value);
-  }
+  };
 }
 
 export default HeaderContainer;
