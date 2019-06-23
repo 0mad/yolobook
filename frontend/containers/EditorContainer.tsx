@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as PostAPI from '../api/post';
 import Editor from '../components/Editor';
+import { withRouter } from 'next/router';
 
 interface IProps {
   postStore?: any;
@@ -68,12 +69,20 @@ class EditorContainer extends Component<IProps> {
 
   public render() {
     const {
+      router: {
+        query: { userId },
+      },
       userStore: { loggedInfo, logged },
       postStore: {
         editPostForm: { content },
       },
     } = this.props;
-    return !!logged ? (
+    let isMyProfile = false;
+    if (!userId || userId == loggedInfo.id) {
+      isMyProfile = true;
+    }
+
+    return !!logged && isMyProfile ? (
       <Editor
         onTextChange={this.handleTextChange}
         onImgsChange={this.handleImgsChange}
@@ -87,4 +96,4 @@ class EditorContainer extends Component<IProps> {
   }
 }
 
-export default EditorContainer;
+export default withRouter(EditorContainer);
