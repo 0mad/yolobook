@@ -92,7 +92,6 @@ const Banner = ({
             </div>
           </div>
         )}
-        ;
         <img src={backgroundImage} />
       </div>
       <div
@@ -127,7 +126,6 @@ const Banner = ({
               </div>
             </div>
           )}
-          ;
         </div>
       </div>
       <div className={cx('username')}>

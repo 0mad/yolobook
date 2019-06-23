@@ -2,6 +2,7 @@ import { inject, observer } from 'mobx-react';
 import React, { Component, ChangeEventHandler } from 'react';
 import Header from '../components/common/Header';
 import * as userAPI from '../api/user';
+import Router from 'next/router';
 
 interface IProps {
   commonStore?: any;
@@ -43,6 +44,7 @@ class HeaderContainer extends Component<IProps> {
     const { userStore } = this.props;
     try {
       await userStore.logout();
+      Router.push({ pathname: '/' });
     } catch (error) {
       throw error;
     }

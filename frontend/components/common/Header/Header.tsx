@@ -85,13 +85,7 @@ const LoginedHeader = (props: IProps) => {
           </Link>
           <ul className={cx('user-menu')}>
             <UserMenu href="/profile/timeline">
-              <img
-                className={cx('user-photo')}
-                src={
-                  profile.thumbnail ||
-                  'https://scontent-hkg3-1.xx.fbcdn.net/v/t1.0-1/c7.0.24.24a/p24x24/10354686_10150004552801856_220367501106153455_n.jpg?_nc_cat=1&_nc_ht=scontent-hkg3-1.xx&oh=bb72ec162290b45765c1e0bba5364a4c&oe=5D9EC7D1'
-                }
-              />
+              <img className={cx('user-photo')} src={profile.thumbnail} />
               <p className={cx('user-name')}>{profile.username}</p>
             </UserMenu>
           </ul>
