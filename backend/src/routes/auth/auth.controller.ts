@@ -1,5 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
+import { setCookie } from '../../lib/token';
 import { Account } from '../../models/Account';
 
 class AuthController {
@@ -64,7 +65,7 @@ class AuthController {
     try {
       const user = await this.getAccount(profile, 'google');
       const token = await user.generateToken();
-      this.setCookie(res, token);
+      setCookie(res, token);
       return res.json(user.profile);
     } catch (error) {
       return next(error);
@@ -88,7 +89,7 @@ class AuthController {
     try {
       const user = await this.getAccount(profile, 'naver');
       const token = await user.generateToken();
-      this.setCookie(res, token);
+      setCookie(res, token);
       return res.json(user.profile);
     } catch (error) {
       return next(error);
@@ -112,7 +113,7 @@ class AuthController {
     try {
       const user = await this.getAccount(profile, 'kakao');
       const token = await user.generateToken();
-      this.setCookie(res, token);
+      setCookie(res, token);
       return res.json(user.profile);
     } catch (error) {
       return next(error);
@@ -138,20 +139,15 @@ class AuthController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { user: { profile } } = req.body;
+    const {
+      user: { profile },
+    } = req.body;
 
     if (!profile) {
       return next();
     }
     res.json(profile);
   };
-
-  private setCookie(res: express.Response, token: string) {
-    res.cookie('access_token', token, {
-      httpOnly: true,
-      maxAge: 100 * 60 * 60 * 24 * 7,
-    });
-  }
 }
 
 export default new AuthController();

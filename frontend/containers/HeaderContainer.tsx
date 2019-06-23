@@ -16,7 +16,7 @@ class HeaderContainer extends Component<IProps> {
   async componentDidMount() {
     const { commonStore } = this.props;
     const { data } = await userAPI.getUserSearchList('');
-    
+
     commonStore.setUserList(data);
   }
 
@@ -43,22 +43,24 @@ class HeaderContainer extends Component<IProps> {
     const { userStore } = this.props;
     try {
       await userStore.logout();
-    } catch(error){
+    } catch (error) {
       throw error;
     }
-  }
+  };
 
   handleToggleSearch = (toggle: () => boolean) => {
-    if(toggle()) {
+    if (toggle()) {
       //TODO 검색에 포커싱 처리
     }
-  }
+  };
 
-  handleSearchChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { target: { value } } = event;
+  handleSearchChange: ChangeEventHandler<HTMLInputElement> = event => {
+    const {
+      target: { value },
+    } = event;
     const { commonStore } = this.props;
     commonStore.setSearchText(value);
-  }
+  };
 }
 
 export default HeaderContainer;

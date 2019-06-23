@@ -47,6 +47,14 @@
           }
         }
       }
+      .upload-cover-img-input {
+        position: absolute;
+        top:0;
+        left:0;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
       @include media("<boundary") {
         top: auto;
         right: 0;
@@ -99,6 +107,7 @@
       }
       width: 170px;
       height: 170px;
+      background-color: white;
       border: solid 5px $oc-gray-0;
       border-radius: 100%;
     }
@@ -190,6 +199,7 @@
     left: 201px;
     margin-bottom: 43px;
     color: $oc-gray-0;
+    text-shadow: 0 0 1px $oc-gray-5;
     h1 {
       margin: 12px 0;
       font-size: 24px;

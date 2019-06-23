@@ -23,6 +23,9 @@ export class Account extends Model<Account> {
   thumbnail?: string;
 
   @Column
+  coverImg?: string;
+
+  @Column
   email!: string;
 
   @AllowNull(false)
@@ -44,6 +47,7 @@ export class Account extends Model<Account> {
 
   public get profile(): object {
     return {
+      coverImg: this.coverImg,
       id: this.id,
       thumbnail: this.thumbnail,
       username: this.username,

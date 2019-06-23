@@ -1,14 +1,11 @@
 import express from 'express';
-import PostController from './post.controller';
+import { multerUpload } from '../../lib/multer';
 import { isLoggedIn } from '../middlewares';
+import PostController from './post.controller';
 
 const post = express.Router();
 
-post.post(
-  '/img',
-  PostController.multerUpload.array('imgs'),
-  PostController.uploadImg
-);
+post.post('/img', multerUpload.array('imgs'), PostController.uploadImg);
 post.get('/', PostController.getPosts);
 post.get('/:id', PostController.getPost);
 post.post('/', isLoggedIn, PostController.wrtiePost);

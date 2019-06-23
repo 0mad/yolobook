@@ -56,3 +56,10 @@ export const jwtMiddleware = async (
 
   return next();
 };
+
+export const setCookie = (res: express.Response, token: string) => {
+  res.cookie('access_token', token, {
+    httpOnly: true,
+    maxAge: 100 * 60 * 60 * 24 * 7,
+  });
+};

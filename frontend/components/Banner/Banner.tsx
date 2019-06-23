@@ -14,6 +14,7 @@ interface IProps {
   profileImage: string;
   username: string;
   onClickFollow?: void;
+  onCoverImgsChange?: void;
 }
 
 const Banner = ({
@@ -22,9 +23,11 @@ const Banner = ({
   profileImage,
   username,
   onClickFollow,
+  onCoverImgsChange,
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
+  let uploadCoverImgEl: any;
 
   const handleBannerMouseOver = () => {
     if (isMobileMode) return;
@@ -46,6 +49,10 @@ const Banner = ({
     profileEl.classList.remove(cx('profile-edit-show'));
   };
 
+  const handleCameraClick = () => {
+    uploadCoverImgEl.click();
+  };
+
   return (
     <div
       className={cx('banner')}
@@ -58,7 +65,17 @@ const Banner = ({
             cameraEl = ref;
           }}
           className={cx('background-edit')}
+          onClick={handleCameraClick}
         >
+          <input
+            className={cx('upload-cover-img-input')}
+            ref={ref => {
+              uploadCoverImgEl = ref;
+            }}
+            type="file"
+            accept="image/*"
+            onChange={onCoverImgsChange}
+          />
           <IoIosCamera />
           <div className={cx('background-edit-content')}>
             <span>{isMobileMode ? '수정' : '커버 사진 업데이트'}</span>
@@ -93,7 +110,7 @@ const Banner = ({
       </div>
       <div className={cx('follow-button')}>
         <Button inline onClick={onClickFollow}>
-          <IoIosPersonAdd/>
+          <IoIosPersonAdd />
           <span>친구 추가</span>
         </Button>
       </div>
