@@ -11,5 +11,8 @@
     .post-item + .post-item {
       margin-top: .9rem;
     }
+    .post-item:last-child {
+      margin-bottom: .9rem;
+    }
   }
 }
