@@ -1,4 +1,4 @@
-import ContentLayout from '../../components/common/ContentLayout';
+import ContentLayoutContainer from '../../containers/common/ContentLayoutContainer';
 import PageTemplate from '../../components/common/PageTemplate';
 import BannerContainer from '../../containers/BannerContainer';
 import EditorContainer from '../../containers/EditorContainer';
@@ -8,10 +8,9 @@ interface IProps {}
 
 const Timeline = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout Banner={BannerContainer}>
-      <EditorContainer />
+    <ContentLayoutContainer Banner={BannerContainer} Editor={EditorContainer}>
       <PostContainer />
-    </ContentLayout>
+    </ContentLayoutContainer>
   </PageTemplate>
 );
 

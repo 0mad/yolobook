@@ -1,4 +1,4 @@
-import ContentLayout from '../components/common/ContentLayout';
+import ContentLayoutContainer from '../containers/common/ContentLayoutContainer';
 import PageTemplate from '../components/common/PageTemplate';
 import FollowContainer from '../containers/FollowContainer';
 
@@ -6,9 +6,9 @@ interface IProps {}
 
 const Follow = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout>
+    <ContentLayoutContainer>
       <FollowContainer />
-    </ContentLayout>
+    </ContentLayoutContainer>
   </PageTemplate>
 );
 
