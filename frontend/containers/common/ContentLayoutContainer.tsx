@@ -8,8 +8,8 @@ interface IProps {
   Editor?: any;
 }
 
-@observer
 @inject('userStore')
+@observer
 class ContentLayoutContainer extends Component<IProps> {
   public render() {
     const {
@@ -18,7 +18,7 @@ class ContentLayoutContainer extends Component<IProps> {
       Editor,
       userStore: { logged },
     } = this.props;
-    const editor = logged ? Editor : false;
+    const editor = !!logged ? Editor : false;
     return (
       <ContentLayout Banner={Banner} Editor={editor}>
         {children}
