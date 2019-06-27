@@ -1,5 +1,6 @@
 .banner {
   position: relative;
+  margin-bottom: 12px;
   background-color: $oc-gray-0;
   .background {
     @include media("<boundary") {

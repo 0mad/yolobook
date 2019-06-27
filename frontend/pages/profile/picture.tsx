@@ -1,5 +1,4 @@
 import withSizes from 'react-sizes';
-import ContentLayoutContainer from '../../containers/common/ContentLayoutContainer';
 import PageTemplate from '../../components/common/PageTemplate';
 import BannerContainer from '../../containers/BannerContainer';
 import PictureContainer from '../../containers/PictureContainer';
@@ -11,9 +10,8 @@ interface IProps {
 
 const Picture = (props: IProps) => (
   <PageTemplate>
-    <ContentLayoutContainer Banner={BannerContainer}>
-      <PictureContainer />
-    </ContentLayoutContainer>
+    <BannerContainer />
+    <PictureContainer />
   </PageTemplate>
 );
 

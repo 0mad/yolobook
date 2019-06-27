@@ -19,8 +19,8 @@ $profile-size: 2.7rem;
 
   .input-form {
     display: flex;
-    align-items: center;
     flex: 1;
+    align-items: center;
   
     .input-content {
       height: 2.4rem;
@@ -42,8 +42,8 @@ $profile-size: 2.7rem;
     height: 38px;
     padding: 0 .6rem;
     margin: 0 .7rem;
+    font-size: 14px;
     border: 1px solid $oc-gray-6;
     border-radius: .2rem;
-    font-size: 14px;
   }
 }

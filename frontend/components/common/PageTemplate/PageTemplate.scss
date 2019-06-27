@@ -1,9 +1,10 @@
 .page-template {
   margin-top: $header-height; 
+  margin-bottom: 12px;
   background-color: $oc-gray-2;
   .page-content {
     width: 100%;
-    max-width: 530px;
+    max-width: 850px;
     margin: 0 auto;
   }
 }

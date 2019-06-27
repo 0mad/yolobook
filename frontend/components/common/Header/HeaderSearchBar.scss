@@ -1,7 +1,7 @@
 .searchbar {
   @include media("<boundary") {
-    margin: 0;
     height: 30px;
+    margin: 0;
   }
   position: relative;
   display: flex;
@@ -22,8 +22,8 @@
     padding-right: .5rem;
     padding-left: .5rem;
     border-radius: .2rem;
-    -webkit-appearance: none;
     flex: 1;
+    -webkit-appearance: none;
     &:focus ~ .search-result {
       visibility: visible;
     }

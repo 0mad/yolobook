@@ -1,4 +1,4 @@
-import { action, observable, runInAction } from 'mobx';
+import { action, observable } from 'mobx';
 import * as PostAPI from '../../api/post';
 
 class PostStore {
@@ -45,7 +45,8 @@ class PostStore {
 
   @action
   public addPost = (post: object) => {
-    this.posts.splice(0, 1, post);
+    this.posts.unshift(post);
+    console.log(post);
   };
 
   @action

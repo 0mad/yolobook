@@ -1,18 +1,14 @@
 .post-wrapper {
   .post-list-label {
-    padding: 0 .4rem 10px .4rem;
+    padding: 1rem .4rem;
     font-size: 12px;
     font-weight: 700;
     color: $oc-gray-7;
   }
 
   .post-list {
-
     .post-item + .post-item {
       margin-top: .9rem;
-    }
-    .post-item:last-child {
-      margin-bottom: .9rem;
     }
   }
 }
