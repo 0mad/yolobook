@@ -6,7 +6,9 @@ $header-height: 44px;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
   background-color: black;
+  user-select: none;
   .header {
     @include media("<boundary") {
       position: static;
@@ -18,10 +20,11 @@ $header-height: 44px;
         display: flex;
         height: $header-height;
         padding-left: 5px;
-        align-items: center;
+        cursor: pointer;
         svg {
           font-size: 30px;
         }
+        align-items: center;
       }
       .title {
         font-size: 16px;
@@ -44,8 +47,8 @@ $header-height: 44px;
     height: 100vh;
     padding: 3% 5%;
     overflow: hidden;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     img {
       width: 100%;
       height: 100%;

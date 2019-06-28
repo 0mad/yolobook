@@ -16,48 +16,39 @@ const cx = classNames.bind(styles);
 interface IProps {
   isMobileMode: boolean;
   images: string[];
+  currentIndex: number;
+  onMoveNext: any;
+  onMovePrev: any;
+  onClose: any;
+  username: string;
 }
 
-const Viewer = ({ isMobileMode, images }: IProps) => {
-  let curIdx = 2;
-
-  const handleChangePrevImage = () => {
-    curIdx = curIdx === 0 ? curIdx : curIdx - 1;
-    const imgEl = document.querySelector('#content>img');
-    imgEl.src = images[curIdx];
-  };
-
-  const handleChangeNextImage = () => {
-    curIdx = curIdx === images.length - 1 ? curIdx : curIdx + 1;
-    const imgEl = document.querySelector('#content>img');
-    imgEl.src = images[curIdx];
-  };
-
+const Viewer = ({ isMobileMode, images, currentIndex, onMoveNext, onMovePrev, onClose, username }: IProps) => {
   return (
     <div className={cx('viewer')}>
       <div className={cx('header')}>
         {isMobileMode && (
-          <div className={cx('back-btn')}>
+          <div className={cx('back-btn')} onClick={() => onClose()}>
             <IoIosArrowRoundBack />
           </div>
         )}
         <div className={cx('title')}>
-          <span>주현님이 게시한 사진</span>
+          <span>{`${username}님이 게시한 사진`}</span>
         </div>
       </div>
       <div id={'content'} className={cx('content')}>
-        <img src={images[curIdx]} />
+        <img src={images[currentIndex]['img']} />
       </div>
       {isMobileMode && <div className={cx('footer')}>footer</div>}
       {!isMobileMode && (
-        <div className={cx('close-btn')}>
+        <div className={cx('close-btn')} onClick={() => onClose()}>
           <IoIosClose />
         </div>
       )}
-      <div className={cx('prev-btn')} onClick={handleChangePrevImage}>
+      <div className={cx('prev-btn')} onClick={() => onMovePrev()}>
         {isMobileMode ? <IoIosArrowDropleftCircle /> : <IoIosArrowBack />}
       </div>
-      <div className={cx('next-btn')} onClick={handleChangeNextImage}>
+      <div className={cx('next-btn')} onClick={() => onMoveNext()}>
         {isMobileMode ? <IoIosArrowDroprightCircle /> : <IoIosArrowForward />}
       </div>
     </div>
