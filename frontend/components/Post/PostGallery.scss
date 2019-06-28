@@ -1,9 +1,13 @@
 
 .gallery {
+
+  @include media("<mobile") {
+    grid-auto-rows: 50vw;
+  }
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: .5rem;
-  grid-auto-rows: minmax(5rem, 50vw);
+  grid-column-gap: .1rem;
+  grid-auto-rows: 255px;
 
   &.isParallel {
     .photo-wrapper {
