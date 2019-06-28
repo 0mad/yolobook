@@ -92,7 +92,12 @@ const Banner = ({
             </div>
           </div>
         )}
-        <img src={backgroundImage} />
+        <img
+          src={
+            backgroundImage ||
+            'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+          }
+        />
       </div>
       <div
         className={cx('profile')}
