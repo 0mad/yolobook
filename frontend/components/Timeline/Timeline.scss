@@ -1,0 +1,11 @@
+.timeline {
+  width: 100%;
+  max-width: 512px;
+  margin: 0 auto;
+  &-space-top {
+    padding-top: 12px;
+  }
+  .timeline-item + .timeline-item{
+    padding-top: 12px;
+  }
+}

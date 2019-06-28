@@ -20,14 +20,14 @@
     margin: 0 auto;
 
     .logo {
-      margin-left: .4rem;
+      width: 32px;
+      height: 32px;
       margin-right: .4rem;
+      margin-left: .4rem;
       font-size: 2rem;
       color: $oc-gray-0;
       cursor: pointer;
       order: -1;
-      height: 32px;
-      width: 32px;
     }
 
     .user-menu {
@@ -85,9 +85,9 @@
         font-size: 1.5rem;
         color: $oc-gray-9;
         cursor: pointer;
-        align-items: center;
-        justify-content: center;
         flex: 1;
+        justify-content: center;
+        align-items: center;
 
         & > * {
           width: 100%;
@@ -114,14 +114,14 @@
       }
       & > img {
         @include media("<boundary") {
-          height: 28px;
           width: 28px;
+          height: 28px;
           margin-top: 2px;
         }
         position: absolute;
         left: 0;
-        height: 32px;
         width: 32px;
+        height: 32px;
       }
     }
   }

@@ -1,5 +1,4 @@
 import withSizes from 'react-sizes';
-import ContentLayout from '../../components/common/ContentLayout';
 import PageTemplate from '../../components/common/PageTemplate';
 import BannerContainer from '../../containers/BannerContainer';
 import UserInfoContainer from '../../containers/UserInfoContainer';
@@ -11,9 +10,8 @@ interface IProps {
 
 const Info = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout Banner={BannerContainer}>
-      <UserInfoContainer />
-    </ContentLayout>
+    <BannerContainer />
+    <UserInfoContainer />
   </PageTemplate>
 );
 

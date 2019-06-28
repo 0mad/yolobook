@@ -1,17 +1,12 @@
 import { withRouter, WithRouterProps } from 'next/router';
-import ContentLayout from '../components/common/ContentLayout';
 import PageTemplate from '../components/common/PageTemplate';
-import EditorContainer from '../containers/EditorContainer';
-import PostContainer from '../containers/PostContainer';
+import TimelineContainer from '../containers/TimelineContainer';
 
 interface IProps extends WithRouterProps<any> {}
 
 const Timeline = (props: IProps) => (
   <PageTemplate>
-    <ContentLayout>
-      <EditorContainer />
-      <PostContainer />
-    </ContentLayout>
+    <TimelineContainer isTopSpace={true} />
   </PageTemplate>
 );
 
