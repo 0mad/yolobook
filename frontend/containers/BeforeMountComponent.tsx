@@ -2,9 +2,9 @@ import { inject, observer } from 'mobx-react';
 import React from 'react';
 import * as AuthAPI from '../api/auth';
 import storage from '../lib/storage';
-import Router from 'next/router';
+import Router, { withRouter, WithRouterProps } from 'next/router';
 
-interface IProps {
+interface IProps extends WithRouterProps {
   userStore?: any;
 }
 
@@ -31,13 +31,16 @@ class BeforeMountComponent extends React.Component<IProps> {
   };
 
   private checkUserInfo = async () => {
-    const { userStore } = this.props;
+    const { userStore, router } = this.props;
+    const { pathname } = router;
     try {
       const { data } = await AuthAPI.checkStatus();
       userStore.setLoggedInfo(data);
     } catch (error) {
       userStore.logout();
-      Router.push({ pathname: '/' });
+      setTimeout(() => {
+        Router.push({ pathname: '/' })
+      }, pathname === '/login' ? 1000: 0);
     }
   };
 
@@ -50,4 +53,4 @@ class BeforeMountComponent extends React.Component<IProps> {
   }
 }
 
-export default BeforeMountComponent;
+export default withRouter(BeforeMountComponent);
