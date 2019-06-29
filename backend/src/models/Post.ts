@@ -47,6 +47,7 @@ export class Post extends Model<Post> {
         username,
       },
       imgs: newImgs,
+      createdAt: this.createdAt
     };
   }
 }

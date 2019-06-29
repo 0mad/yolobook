@@ -1,4 +1,5 @@
 $header-height: 44px;
+$header-content: " ";
 
 .viewer {
   position: fixed;
@@ -6,33 +7,47 @@ $header-height: 44px;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
   background-color: black;
+  user-select: none;
   .header {
     @include media("<boundary") {
       position: static;
       padding: 0;
       text-align: center;
-      background-color: $oc-blue-8;
+      background-color: $oc-violet-9;
       .back-btn {
         position: absolute;
         display: flex;
         height: $header-height;
         padding-left: 5px;
-        align-items: center;
+        cursor: pointer;
         svg {
           font-size: 30px;
         }
+        align-items: center;
       }
       .title {
+        height: auto;
         font-size: 16px;
         font-weight: 600;
         line-height: $header-height;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
       }
     }
     position: fixed;
     padding: 20px 0 0 20px;
     font-size: 21px;
     color: white;
+  }
+
+  .title {
+    height: 4px;
+    box-shadow: 0px 0px 19px 8px rgba(0,0,0,0.85), inset 0px 0px 98px 0px rgba(0, 0, 0,.8);
+    -moz-box-shadow: 0px 0px 19px 8px rgba(0,0,0,0.85), inset 0px 0px 98px 0px rgba(0, 0, 0,.8);
+    -webkit-box-shadow: 0px 0px 19px 8px rgba(0,0,0,0.85), inset 0px 0px 98px 0px rgba(0, 0, 0,.8);
   }
 
   .content {

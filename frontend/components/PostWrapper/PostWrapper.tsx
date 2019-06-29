@@ -7,35 +7,37 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   posts: any;
+  onClickPhoto: any;
 }
 
-const renderPostItem = (post: object) => {
-  const { id } = post;
+const renderPostItem = (data: { post: object, onClickPhoto: any}) => {
+  const { post, onClickPhoto } = data;
+  const { id, user } = post;
   return (
     <li key={id} className={cx('post-item')}>
-      <Post post={post} />
-      <Comment user={post.user} />
+      <Post post={post} onClickPhoto={onClickPhoto}/>
+      <Comment user={user} />
     </li>
   );
 };
 
-const renderPostList = (posts: Array<object>) => {
+const renderPostList = (props: IProps) => {
+  const { posts, onClickPhoto } = props;
   if (!posts || posts.length === 0) {
     return false;
   }
   return (
     <ul className={cx('post-list')}>
-      {posts.map(post => renderPostItem(post))}
+      {posts.map(post => renderPostItem({ post, onClickPhoto }))}
     </ul>
   );
 };
 
 const PostWrapper = (props: IProps) => {
-  const { posts } = props;
   return (
     <div className={cx('post-wrapper')}>
       <p className={cx('post-list-label')}>게시물</p>
-      {renderPostList(posts)}
+      {renderPostList(props)}
     </div>
   );
 };

@@ -1,34 +1,44 @@
 import className from 'classnames/bind';
 import { IoIosChatboxes, IoIosShareAlt, IoIosThumbsUp } from 'react-icons/io';
+import Link from 'next/link';
 import style from './Post.scss';
-import Gallery from './PostGallery';
+import PostGallery from './PostGallery';
+import getCoolDate from '../../utils/getCoolDate';
 
 const cx = className.bind(style);
 
 interface IProps {
   post: any;
+  onClickPhoto: any;
 }
 
 const Post = (props: IProps) => {
   const {
     post: {
       content,
+      createdAt,
       imgs,
-      user: { thumbnail, username },
+      user: { thumbnail, username, id }
     },
+    onClickPhoto
   } = props;
+  
   return (
     <div className={cx('post')}>
       <div className={cx('post-header')}>
-        <img className={cx('user-photo')} src={thumbnail} />
+        <Link href={`/profile/timeline/${id}`}>
+          <img className={cx('user-photo')} src={thumbnail} />
+        </Link>
         <div className={cx('meta-data')}>
-          <a className={cx('user-name')}>{username}</a>
-          <span className={cx('created-time')}>10시간</span>
+          <Link href={`/profile/timeline/${id}`}>
+            <p className={cx('user-name')}>{username}</p>
+          </Link>
+          <span className={cx('created-time')}>{getCoolDate(createdAt)}</span>
         </div>
       </div>
       <div className={cx('post-body')}>
         <pre className={cx('post-content')}>{content}</pre>
-        <Gallery photoList={imgs} />
+        <PostGallery images={imgs} onClickPhoto={onClickPhoto} username={username}/>
       </div>
 
       <div className={cx('post-footer')}>

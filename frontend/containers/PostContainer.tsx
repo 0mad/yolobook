@@ -5,13 +5,14 @@ import * as PostAPI from '../api/post';
 
 interface IProps {
   postStore?: any;
+  viewerStore?: any;
 }
 interface IState {
   user: any;
   posts: any[];
 }
 
-@inject('postStore')
+@inject('postStore', 'viewerStore')
 @observer
 class PostContainer extends Component<IProps, IState> {
 
@@ -29,7 +30,18 @@ class PostContainer extends Component<IProps, IState> {
     const {
       postStore: { posts },
     } = this.props;
-    return !!posts && !!posts.length ? <PostWrapper posts={posts} /> : false;
+    return !!posts && !!posts.length 
+      ? (
+        <PostWrapper 
+          posts={posts} 
+          onClickPhoto={this.handleClickPhoto}
+        /> 
+      ) : false;
+  }
+
+  public handleClickPhoto = (data: { currentIndex: number, images: any[], username: string }) => {
+    const { viewerStore } = this.props;
+    viewerStore.setViewerData(data)
   }
 }
 

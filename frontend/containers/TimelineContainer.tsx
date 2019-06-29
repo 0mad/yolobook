@@ -5,6 +5,7 @@ import EditorContainer from './EditorContainer';
 import PostContainer from './PostContainer';
 import { withRouter } from 'next/router';
 import UserStore from '../stores/modules/UserStore';
+import ViewerContainer from '../containers/ViewerContainer';
 
 interface IProps {
   children: any;
@@ -34,6 +35,7 @@ class TimelineContainer extends Component<IProps> {
       <TimeLine isTopSpace={!!logged && isTopSpace}>
         {editor}
         <PostContainer />
+        <ViewerContainer />
       </TimeLine>
     );
   }
