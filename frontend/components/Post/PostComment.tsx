@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
-import styles from './Comment.scss';
-import CommentEditor from './CommentEditor';
-import CommentItem from './CommentItem';
+import PostCommentItem from './PostCommentItem';
+import styles from './PostComment.scss';
 
 const cx = classNames.bind(styles);
 
 interface IProps {
-  user: any;
+  // user: any;
   commentData?: any[];
   onClickLike?: () => void;
   onClickReply?: () => void;
@@ -20,7 +19,7 @@ const renderReplyList = ({ replyData, onClickLike, onClickReply, user }) => {
     <div className={cx('reply-area')}>
       <ol className={cx('reply-list')}>
         {replyData.map(comment => (
-          <CommentItem
+          <PostCommentItem
             comment={comment}
             reply={true}
             onClickLike={onClickLike}
@@ -29,7 +28,7 @@ const renderReplyList = ({ replyData, onClickLike, onClickReply, user }) => {
           />
         ))}
       </ol>
-      <CommentEditor user={user} reply={true} />
+      <PostCommentEditor user={user} reply={true} />
     </div>
   );
 };
@@ -43,7 +42,7 @@ const renderCommentList = ({
     <ol className={cx('comment-list')}>
       {commentData.map(comment => {
         return (
-          <CommentItem
+          <PostCommentItem
             comment={comment}
             onClickLike={onClickLike}
             onClickReply={onClickReply}
@@ -55,21 +54,23 @@ const renderCommentList = ({
               replyData: comment.replys,
               user,
             })}
-          </CommentItem>
+          </PostCommentItem>
         );
       })}
     </ol>
   );
 };
 
-const Comment = (props: IProps) => {
-  const { user } = props;
+const PostComment = (props: IProps) => {
+  // const { user } = props;
+
   return (
-    <div className={cx('comment')}>
+    <div className={cx('post-comment')}>
+      {/* <PostCommentEditor /> */}
       {/* {renderCommentList(props)} */}
-      <CommentEditor user={user} />
+      {/* <PostCommentEditor user={user} /> */}
     </div>
   );
 };
 
-export default Comment;
+export default PostComment;
