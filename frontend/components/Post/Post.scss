@@ -1,6 +1,8 @@
 .post {
-  padding: .8rem 0;
+  padding: 0;
+  padding-top: 12px;
   background-color: white;
+  border: solid 1px $oc-gray-3;
   border-radius: 3px;
 }
 
@@ -21,9 +23,10 @@
     
     .user-name {
       height: 50%;
+      font-size: 14px;
       font-weight: 800;
       line-height: 1.5;
-      color: $oc-indigo-9;
+      color: $oc-violet-9;
     
       cursor: pointer;
       &:hover {
@@ -32,12 +35,9 @@
     }
     .created-time {
       height: 50%;
-      font-size: .8rem;
-      font-weight: 600;
-      line-height: 1.5;
-      color: $oc-gray-8;
+      font-size: 12px;
+      color: $oc-gray-7;
 
-      cursor: pointer;
       &:hover {
         text-decoration: underline;
       }
@@ -58,68 +58,64 @@
   padding: 0 .7rem;
   font-size: 12px;
   color: $oc-gray-8;
-  border-bottom: 1px solid $oc-gray-4;
   
-  .score-board {
-    height: 2.5rem;
-    line-height: 2.5;
-    border-bottom: 1px solid $oc-gray-4;
+  .score-info {
+    display: flex;
+    min-height: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid $oc-gray-3;
+    align-items: center;
+    justify-content: space-between;
 
-    .score-like {
-      float: left;
-      cursor: pointer;
+    .score-info-item {
+      display: inline-flex;
+      align-items: center;
     }
-    .score-comment {
-      float: right;
-      margin-right: .5rem;
-      cursor: pointer;
+    .score-info-item + .score-info-item {
+      margin-left: 6px;
     }
-    .score-share {
-      float: right;
+
+    .score-info-like {
+      svg {
+        font-size: 15px;
+      }
+      svg + span {
+        margin-left: 3px;
+      }
+    }
+
+    .score-info-comment {
       cursor: pointer;
     }
   }
 
-  .interaction {
+  .more-list {
     display: flex;
-    height: 2.5rem;
-    font-size: 13px;
-    line-height: 2.5;
-    text-align: center;
-    
-    svg {
-      margin-right: .2rem;
-      font-size: 1.4rem;
-      vertical-align: middle;
-    }
-
+    height: 42px;
     align-items: center;
-    .button-like {
-      height: 100%;
-      cursor: pointer;
-      flex: 1;
+
+    .more-item {
       &:hover {
         background-color: $oc-gray-1;
+        border-radius: 3px;
       }
-    }
-    .button-comment {
-      height: 100%;
+
+      display: flex;
+      height: 32px;
       cursor: pointer;
       flex: 1;
-      &:hover {
-        background-color: $oc-gray-1;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        font-size: 18px;
+        vertical-align: middle;
       }
-    }
-    .button-share {
-      height: 100%;
-      cursor: pointer;
-      flex: 1;
-      &:hover {
-        background-color: $oc-gray-1;
+      svg + span {
+        margin-left: 5px;
       }
     }
   }
 }
-
 
 

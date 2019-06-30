@@ -1,0 +1,69 @@
+.post-comment-item {
+  display: flex;
+  font-size: 13px;
+  .profile {
+    width: 32px;
+    height: 32px;
+    margin-right: 6px;
+    cursor: pointer;
+    border-radius: 100%;
+    &-reply {
+      width: 20px;
+      height: 20px;
+      margin-top: 10px;
+    }
+  }
+  .wrap-content {
+    position: relative;
+    .content {
+      background-color: $oc-gray-1;
+      padding: 8px 10px;
+      border-radius: 20px;
+      color: $oc-gray-9;
+      .username {
+        font-weight: 600;
+        color: $oc-violet-9;
+        cursor: pointer;
+      }
+      span + span {
+        margin-left: 4px;
+      }
+    }
+    .like-badge {
+      position: absolute;
+      display: flex;
+      background-color: white;
+      border-radius: 30px;
+      border: 1px solid $oc-gray-2;
+      font-size: 12px;
+      padding: 4px 4px;
+      align-items: center;
+      line-height: 0;
+      right: 0;
+      &-hide {
+        display: none;
+      }
+      svg {
+        color: $oc-violet-9;
+      }
+      svg + span{
+        margin-left : 3px;
+      }
+    }
+    .interaction {
+      font-size: 12px;
+      margin-left: 11px;
+      margin-top: 3px;
+      .like, .comment {
+        color: $oc-violet-9;
+        cursor: pointer;
+      }
+      .date {
+        color: $oc-gray-8;
+      }
+      span + span {
+        margin-left: 5px;
+      }
+    }
+  }
+}

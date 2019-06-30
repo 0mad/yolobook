@@ -1,5 +1,4 @@
 import classNames from 'classnames/bind';
-import Comment from '../Comment';
 import Post from '../Post';
 import styles from './PostWrapper.scss';
 
@@ -10,13 +9,12 @@ interface IProps {
   onClickPhoto: any;
 }
 
-const renderPostItem = (data: { post: object, onClickPhoto: any}) => {
+const renderPostItem = (data: { post: object; onClickPhoto: any }) => {
   const { post, onClickPhoto } = data;
   const { id, user } = post;
   return (
     <li key={id} className={cx('post-item')}>
-      <Post post={post} onClickPhoto={onClickPhoto}/>
-      <Comment user={user} />
+      <Post post={post} onClickPhoto={onClickPhoto} />
     </li>
   );
 };

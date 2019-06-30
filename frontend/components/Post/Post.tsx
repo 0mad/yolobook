@@ -1,9 +1,18 @@
 import className from 'classnames/bind';
-import { IoIosChatboxes, IoIosShareAlt, IoIosThumbsUp } from 'react-icons/io';
+import { IoIosThumbsUp } from 'react-icons/io';
+import {
+  FaThumbsUp,
+  FaRegThumbsUp,
+  FaComments,
+  FaRegComments,
+  FaShareSquare,
+  FaRegShareSquare,
+} from 'react-icons/fa';
 import Link from 'next/link';
 import style from './Post.scss';
 import PostGallery from './PostGallery';
 import getCoolDate from '../../utils/getCoolDate';
+import PostComment from './PostComment';
 
 const cx = className.bind(style);
 
@@ -18,11 +27,11 @@ const Post = (props: IProps) => {
       content,
       createdAt,
       imgs,
-      user: { thumbnail, username, id }
+      user: { thumbnail, username, id },
     },
-    onClickPhoto
+    onClickPhoto,
   } = props;
-  
+
   return (
     <div className={cx('post')}>
       <div className={cx('post-header')}>
@@ -37,34 +46,43 @@ const Post = (props: IProps) => {
         </div>
       </div>
       <div className={cx('post-body')}>
-        <pre className={cx('post-content')}>{content}</pre>
-        <PostGallery images={imgs} onClickPhoto={onClickPhoto} username={username}/>
+        <div className={cx('post-content')}>{content}</div>
+        <PostGallery
+          images={imgs}
+          onClickPhoto={onClickPhoto}
+          username={username}
+        />
       </div>
 
       <div className={cx('post-footer')}>
-        <div className={cx('score-board')}>
-          <span className={cx('score-like')}>
+        <div className={cx('score-info')}>
+          <div className={cx('score-info-item', 'score-info-like')}>
             <IoIosThumbsUp />
-            78명
-          </span>
-          <span className={cx('score-share')}>공유 7회</span>
-          <span className={cx('score-comment')}>댓글 81개</span>
+            <span>78명</span>
+          </div>
+          <div>
+            <div className={cx('score-info-item')}>공유 7회</div>
+            <div className={cx('score-info-item', 'score-info-comment')}>
+              댓글 81개
+            </div>
+          </div>
         </div>
-        <ul className={cx('interaction')}>
-          <li className={cx('button-like')}>
-            <IoIosThumbsUp />
-            좋아요
+        <ul className={cx('more-list')}>
+          <li className={cx('more-item')}>
+            <FaRegThumbsUp />
+            <span>좋아요</span>
           </li>
-          <li className={cx('button-comment')}>
-            <IoIosChatboxes />
-            댓글
+          <li className={cx('more-item')}>
+            <FaRegComments />
+            <span>댓글</span>
           </li>
-          <li className={cx('button-share')}>
-            <IoIosShareAlt />
-            공유하기
+          <li className={cx('more-item')}>
+            <FaRegShareSquare />
+            <span>공유하기</span>
           </li>
         </ul>
       </div>
+      <PostComment />
     </div>
   );
 };
