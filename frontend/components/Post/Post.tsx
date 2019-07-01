@@ -1,4 +1,12 @@
+import { useState } from 'react';
 import className from 'classnames/bind';
+import Link from 'next/link';
+import style from './Post.scss';
+import PostGallery from './PostGallery';
+import getCoolDate from '../../utils/getCoolDate';
+import PostComments from './PostComments';
+import PostCommentEditor from './PostCommentEditor';
+import PostCommentItem from './PostCommentItem';
 import { IoIosThumbsUp } from 'react-icons/io';
 import {
   FaThumbsUp,
@@ -8,44 +16,46 @@ import {
   FaShareSquare,
   FaRegShareSquare,
 } from 'react-icons/fa';
-import Link from 'next/link';
-import style from './Post.scss';
-import PostGallery from './PostGallery';
-import getCoolDate from '../../utils/getCoolDate';
-import PostComment from './PostComment';
 
 const cx = className.bind(style);
 
 interface IProps {
   post: any;
-  onClickPhoto: any;
+  onClickPhoto: Function;
+  onCommentSubmit: Function;
+  onReplyCommentSubmit: Function;
 }
 
 const Post = (props: IProps) => {
   const {
     post: {
+      id: postId,
       content,
       createdAt,
       imgs,
-      user: { thumbnail, username, id },
+      user: { thumbnail, username, id: userId },
+      comments,
     },
     onClickPhoto,
+    onCommentSubmit,
+    onReplyCommentSubmit,
   } = props;
+  const [isShowComment, setIsShowComment] = useState(!!comments.length);
 
   return (
     <div className={cx('post')}>
-      <div className={cx('post-header')}>
-        <Link href={`/profile/timeline/${id}`}>
+      <div className={cx('header')}>
+        <Link href={`/profile/timeline/${userId}`}>
           <img className={cx('user-photo')} src={thumbnail} />
         </Link>
         <div className={cx('meta-data')}>
-          <Link href={`/profile/timeline/${id}`}>
+          <Link href={`/profile/timeline/${userId}`}>
             <p className={cx('user-name')}>{username}</p>
           </Link>
           <span className={cx('created-time')}>{getCoolDate(createdAt)}</span>
         </div>
       </div>
-      <div className={cx('post-body')}>
+      <div className={cx('body')}>
         <div className={cx('post-content')}>{content}</div>
         <PostGallery
           images={imgs}
@@ -54,7 +64,7 @@ const Post = (props: IProps) => {
         />
       </div>
 
-      <div className={cx('post-footer')}>
+      <div className={cx('footer')}>
         <div className={cx('score-info')}>
           <div className={cx('score-info-item', 'score-info-like')}>
             <IoIosThumbsUp />
@@ -72,7 +82,10 @@ const Post = (props: IProps) => {
             <FaRegThumbsUp />
             <span>좋아요</span>
           </li>
-          <li className={cx('more-item')}>
+          <li
+            className={cx('more-item')}
+            onClick={() => setIsShowComment(true)}
+          >
             <FaRegComments />
             <span>댓글</span>
           </li>
@@ -82,7 +95,15 @@ const Post = (props: IProps) => {
           </li>
         </ul>
       </div>
-      <PostComment />
+      <div className={cx('comments', !isShowComment && 'comments-hide')}>
+        <PostCommentEditor
+          parentId={postId}
+          userId={userId}
+          thumbnail={thumbnail}
+          onSubmit={onCommentSubmit}
+        />
+        {/* PostComments */}
+      </div>
     </div>
   );
 };

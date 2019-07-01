@@ -4,118 +4,124 @@
   background-color: white;
   border: solid 1px $oc-gray-3;
   border-radius: 3px;
-}
 
-.post-header {
-  padding: 0 .8rem;
-  .user-photo {
-    width: 3rem;
-    height: 3rem;
-    vertical-align: top;
-    cursor: pointer;
-    border-radius: 2rem;
-  }
-  .meta-data {
-    display: inline-flex;
-    height: 3rem;
-    padding: 0 .5rem;
-    flex-direction: column;
-    
-    .user-name {
-      height: 50%;
-      font-size: 14px;
-      font-weight: 800;
-      line-height: 1.5;
-      color: $oc-violet-9;
-    
+  .header {
+    padding: 0 .8rem;
+    .user-photo {
+      width: 3rem;
+      height: 3rem;
+      vertical-align: top;
       cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
+      border-radius: 2rem;
     }
-    .created-time {
-      height: 50%;
-      font-size: 12px;
-      color: $oc-gray-7;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.post-body {
-  .post-content {
-    width: 100%;
-    padding: .8rem;
-    font-size: 14px;
-    border: none;
-  }
-}
-
-.post-footer {
-  padding: 0 .7rem;
-  font-size: 12px;
-  color: $oc-gray-8;
-  
-  .score-info {
-    display: flex;
-    min-height: 18px;
-    padding: 10px 0;
-    border-bottom: 1px solid $oc-gray-3;
-    align-items: center;
-    justify-content: space-between;
-
-    .score-info-item {
+    .meta-data {
       display: inline-flex;
-      align-items: center;
-    }
-    .score-info-item + .score-info-item {
-      margin-left: 6px;
-    }
+      height: 3rem;
+      padding: 0 .5rem;
+      flex-direction: column;
 
-    .score-info-like {
-      svg {
-        font-size: 15px;
-      }
-      svg + span {
-        margin-left: 3px;
-      }
-    }
+      .user-name {
+        height: 50%;
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.5;
+        color: $oc-violet-9;
 
-    .score-info-comment {
-      cursor: pointer;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .created-time {
+        height: 50%;
+        font-size: 12px;
+        color: $oc-gray-7;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
-  .more-list {
-    display: flex;
-    height: 42px;
-    align-items: center;
+  .body {
+    .post-content {
+      width: 100%;
+      padding: .8rem;
+      font-size: 14px;
+      border: none;
+    }
+  }
 
-    .more-item {
-      &:hover {
-        background-color: $oc-gray-1;
-        border-radius: 3px;
+  .footer {
+    padding: 0 .7rem;
+    font-size: 12px;
+    color: $oc-gray-8;
+
+    .score-info {
+      display: flex;
+      min-height: 18px;
+      padding: 10px 0;
+      border-bottom: 1px solid $oc-gray-3;
+      align-items: center;
+      justify-content: space-between;
+
+      .score-info-item {
+        display: inline-flex;
+        align-items: center;
+      }
+      .score-info-item + .score-info-item {
+        margin-left: 6px;
       }
 
+      .score-info-like {
+        svg {
+          font-size: 15px;
+        }
+        svg + span {
+          margin-left: 3px;
+        }
+      }
+
+      .score-info-comment {
+        cursor: pointer;
+      }
+    }
+
+    .more-list {
       display: flex;
-      height: 32px;
-      cursor: pointer;
-      flex: 1;
-      justify-content: center;
+      height: 42px;
       align-items: center;
 
-      svg {
-        font-size: 18px;
-        vertical-align: middle;
+      .more-item {
+        &:hover {
+          background-color: $oc-gray-1;
+          border-radius: 3px;
+        }
+
+        display: flex;
+        height: 32px;
+        cursor: pointer;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+          font-size: 18px;
+          vertical-align: middle;
+        }
+        svg + span {
+          margin-left: 5px;
+        }
       }
-      svg + span {
-        margin-left: 5px;
-      }
+    }
+  }
+
+  .comments {
+    padding: 4px 0;
+    border-top: solid 1px $oc-gray-3;
+    &-hide {
+      display: none;
     }
   }
 }
-
-

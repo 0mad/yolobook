@@ -10,15 +10,25 @@ const cx = classNames.bind(styles);
 interface IProps {
   reply?: boolean;
   id: string;
-  profile: string;
+  thumbnail: string;
   username: string;
   content: string;
   likeCnt?: string;
   createdAt: string;
+  onClickReply: any;
 }
 
 const PostCommentItem = (props: IProps) => {
-  const { reply, id, profile, username, content, likeCnt, createdAt } = props;
+  const {
+    reply,
+    id,
+    thumbnail,
+    username,
+    content,
+    likeCnt,
+    createdAt,
+    onClickReply,
+  } = props;
 
   return (
     <div className={cx('post-comment-item')}>
@@ -26,7 +36,7 @@ const PostCommentItem = (props: IProps) => {
         <Link href={`/profile/timeline/${id}`}>
           <img
             className={cx('profile', reply && 'profile-reply')}
-            src={profile}
+            src={thumbnail}
           />
         </Link>
       </div>
@@ -44,7 +54,9 @@ const PostCommentItem = (props: IProps) => {
 
         <div className={cx('interaction')}>
           <span className={cx('like')}>좋아요</span>
-          <span className={cx('comment')}>답글 달기</span>
+          <span className={cx('comment')} onClick={onClickReply}>
+            답글 달기
+          </span>
           <span className={cx('date')}> {getCoolDate(createdAt)}</span>
         </div>
       </div>
