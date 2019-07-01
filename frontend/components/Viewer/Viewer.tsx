@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   isMobileMode: boolean;
-  images: string[];
+  images: any[];
   currentIndex: number;
   onMoveNext: any;
   onMovePrev: any;

@@ -7,7 +7,7 @@ const post = express.Router();
 
 post.post('/img', multerUpload.array('imgs'), PostController.uploadImg);
 post.get('/', PostController.getPosts);
-post.get('/:id', PostController.getPost);
+post.get('/:userId', PostController.getUserPosts);
 post.post('/', isLoggedIn, PostController.wrtiePost);
 post.get('/hashtag', PostController.getPostsWithHashTag);
 post.get('/:id/comments', PostController.getComments);

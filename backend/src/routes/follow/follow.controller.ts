@@ -11,17 +11,17 @@ class FollowController {
     next: express.NextFunction
   ) => {
     const { user: { profile } } = req.body;
-    const targetId = parseInt(req.params.targetId);
+    const userId = parseInt(req.params.userId);
     const me = profile.id;
-    if (me === targetId) {
+    if (me === userId) {
       res.sendStatus(500);
     }
     try {
       const existing = await Follow.findOne({
         where: {
           [Op.or]: [
-            { followingId: targetId, followerId: me },
-            { followingId: me, followerId: targetId },
+            { followingId: userId, followerId: me },
+            { followingId: me, followerId: userId },
           ]
         }
       });
@@ -35,7 +35,7 @@ class FollowController {
     try {
       await Follow.create({
         followerId: me,
-        followingId: targetId
+        followingId: userId
       });
     } catch (error) {
       next(error);
@@ -140,6 +140,44 @@ class FollowController {
     const status = result === 1 ? 200 : 500;
     return res.sendStatus(status);
   };
+
+
+  public getAcceptedFollowList = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const userId = parseInt(req.params.userId);
+    let followList: any[] = [];
+    try {
+      followList = await Follow.findAll({
+        attributes: ['id', 'createdAt'],
+        include: [
+          { association: 'following', attributes: ['id', 'username', 'thumbnail'] },
+          { association: 'follower', attributes: ['id', 'username', 'thumbnail'] }
+        ],
+        where: {
+          [Op.or]: [
+            { followerId: userId },
+            { followingId: userId }
+          ],
+          status: 'ACCEPTED'
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+
+    if (followList.length > 0) {
+      followList = followList.map(follow => ({
+        id: follow.id,
+        profile: follow.following.id === userId ? follow.follower : follow.following
+      }));
+    }
+
+    res.send(followList);
+    return res;
+  }
 
   public getFollowList = async (
     req: express.Request,
