@@ -1,5 +1,6 @@
 .post-comment-item {
   display: flex;
+  padding: 4px 12px;
   font-size: 13px;
   .profile {
     width: 32px;
@@ -16,10 +17,10 @@
   .wrap-content {
     position: relative;
     .content {
-      background-color: $oc-gray-1;
       padding: 8px 10px;
-      border-radius: 20px;
       color: $oc-gray-9;
+      background-color: $oc-gray-1;
+      border-radius: 20px;
       .username {
         font-weight: 600;
         color: $oc-violet-9;
@@ -31,15 +32,15 @@
     }
     .like-badge {
       position: absolute;
-      display: flex;
-      background-color: white;
-      border-radius: 30px;
-      border: 1px solid $oc-gray-2;
-      font-size: 12px;
-      padding: 4px 4px;
-      align-items: center;
-      line-height: 0;
       right: 0;
+      display: flex;
+      padding: 4px 4px;
+      font-size: 12px;
+      line-height: 0;
+      background-color: white;
+      border: 1px solid $oc-gray-2;
+      border-radius: 30px;
+      align-items: center;
       &-hide {
         display: none;
       }
@@ -51,9 +52,9 @@
       }
     }
     .interaction {
-      font-size: 12px;
-      margin-left: 11px;
       margin-top: 3px;
+      margin-left: 11px;
+      font-size: 12px;
       .like, .comment {
         color: $oc-violet-9;
         cursor: pointer;

@@ -6,22 +6,22 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   reply?: boolean;
-  id: string;
-  profile: string;
+  parentId: string;
+  userId: string;
+  thumbnail: string;
   onSubmit: Function;
 }
 
 const PostCommentEditor = (props: IProps) => {
-  const { reply, id, profile, onSubmit } = props;
-
+  const { reply, parentId, userId, thumbnail, onSubmit } = props;
   const [value, setValue] = useState('');
 
   return (
     <div className={cx('post-comment-editor')}>
-      <Link href={`/profile/timeline/${id}`}>
+      <Link href={`/profile/timeline/${userId}`}>
         <img
           className={cx('profile', reply && 'profile-reply')}
-          src={profile}
+          src={thumbnail}
         />
       </Link>
       <div className={cx('form')}>
@@ -35,7 +35,7 @@ const PostCommentEditor = (props: IProps) => {
         <button
           className={cx('submit')}
           onClick={() => {
-            onSubmit(value);
+            onSubmit({ parentId, value });
           }}
         >
           달기
