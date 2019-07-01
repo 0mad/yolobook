@@ -36,12 +36,24 @@ class UserController {
   };
 
   // 특정 사용자 아이디의 게시글 리스트 가져오기
-  public getPost = async (
+  public getUserPosts = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('특정 사용자 아이디의 게시글 리스트 가져오기');
+    const { userId } = req.params;
+    const posts = await Post.findAll({
+      include: [Account, PostImage],
+      order: [['createdAt', 'DESC']],
+      where: {
+        accountId: userId
+      }
+    });
+    const data: any = [];
+    posts.forEach((post: any) => {
+      data.push(post.info);
+    });
+    res.json(data);
   };
 
   // 게시글 작성

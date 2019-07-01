@@ -7,8 +7,12 @@ storiesOf('Friend', module)
     const friendList = [];
     for (let i = 0; i < 30; i++) {
       friendList.push({
-        img: 'http://placekitten.com/1000/1000',
-        name: '문태민',
+        id: i,
+        profile: {
+          thumbnail: 'http://placekitten.com/1000/1000',
+          username: '문태민',
+          userId: i
+        },
         cnt: '1000',
       });
     }
@@ -24,7 +28,7 @@ storiesOf('Friend', module)
     const cnt = '1000';
     return (
       <div style={{ padding: '20px', backgroundColor: 'white' }}>
-        <FriendItem img={img} name={name} cnt={cnt} />
+        <FriendItem thumbnail={img} username={name} cnt={cnt} userId={1} />
       </div>
     );
   });

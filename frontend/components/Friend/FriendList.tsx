@@ -42,13 +42,16 @@ const FriendList = ({ isMobileMode, friendList }: IProps) => {
       <ul className={cx('list')}>
         {friendList.map(
           (
-            data: { img: string; name: string; cnt: string },
+            data: { id: number, profile: { thumbnail: string, username: string, id: string } },
             index: string | number | undefined
-          ) => (
-            <li key={index} className={cx('item')}>
-              <FriendItem img={data.img} name={data.name} cnt={data.cnt} />
-            </li>
-          )
+          ) => {
+            const profile = data.profile
+            return (
+              <li key={index} className={cx('item')}>
+                <FriendItem thumbnail={profile.thumbnail} username={profile.username} userId={profile.id} />
+              </li>
+            )
+          }
         )}
       </ul>
     </div>
