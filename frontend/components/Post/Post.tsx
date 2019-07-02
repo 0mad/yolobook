@@ -6,14 +6,11 @@ import PostGallery from './PostGallery';
 import getCoolDate from '../../utils/getCoolDate';
 import PostComments from './PostComments';
 import PostCommentEditor from './PostCommentEditor';
-import PostCommentItem from './PostCommentItem';
 import { IoIosThumbsUp } from 'react-icons/io';
 import {
   FaThumbsUp,
   FaRegThumbsUp,
-  FaComments,
   FaRegComments,
-  FaShareSquare,
   FaRegShareSquare,
 } from 'react-icons/fa';
 
@@ -22,18 +19,25 @@ const cx = className.bind(style);
 interface IProps {
   post: any;
   onClickPhoto: Function;
+  onLikeToggleClick: Function;
   onCommentSubmit: Function;
+  onCommentLikeToggleClick: Function;
   onReplyCommentSubmit: Function;
+  onReplyCommentLikeToggleClick: Function;
 }
 
 const Post = (props: IProps) => {
   const {
-    post: { id: postId, content, createdAt, imgs, user, comments, likeCnt },
+    post,
     onClickPhoto,
+    onLikeToggleClick,
     onCommentSubmit,
+    onCommentLikeToggleClick,
     onReplyCommentSubmit,
+    onReplyCommentLikeToggleClick,
   } = props;
-  const { thumbnail, username, id: userId } = user;
+  const { content, createdAt, imgs, profile, comments, likeCnt, isLike } = post;
+  const { thumbnail, username, id: userId } = profile;
 
   const [isShowComment, setIsShowComment] = useState(!!comments.length);
 
@@ -77,8 +81,13 @@ const Post = (props: IProps) => {
           </div>
         </div>
         <ul className={cx('more-list')}>
-          <li className={cx('more-item')}>
-            <FaRegThumbsUp />
+          <li
+            className={cx('more-item', isLike === 'true' && 'like-did')}
+            onClick={() => {
+              onLikeToggleClick({ post, isLike: !(isLike === 'true') });
+            }}
+          >
+            {isLike ? <FaThumbsUp /> : <FaRegThumbsUp />}
             <span>좋아요</span>
           </li>
           <li
@@ -98,14 +107,15 @@ const Post = (props: IProps) => {
       </div>
       <div className={cx('comments', !isShowComment && 'comments-hide')}>
         <PostComments
-          user={user}
+          profile={profile}
           comments={comments}
+          onCommentLikeToggleClick={onCommentLikeToggleClick}
           onReplyCommentSubmit={onReplyCommentSubmit}
+          onReplyCommentLikeToggleClick={onReplyCommentLikeToggleClick}
         />
         <PostCommentEditor
-          parentId={postId}
-          userId={userId}
-          thumbnail={thumbnail}
+          parent={post}
+          profile={profile}
           onSubmit={onCommentSubmit}
         />
       </div>

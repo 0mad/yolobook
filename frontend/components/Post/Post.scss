@@ -114,6 +114,12 @@
           margin-left: 5px;
         }
       }
+      .like {
+        &-did {
+          font-weight: 600;
+          color: $oc-violet-9;
+        }
+      }
     }
   }
 
