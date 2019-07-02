@@ -15,9 +15,13 @@ interface IProps {
   username: string;
   isMyProfile: boolean;
   onClickFollow?: void;
+  onClickAcceptFollow?: void;
+  onClickRejectFollow?: void;
+  onClickCancelFollow?: void;
   onCoverImgsChange?: void;
   onThumbnailImgsChange?: void;
   userId: number;
+  friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED'
 }
 
 const Banner = ({
@@ -27,9 +31,13 @@ const Banner = ({
   username,
   isMyProfile,
   onClickFollow,
+  onClickAcceptFollow,
+  onClickRejectFollow,
+  onClickCancelFollow,
   onCoverImgsChange,
   onThumbnailImgsChange,
-  userId
+  userId,
+  friendShip
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
@@ -63,6 +71,61 @@ const Banner = ({
   const handleThumbnailClick = () => {
     uploadThumbnailImgEl.click();
   };
+
+  const renderFriendShipButton = (friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED') => {
+    const defaultButtonObj = {
+      onClick: () => null,
+      text: '',
+      disable: false,
+    }
+    let buttonMetaObj = {};
+
+    if (userId === -1 || isMyProfile || friendShip === 'REJECTED') {
+      return false;
+    } else if (friendShip === 'NOTHING') {
+      buttonMetaObj = {
+        onClick: onClickFollow,
+        text: '친구 추가'
+      };
+    } else if (friendShip === 'ACCEPTED') {
+      buttonMetaObj = {
+        disable: true,
+        text: '친구'
+      };
+    } else if (friendShip === 'FOLLOWER') {
+      buttonMetaObj = {
+        onClick: onClickAcceptFollow,
+        text: '친구 승인'
+      };
+    } else if (friendShip === 'FOLLOWING') {
+      buttonMetaObj = {
+        onClick: onClickCancelFollow,
+        text: '친구 요청 취소'
+      };
+    }
+    buttonMetaObj = {
+      ...defaultButtonObj,
+      ...buttonMetaObj
+    }
+    return (
+      <>
+        <div className={cx('friendship-button')}>
+          <Button inline disabled={buttonMetaObj.disable} onClick={buttonMetaObj.onClick} href={buttonMetaObj.href}>
+            <IoIosPersonAdd />
+            <span>{buttonMetaObj.text}</span>
+          </Button>
+        </div>
+        {friendShip === 'FOLLOWER' && (
+          <div className={cx('friendship-reject-button')}>
+            <Button inline theme='pink' onClick={onClickRejectFollow} style={{height: '38px'}}>
+              <span>친구 거절</span>
+            </Button>
+          </div>
+        )}
+      </>
+    )
+    return false;
+  }
 
   return (
     <div
@@ -138,14 +201,7 @@ const Banner = ({
       <div className={cx('username')}>
         <h1>{username}</h1>
       </div>
-      {!isMyProfile && (
-        <div className={cx('follow-button')}>
-          <Button inline onClick={onClickFollow}>
-            <IoIosPersonAdd />
-            <span>친구 추가</span>
-          </Button>
-        </div>
-      )}
+      {renderFriendShipButton(friendShip)}
       {!isMobileMode && (
         <nav className={cx('nav')}>
           <ul>

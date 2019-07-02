@@ -1,6 +1,13 @@
 import express from 'express';
 import { Op } from "sequelize";
+import { Account } from '../../models/Account';
 import { Follow } from '../../models/Follow';
+
+const Status = {
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  REQUESTING: 'REQUESTING',
+}
 
 class FollowController {
 
@@ -33,15 +40,26 @@ class FollowController {
     }
 
     try {
-      await Follow.create({
+      const follow = await Follow.create({
         followerId: me,
         followingId: userId
+      });
+      const following = await Account.findOne({
+        where: {
+          id: userId
+        }
+      });
+
+      res.json({
+        createdAt: follow.createdAt,
+        id: follow.id,
+        profile: following!.profile,
+        status: follow.status,
       });
     } catch (error) {
       next(error);
     }
-
-    return res.sendStatus(201);
+    return res;
   };
 
   // 팔로우 수락 
@@ -60,7 +78,7 @@ class FollowController {
         where: {
           followingId: me,
           id: followId,
-          status: "REQUESTING"
+          status: Status.REQUESTING
         }
       });
     } catch (error) {
@@ -73,7 +91,7 @@ class FollowController {
 
     try {
       follow.update({
-        status: 'ACCEPTED'
+        status: Status.ACCEPTED
       });
     } catch (error) {
       next(error);
@@ -106,7 +124,7 @@ class FollowController {
 
     try {
       follow.update({
-        status: 'REJECT'
+        status: Status.REJECTED
       });
     } catch (error) {
       next(error);
@@ -130,7 +148,7 @@ class FollowController {
         where: {
           followerId: me,
           id: followId,
-          status: 'REQUESTING'
+          status: Status.REQUESTING
         }
       });
     } catch (error) {
@@ -140,44 +158,6 @@ class FollowController {
     const status = result === 1 ? 200 : 500;
     return res.sendStatus(status);
   };
-
-
-  public getAcceptedFollowList = async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    const userId = parseInt(req.params.userId);
-    let followList: any[] = [];
-    try {
-      followList = await Follow.findAll({
-        attributes: ['id', 'createdAt'],
-        include: [
-          { association: 'following', attributes: ['id', 'username', 'thumbnail'] },
-          { association: 'follower', attributes: ['id', 'username', 'thumbnail'] }
-        ],
-        where: {
-          [Op.or]: [
-            { followerId: userId },
-            { followingId: userId }
-          ],
-          status: 'ACCEPTED'
-        }
-      });
-    } catch (error) {
-      next(error);
-    }
-
-    if (followList.length > 0) {
-      followList = followList.map(follow => ({
-        id: follow.id,
-        profile: follow.following.id === userId ? follow.follower : follow.following
-      }));
-    }
-
-    res.send(followList);
-    return res;
-  }
 
   public getFollowList = async (
     req: express.Request,
@@ -198,7 +178,6 @@ class FollowController {
             { followerId: profile.id },
             { followingId: profile.id }
           ],
-          status: 'REQUESTING'
         }
       });
     } catch (error) {
@@ -207,10 +186,15 @@ class FollowController {
 
     const followerList: any[] = [];
     const followingList: any[] = [];
+    const acceptedList: any[] = [];
 
     if (followList) {
       followList.forEach(follow => {
-        if (follow.follower.id === profile.id) {
+        if (follow.status === Status.ACCEPTED) {
+          acceptedList.push({
+            profile: follow.following.id === profile.id ? follow.follower : follow.following
+          });
+        } else if (follow.follower.id === profile.id) {
           followingList.push(follow);
         } else {
           followerList.push(follow);
@@ -219,8 +203,9 @@ class FollowController {
     }
 
     res.send({
+      acceptedList,
       followerList,
-      followingList
+      followingList,
     });
     return res;
   }

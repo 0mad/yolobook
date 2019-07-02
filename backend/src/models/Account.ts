@@ -48,6 +48,7 @@ export class Account extends Model<Account> {
   public get profile(): object {
     return {
       coverImg: this.coverImg,
+      description: this.description,
       id: this.id,
       thumbnail: this.thumbnail,
       username: this.username,

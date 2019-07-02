@@ -93,12 +93,9 @@ const LoginedHeader = (props: IProps) => {
       )}
       {
         <ul className={cx('toggle-menu')}>
-          <ToggleMenu onClick={onLogout}>
-            <IoIosLogOut />
-          </ToggleMenu>
           {isMobileMode && (
             <>
-              <ToggleMenu href={profile ? `/profile/timeline/${profile.id}` : `/`}>
+              <ToggleMenu href="/">
                 <IoIosFiling />
               </ToggleMenu>
               <ToggleMenu onClick={toggleSearch}>
@@ -108,6 +105,9 @@ const LoginedHeader = (props: IProps) => {
           )}
           <ToggleMenu href="/follow/follower">
             <IoIosContacts />
+          </ToggleMenu>
+          <ToggleMenu onClick={onLogout}>
+            <IoIosLogOut />
           </ToggleMenu>
         </ul>
       }
