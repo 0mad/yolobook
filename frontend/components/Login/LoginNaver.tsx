@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import { withRouter, WithRouterProps } from 'next/router';
 import React from 'react';
 import styles from './LoginNaver.scss';
+import { toast } from 'react-toastify';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +21,7 @@ interface IState {}
  * @param props 
  */
 const initLoginButton = (props: IProps) => {
-  if(!process.browser) {
+  if(true || !process.browser) {
     return;
   }
   const { clientId, callbackUrl, onSuccess, isPopup=false } = props;
@@ -93,7 +94,7 @@ class LoginNaver extends React.Component<IProps, IState> {
   public render() {
     const { render } = this.props;
     return (
-      <div className={cx('naver-login')}>
+      <div className={cx('naver-login')} onClick={() => toast.info('네이버 로그인은 준비 중 입니다.')}>
         <div ref={el => (this.ref = el)} id="naverIdLogin"/>
         {render && render()}
       </div>

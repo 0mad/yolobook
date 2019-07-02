@@ -198,13 +198,27 @@
     }
   }
 
-  .follow-button {
+  .friendship-button {
     @include media("<boundary") {
       bottom: 24px;
       left: 24px;
     }
     position: absolute;
     right: 108px;
+    bottom: 54px;
+    display: inline;
+    svg {
+      font-size: 20px;
+    }
+  }
+   
+  .friendship-reject-button {
+    @include media("<boundary") {
+      bottom: 24px;
+      left: 145px;
+    }
+    position: absolute;
+    right: 36px;
     bottom: 54px;
     display: inline;
     svg {
