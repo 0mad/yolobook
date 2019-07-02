@@ -13,7 +13,7 @@ interface IProps {
   thumbnail: string;
   username: string;
   content: string;
-  likeCnt?: string;
+  likeCnt?: any;
   createdAt: string;
   onClickReply: any;
 }
@@ -46,7 +46,12 @@ const PostCommentItem = (props: IProps) => {
             <span className={cx('username')}>{username}</span>
           </Link>
           <span>{content}</span>
-          <div className={cx('like-badge', !likeCnt && 'like-badge-hide')}>
+          <div
+            className={cx(
+              'like-badge',
+              !Number.parseInt(likeCnt) && 'like-badge-hide'
+            )}
+          >
             <IoIosThumbsUp />
             <span>{likeCnt}</span>
           </div>

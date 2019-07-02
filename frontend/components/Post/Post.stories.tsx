@@ -22,7 +22,7 @@ storiesOf('Post', module)
           createdAt: '2019-06-27T06:17:21.000',
           content:
             '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
-          likeCnt: '2',
+          likeCnt: j.toString(),
         });
       }
 
@@ -33,7 +33,7 @@ storiesOf('Post', module)
         createdAt: '2019-06-27T06:17:21.000',
         content:
           '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
-        likeCnt: '3',
+        likeCnt: i.toString(),
         comments: replyComments,
       });
     }
@@ -318,7 +318,7 @@ storiesOf('Post', module)
           createdAt: '2019-06-27T06:17:21.000',
           content:
             '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
-          likeCnt: '2',
+          likeCnt: j.toString(),
         });
       }
 
