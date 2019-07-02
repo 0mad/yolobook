@@ -367,6 +367,7 @@ storiesOf('Post', module)
           thumbnail: 'http://placekitten.com/40/40',
           username: '유주현',
         },
+        id: i.toString(),
         createdAt: '2019-06-27T06:17:21.000',
         content:
           '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
