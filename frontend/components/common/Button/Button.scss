@@ -46,6 +46,14 @@
     }
   }
 
+  &.pink {
+    color: white;
+    background: $oc-pink-6;
+    &:hover, &:active {
+      background: $oc-pink-7;
+    }
+  }
+
   &.gray {
     color: $oc-gray-9;
     background: $oc-gray-1;

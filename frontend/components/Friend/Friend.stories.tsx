@@ -7,12 +7,9 @@ storiesOf('Friend', module)
     const friendList = [];
     for (let i = 0; i < 30; i++) {
       friendList.push({
-        id: i,
-        profile: {
-          thumbnail: 'http://placekitten.com/1000/1000',
-          username: '문태민',
-          userId: i
-        },
+        thumbnail: 'http://placekitten.com/1000/1000',
+        username: '문태민',
+        userId: i,
         cnt: '1000',
       });
     }

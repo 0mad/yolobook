@@ -24,11 +24,15 @@ export const FollowItem = (props: IFollowItemProps) => {
   const { id, profile, type, onAccept, onReject , onCancel } = props;
   return (
     <li className={cx('follow-item')} key={id}>
-      <div className={cx('thumbnail')}>
-        <img src={profile.thumbnail} />
-      </div>
+      <Link href={`/profile/timeline/${profile.id}`}>
+        <div className={cx('thumbnail')}>
+          <img src={profile.thumbnail} />
+        </div>
+      </Link>
       <div className={cx('content')}>
-        <div className={cx('name')}>{profile.username}</div>
+        <Link href={`/profile/timeline/${profile.id}`}>
+          <div className={cx('name')}>{profile.username}</div>
+        </Link>
         <div className={cx('more-btn')}>
           {type === 'follower' ? (
             <>

@@ -1,7 +1,7 @@
 import { WithRouterProps, withRouter } from 'next/router';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import * as followAPI from '../api/follow';
+import * as FollowAPI from '../api/follow';
 import Follow from '../components/Follow';
 import { inject, observer } from 'mobx-react';
 
@@ -22,8 +22,11 @@ class FollowContainer extends Component<IProps> {
 
   async componentDidMount() {
     const { followStore } = this.props;
-    const { data } = await followAPI.getFollowList();
-    followStore.setFollowList(data);
+    const { notInit } = followStore;
+    if (notInit) {
+      const { data } = await FollowAPI.getFollowList();
+      followStore.setFollowList(data);
+    }
   }
 
   public render() {
@@ -45,7 +48,7 @@ class FollowContainer extends Component<IProps> {
 
   async handleFollowAccept(followId: number) {
     try {
-      const { status } = await followAPI.acceptFollow(followId);
+      const { status } = await FollowAPI.acceptFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
         followStore.acceptFollow(followId);
@@ -58,7 +61,7 @@ class FollowContainer extends Component<IProps> {
 
   async handleRejectFollow(followId: number) {
     try {
-      const { status } = await followAPI.rejectFollow(followId);
+      const { status } = await FollowAPI.rejectFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
         followStore.rejectFollow(followId);
@@ -71,7 +74,7 @@ class FollowContainer extends Component<IProps> {
 
   async handleCancelFollow(followId: number) {
     try {
-      const { status } = await followAPI.cancelFollow(followId);
+      const { status } = await FollowAPI.cancelFollow(followId);
       if (status === 200) {
         const { followStore } = this.props;
         followStore.cancelFollow(followId);

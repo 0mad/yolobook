@@ -13,6 +13,7 @@
     .toggle {
       font-size: .7rem;
       color: $oc-violet-9;
+      cursor: pointer;
       &:hover {
         text-decoration: underline;
       }
@@ -47,6 +48,7 @@
   .thumbnail {
     margin-right: 13px;
     line-height: 0;
+    cursor: pointer;
     img {
       width: 4.7rem;
       height: 4.7rem;
@@ -61,6 +63,7 @@
       font-size: 15px;
       font-weight: 600;
       color: $oc-indigo-9;
+      cursor: pointer;
     }
     .more-btn {
       font-size: 13px;

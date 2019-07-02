@@ -13,7 +13,7 @@ export const multerUpload = multer({
       const ext = path.extname(file.originalname);
       cb(
         null,
-        path.basename(file.originalname, ext) + new Date().valueOf() + ext
+        Math.random().toString(36).substr(7) + new Date().valueOf() + ext
       );
     },
   }),

@@ -1,9 +1,10 @@
+import { withRouter, WithRouterProps } from 'next/router';
 import React, { Component } from 'react';
 import PostWrapper from '../components/PostWrapper';
 import { observer, inject } from 'mobx-react';
 import * as PostAPI from '../api/post';
 
-interface IProps {
+interface IProps extends WithRouterProps {
   postStore?: any;
   viewerStore?: any;
 }
@@ -17,9 +18,15 @@ interface IState {
 class PostContainer extends Component<IProps, IState> {
 
   async componentDidMount() {
-    const { postStore } = this.props;
+    const { 
+      router: {
+        query: { userId },
+      },
+      postStore 
+    } = this.props;
+    const getPost = userId ? () => PostAPI.getUserPosts(userId) : PostAPI.getPosts
     try {
-      const res = await PostAPI.getPosts();
+      const res = await getPost();
       postStore.setPosts(res.data);
     } catch (error) {
       return false;
@@ -45,4 +52,4 @@ class PostContainer extends Component<IProps, IState> {
   }
 }
 
-export default PostContainer;
+export default withRouter(PostContainer);

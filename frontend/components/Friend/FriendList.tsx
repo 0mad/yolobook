@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 export interface IProps {
   isMobileMode: boolean;
-  friendList: any;
+  friendList: any[];
 }
 
 const DesktopHeader = () => (
@@ -42,10 +42,9 @@ const FriendList = ({ isMobileMode, friendList }: IProps) => {
       <ul className={cx('list')}>
         {friendList.map(
           (
-            data: { id: number, profile: { thumbnail: string, username: string, id: string } },
+            profile: { thumbnail: string, username: string, id: string },
             index: string | number | undefined
           ) => {
-            const profile = data.profile
             return (
               <li key={index} className={cx('item')}>
                 <FriendItem thumbnail={profile.thumbnail} username={profile.username} userId={profile.id} />

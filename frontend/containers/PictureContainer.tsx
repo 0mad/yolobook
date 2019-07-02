@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import Gallery from '../components/Gallery';
-import * as postAPI from '../api/post';
+import * as PostAPI from '../api/post';
 import { toast } from 'react-toastify';
 
 interface IProps {
@@ -24,7 +24,7 @@ class UserInfoContainer extends Component<IProps, IState> {
     const { userStore: { loggedInfo } } = this.props;
     let pictureList;
     try {
-      const { data } = await postAPI.getUserPosts(loggedInfo.id)
+      const { data } = await PostAPI.getUserPosts(loggedInfo.id)
       pictureList = data.reduce((accum, data) => accum.concat(data.imgs), [])
     } catch (error) {
       toast.error('친구 리스트를 가져오는데 실패했습니다.')

@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
 import FriendList from '../components/Friend';
-import * as followAPI from '../api/follow';
-import { toast } from 'react-toastify';
+import { inject, observer } from 'mobx-react';
 
 interface IProps {}
 
-interface IState {
-  friendList: any[];
-}
+interface IState {}
 
-class FriendContainer extends Component<IProps, IState>{
+@inject('followStore')
+@observer
+class FriendContainer extends Component<IProps, IState> {
   state = {
     friendList: []
   }
 
-  async componentDidMount() {
-    try {
-      const { data } = await followAPI.getAcceptedFollowList(1);
-      if(data) {
-        this.setState({
-          friendList: data
-        });
-      }
-    } catch (error) {
-      toast.error('친구 리스트를 가져오는데 실패했습니다.')
-    }
-  }
-
   public render() {
-    const { friendList } = this.state;
+    const { followStore } = this.props;
+    const { friendList } = followStore;
     return <FriendList friendList={friendList} />;
   }
 }
