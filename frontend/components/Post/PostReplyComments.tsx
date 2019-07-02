@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './PostReplyComments.scss';
 import PostCommentItem from './PostCommentItem';
@@ -35,6 +34,7 @@ const PostReplyComments = (props: IProps) => {
             username,
             content,
             createdAt,
+            likeCnt,
           }: any) => (
             <li key={replyCommentId}>
               <PostCommentItem
@@ -44,6 +44,7 @@ const PostReplyComments = (props: IProps) => {
                 content={content}
                 createdAt={createdAt}
                 onClickReply={() => onClickReply()}
+                likeCnt={likeCnt}
                 reply
               />
             </li>
