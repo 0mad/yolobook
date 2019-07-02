@@ -6,14 +6,17 @@ const cx = classNames.bind(styles);
 
 interface IProps {
   reply?: boolean;
-  parentId: string;
-  userId: string;
-  thumbnail: string;
+  parent: any;
+  profile: {
+    id: string;
+    thumbnail: string;
+  };
   onSubmit: Function;
 }
 
 const PostCommentEditor = (props: IProps) => {
-  const { reply, parentId, userId, thumbnail, onSubmit } = props;
+  const { reply, parent, profile, onSubmit } = props;
+  const { id: userId, thumbnail } = profile;
   const [value, setValue] = useState('');
 
   return (
@@ -35,7 +38,7 @@ const PostCommentEditor = (props: IProps) => {
         <button
           className={cx('submit')}
           onClick={() => {
-            onSubmit({ parentId, value });
+            onSubmit({ parent, value });
           }}
         >
           달기

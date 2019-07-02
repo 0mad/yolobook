@@ -55,6 +55,11 @@
       margin-top: 3px;
       margin-left: 11px;
       font-size: 12px;
+      .like {
+        &-did {
+          font-weight: 600;
+        }
+      }
       .like, .comment {
         color: $oc-violet-9;
         cursor: pointer;
