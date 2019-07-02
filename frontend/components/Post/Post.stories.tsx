@@ -14,7 +14,7 @@ storiesOf('Post', module)
     const comments = [];
     for (let i = 0; i < 3; i++) {
       const replyComments = [];
-      for (let j = 0; j < i + 1; j++) {
+      for (let j = 0; j < i; j++) {
         replyComments.push({
           id: j.toString(),
           thumbnail: 'http://placekitten.com/40/40',

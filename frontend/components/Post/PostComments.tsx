@@ -3,6 +3,7 @@ import { useState } from 'react';
 import PostCommentItem from './PostCommentItem';
 import styles from './PostComments.scss';
 import PostReplyComments from './PostReplyComments';
+import { IoIosReturnRight } from 'react-icons/io';
 
 const cx = classNames.bind(styles);
 
@@ -53,17 +54,29 @@ const PostComment = (props: IPostCommentProps) => {
         likeCnt={likeCnt}
         onClickReply={handleReplyCommentClick}
       />
-      {/* <div className={cx('open-reply-comments')}>
-
-      </div> */}
-      <PostReplyComments
-        commentId={commentId}
-        replyComments={comments}
-        user={user}
-        onSubmit={onReplyCommentSubmit}
-        isShowEditor={isShowEditor}
-        onClickReply={handleReplyCommentClick}
-      />
+      {!!comments.length && (
+        <>
+          {!isShowComments && (
+            <div
+              className={cx('open-reply-comments')}
+              onClick={handleShowReplyCommentClick}
+            >
+              <IoIosReturnRight />
+              <span>{`답글 ${comments.length}개 더보기`}</span>
+            </div>
+          )}
+          {isShowComments && (
+            <PostReplyComments
+              commentId={commentId}
+              replyComments={comments}
+              user={user}
+              onSubmit={onReplyCommentSubmit}
+              isShowEditor={isShowEditor}
+              onClickReply={handleReplyCommentClick}
+            />
+          )}
+        </>
+      )}
     </>
   );
 };
