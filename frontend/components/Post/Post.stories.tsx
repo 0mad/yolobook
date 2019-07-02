@@ -38,7 +38,7 @@ storiesOf('Post', module)
       });
     }
 
-    const post = {
+    const postHasComment = {
       content: `애플이 저명한 철학가를 풀타임 정규직으로 채용했다. 
       스티브 잡스의 프로젝트에 여러 영감은 전한 것으로 전해지는 조슈아 코헨이 
       최근 애플의 선임 연구원으로 정식 고용된 것이다.`,
@@ -56,6 +56,28 @@ storiesOf('Post', module)
       },
       createdAt: '2019-06-27T06:17:21.000Z',
       comments: comments,
+      likeCnt: '12',
+    };
+
+    const postNotHasComment = {
+      content: `애플이 저명한 철학가를 풀타임 정규직으로 채용했다. 
+      스티브 잡스의 프로젝트에 여러 영감은 전한 것으로 전해지는 조슈아 코헨이 
+      최근 애플의 선임 연구원으로 정식 고용된 것이다.`,
+      id: '21121',
+      imgs: [
+        {
+          id: '1233x',
+          img: 'http://placekitten.com/500/500',
+        },
+      ],
+      user: {
+        thumbnail: 'http://placekitten.com/40/40',
+        username: '김유저',
+        id: 233,
+      },
+      createdAt: '2019-06-27T06:17:21.000Z',
+      comments: [],
+      likeCnt: '0',
     };
 
     const handleCommentSubmit = ({ targetId, value }: any) => {
@@ -76,8 +98,16 @@ storiesOf('Post', module)
       <div
         style={{ margin: '0 auto', width: '500px', backgroundColor: '#fff' }}
       >
+        <h3>댓글이 없는 포스트</h3>
         <Post
-          post={post}
+          post={postNotHasComment}
+          onCommentSubmit={handleCommentSubmit}
+          onReplyCommentSubmit={handleReplyCommentSubmit}
+        />
+        <br />
+        <h3>댓글이 있는 포스트</h3>
+        <Post
+          post={postHasComment}
           onCommentSubmit={handleCommentSubmit}
           onReplyCommentSubmit={handleReplyCommentSubmit}
         />
@@ -272,6 +302,67 @@ storiesOf('Post', module)
           replyComments={[]}
           user={user}
           onSubmit={handleReplyCommentSubmit}
+        />
+      </div>
+    );
+  })
+  .add('PostComments', () => {
+    const comments = [];
+    for (let i = 0; i < 3; i++) {
+      const replyComments = [];
+      for (let j = 0; j < i + 1; j++) {
+        replyComments.push({
+          id: j.toString(),
+          thumbnail: 'http://placekitten.com/40/40',
+          username: '문태민',
+          createdAt: '2019-06-27T06:17:21.000',
+          content:
+            '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
+          likeCnt: '2',
+        });
+      }
+
+      comments.push({
+        id: i.toString(),
+        thumbnail: 'http://placekitten.com/40/40',
+        username: '유주현',
+        createdAt: '2019-06-27T06:17:21.000',
+        content:
+          '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
+        likeCnt: '3',
+        comments: replyComments,
+      });
+    }
+
+    const user = {
+      thumbnail: 'http://placekitten.com/40/40',
+      username: '김유저',
+      id: 233,
+    };
+
+    const handleCommentSubmit = ({ parentId: postId, value }: any) => {
+      console.group('handleCommentSubmit');
+      console.log(`postId: ${postId}`);
+      console.log(`value: ${value}`);
+      console.groupEnd();
+    };
+
+    const handleReplyCommentSubmit = ({ parentId: commentId, value }: any) => {
+      console.group('handleReplyCommentSubmit');
+      console.log(`commentId: ${commentId}`);
+      console.log(`value: ${value}`);
+      console.groupEnd();
+    };
+
+    return (
+      <div
+        style={{ margin: '0 auto', width: '500px', backgroundColor: '#fff' }}
+      >
+        <PostComments
+          user={user}
+          comments={comments}
+          onCommentSubmit={handleCommentSubmit}
+          onReplyCommentSubmit={handleReplyCommentSubmit}
         />
       </div>
     );
