@@ -10,7 +10,7 @@ import ViewerContainer from '../containers/ViewerContainer';
 interface IProps {
   children: any;
   router: any;
-  userStore: UserStore;
+  userStore?: UserStore;
   isTopSpace: boolean;
 }
 

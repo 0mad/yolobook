@@ -5,6 +5,8 @@ export const modifyUserInfo = ({ profile, username }) =>
   axios.patch(`/api/user`, { profile, username });
 export const getUserSearchList = (search: any) =>
   axios.get(`/api/user/search/${search}`);
+export const getUserPictureList = (userId: number) =>
+  axios.get(`/api/user/pictures/${userId}`);
 export const modifyCoverImg = (formData: any) =>
   axios.patch(`/api/user/cover`, formData);
 export const modifyThumbnailImg = (formData: any) =>

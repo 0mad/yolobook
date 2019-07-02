@@ -16,7 +16,7 @@ interface IProps {
 
 const Photo = (props: IProps) => {
   const {
-    photo: { url },
+    photo: { img },
     isMobileMode,
     onClickPhoto,
     onClickLike,
@@ -25,7 +25,7 @@ const Photo = (props: IProps) => {
   return (
     <div
       className={cx('photo')}
-      style={{ backgroundImage: `url(${url})` }}
+      style={{ backgroundImage: `url(${img})` }}
       onClick={onClickPhoto}
     >
       {false /** 미구현 */ && !isMobileMode && (

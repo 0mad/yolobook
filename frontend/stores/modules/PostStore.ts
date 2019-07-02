@@ -46,7 +46,6 @@ class PostStore {
   @action
   public addPost = (post: object) => {
     this.posts.unshift(post);
-    console.log(post);
   };
 
   @action

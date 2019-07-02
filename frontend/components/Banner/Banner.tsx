@@ -17,6 +17,7 @@ interface IProps {
   onClickFollow?: void;
   onCoverImgsChange?: void;
   onThumbnailImgsChange?: void;
+  userId: number;
 }
 
 const Banner = ({
@@ -28,6 +29,7 @@ const Banner = ({
   onClickFollow,
   onCoverImgsChange,
   onThumbnailImgsChange,
+  userId
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
@@ -148,16 +150,16 @@ const Banner = ({
         <nav className={cx('nav')}>
           <ul>
             <li>
-              <Link href={'/profile/timeline/abc'}>타임라인</Link>
+              <Link href={`/profile/timeline/${userId}`}>타임라인</Link>
             </li>
             <li>
-              <Link href={'/profile/info'}>정보</Link>
+              <Link href={`/profile/info/${userId}`}>정보</Link>
             </li>
             <li>
-              <Link href={'/profile/friend'}>친구</Link>
+              <Link href={`/profile/friend/${userId}`}>친구</Link>
             </li>
             <li>
-              <Link href={'/profile/picture'}>사진</Link>
+              <Link href={`/profile/picture/${userId}`}>사진</Link>
             </li>
           </ul>
         </nav>

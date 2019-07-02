@@ -9,8 +9,8 @@ import ProfileStore from '../stores/modules/ProfileStore';
 import UserStore from '../stores/modules/UserStore';
 
 interface IProps extends WithRouterProps {
-  userStore: UserStore;
-  profileStore: ProfileStore;
+  userStore?: UserStore;
+  profileStore?: ProfileStore;
 }
 
 @inject('userStore', 'profileStore')
@@ -106,6 +106,7 @@ class BannerContainer extends Component<IProps> {
         onClickFollow={() => this.handleFollow(id)}
         onCoverImgsChange={this.handleChangeCoverImg}
         onThumbnailImgsChange={this.handleChangeThumbnailImg}
+        userId={id}
       />
     );
   }
