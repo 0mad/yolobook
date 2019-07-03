@@ -2,21 +2,19 @@ import { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './PostCommentEditor.scss';
 import Link from 'next/link';
+import { Comment, Profile, Post } from '../../types';
 const cx = classNames.bind(styles);
 
 interface IProps {
   reply?: boolean;
-  parent: any;
-  profile: {
-    id: string;
-    thumbnail: string;
-  };
+  parent: Comment | Post;
+  user: Profile;
   onSubmit: Function;
 }
 
 const PostCommentEditor = (props: IProps) => {
-  const { reply, parent, profile, onSubmit } = props;
-  const { id: userId, thumbnail } = profile;
+  const { reply = false, parent, user, onSubmit } = props;
+  const { id: userId, thumbnail } = user;
   const [value, setValue] = useState('');
 
   return (
@@ -32,6 +30,7 @@ const PostCommentEditor = (props: IProps) => {
           className={cx('textarea')}
           name="input-content"
           rows={1}
+          value={value}
           placeholder={reply ? '댓글 달기' : '댓글을 입력하세요...'}
           onChange={event => setValue(event.target.value)}
         />
@@ -39,9 +38,10 @@ const PostCommentEditor = (props: IProps) => {
           className={cx('submit')}
           onClick={() => {
             onSubmit({ parent, value });
+            setValue('');
           }}
         >
-          달기
+          게시
         </button>
       </div>
     </div>

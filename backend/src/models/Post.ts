@@ -9,6 +9,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Account } from './Account';
+import { Comment } from './Comment';
 import { PostImage } from './PostImage';
 
 @Table({
@@ -28,6 +29,9 @@ export class Post extends Model<Post> {
   @HasMany(() => PostImage)
   imgs?: PostImage[];
 
+  @HasMany(() => Comment)
+  comments?: Comment[];
+
   public get info(): object {
     const { id: accountId, username, thumbnail } = this.account;
     const oldImgs: any = this.imgs;
@@ -39,15 +43,16 @@ export class Post extends Model<Post> {
       });
     });
     return {
-      id: this.id,
+      comments: this.comments,
       content: this.content,
-      user: {
+      createdAt: this.createdAt,
+      id: this.id,
+      imgs: newImgs,
+      profile: {
         id: accountId,
         thumbnail,
         username,
       },
-      imgs: newImgs,
-      createdAt: this.createdAt
     };
   }
 }

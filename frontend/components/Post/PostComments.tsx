@@ -5,40 +5,44 @@ import styles from './PostComments.scss';
 import PostReplyComments from './PostReplyComments';
 import PostCommentEditor from './PostCommentEditor';
 import { IoIosReturnRight } from 'react-icons/io';
+import {
+  Comment,
+  CommentHandler,
+  Profile,
+} from '../../types';
 
 const cx = classNames.bind(styles);
 
 interface IPostCommentProps {
-  profile: any;
-  comment?: any;
-  onCommentLikeToggleClick: Function;
-  onReplyCommentSubmit: Function;
-  onReplyCommentLikeToggleClick: Function;
+  user: Profile;
+  comment: Comment;
+  commentHandler: CommentHandler;
 }
 
 interface IPostCommentsProps {
-  profile: any;
-  comments?: any;
-  onCommentLikeToggleClick: Function;
-  onReplyCommentSubmit: Function;
-  onReplyCommentLikeToggleClick: Function;
+  user: Profile;
+  comments: Comment[];
+  commentHandler: CommentHandler;
 }
 
 const PostComment = (props: IPostCommentProps) => {
   const {
-    profile,
+    user,
     comment,
-    onCommentLikeToggleClick,
-    onReplyCommentSubmit,
-    onReplyCommentLikeToggleClick,
+    commentHandler,
   } = props;
-  const { comments: replyComments } = comment;
+  const { replyComments=[] } = comment;
+  const {
+    onSubmitReplyComment,
+    onToggleCommentLike,
+    onToggleReplyCommentLike
+  } = commentHandler;
   const [isShowEditor, setIsShowEditor] = useState(false);
   const [isShowComments, setIsShowComments] = useState(false);
-  const handleShowReplyCommentEditorClick = () => {
+  const handleShowReplyCommentEditor = () => {
     setIsShowEditor(true);
   };
-  const handleShowReplyCommentClick = () => {
+  const handleShowReplyComment = () => {
     setIsShowComments(true);
     setIsShowEditor(true);
   };
@@ -47,8 +51,8 @@ const PostComment = (props: IPostCommentProps) => {
     <>
       <PostCommentItem
         comment={comment}
-        onReplyClick={handleShowReplyCommentEditorClick}
-        onLikeToggleClick={onCommentLikeToggleClick}
+        onClickReply={handleShowReplyCommentEditor}
+        onToggleLike={onToggleCommentLike}
       />
       <div className={cx('reply-comments')}>
         {!!replyComments.length && (
@@ -56,7 +60,7 @@ const PostComment = (props: IPostCommentProps) => {
             {!isShowComments && (
               <div
                 className={cx('open-reply-comments')}
-                onClick={handleShowReplyCommentClick}
+                onClick={handleShowReplyComment}
               >
                 <IoIosReturnRight />
                 <span>{`답글 ${replyComments.length}개 더보기`}</span>
@@ -65,18 +69,18 @@ const PostComment = (props: IPostCommentProps) => {
             {isShowComments && (
               <PostReplyComments
                 comment={comment}
-                onReplyClick={handleShowReplyCommentEditorClick}
-                onLikeToggleClick={onReplyCommentLikeToggleClick}
+                onReplyClick={handleShowReplyCommentEditor}
+                onLikeToggleClick={onToggleReplyCommentLike}
               />
             )}
           </>
         )}
-        {isShowEditor && (
+        {isShowEditor && user && user.id !== '-1' && (
           <div>
             <PostCommentEditor
               parent={comment}
-              profile={profile}
-              onSubmit={onReplyCommentSubmit}
+              user={user}
+              onSubmit={onSubmitReplyComment}
               reply
             />
           </div>
@@ -88,11 +92,9 @@ const PostComment = (props: IPostCommentProps) => {
 
 const PostComments = (props: IPostCommentsProps) => {
   const {
-    profile,
-    comments,
-    onCommentLikeToggleClick,
-    onReplyCommentSubmit,
-    onReplyCommentLikeToggleClick,
+    user,
+    comments=[],
+    commentHandler,
   } = props;
   return (
     <div className={cx('post-comments')}>
@@ -100,11 +102,9 @@ const PostComments = (props: IPostCommentsProps) => {
         {comments.map((comment: any) => (
           <li key={comment.id}>
             <PostComment
-              profile={profile}
+              user={user}
               comment={comment}
-              onCommentLikeToggleClick={onCommentLikeToggleClick}
-              onReplyCommentSubmit={onReplyCommentSubmit}
-              onReplyCommentLikeToggleClick={onReplyCommentLikeToggleClick}
+              commentHandler={commentHandler}
             />
           </li>
         ))}

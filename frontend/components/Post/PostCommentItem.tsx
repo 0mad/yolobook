@@ -4,29 +4,21 @@ import { IoIosThumbsUp } from 'react-icons/io';
 import getCoolDate from '../../utils/getCoolDate';
 
 import styles from './PostCommentItem.scss';
+import {
+  Comment
+} from '../../types';
 
 const cx = classNames.bind(styles);
 
 interface IProps {
   reply?: boolean;
-  comment: {
-    id: string;
-    profile: {
-      id: string;
-      username: string;
-      thumbnail: string;
-    };
-    content: string;
-    isLike: string;
-    likeCnt?: any;
-    createdAt: string;
-  };
-  onReplyClick: any;
-  onLikeToggleClick: any;
+  comment: Comment;
+  onClickReply: Function;
+  onToggleLike: Function;
 }
 
 const PostCommentItem = (props: IProps) => {
-  const { reply, comment, onReplyClick, onLikeToggleClick } = props;
+  const { reply=false, comment, onClickReply, onToggleLike } = props;
   const {
     profile: { id: userId, username, thumbnail },
     content,
@@ -66,12 +58,12 @@ const PostCommentItem = (props: IProps) => {
           <span
             className={cx('like', isLike === 'true' && 'like-did')}
             onClick={() =>
-              onLikeToggleClick({ comment, isLike: !(isLike === 'true') })
+              onToggleLike({ comment, isLike: !(isLike === 'true') })
             }
           >
             좋아요
           </span>
-          <span className={cx('comment')} onClick={onReplyClick}>
+          <span className={cx('comment')} onClick={onClickReply}>
             답글 달기
           </span>
           <span className={cx('date')}> {getCoolDate(createdAt)}</span>

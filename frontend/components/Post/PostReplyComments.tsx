@@ -1,14 +1,15 @@
 import PostCommentItem from './PostCommentItem';
+import { Comment } from '../../types';
 
 interface IProps {
-  comment?: any;
+  comment: Comment;
   onLikeToggleClick: Function;
   onReplyClick: Function;
 }
 
 const PostReplyComments = (props: IProps) => {
   const { comment, onLikeToggleClick, onReplyClick } = props;
-  const { comments: replyComments } = comment;
+  const { replyComments=[] } = comment;
 
   return (
     <ul>

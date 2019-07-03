@@ -20,7 +20,7 @@ class UserStore {
 
   private setDefaultData = () => {
     this.loggedInfo = {
-      id: -1,
+      id: '-1',
       thumbnail: 'http://placekitten.com/40/40',
       username: '손님',
       coverImg: null,

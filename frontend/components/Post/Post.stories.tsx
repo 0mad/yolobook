@@ -6,6 +6,13 @@ import PostCommentEditor from './PostCommentEditor';
 import PostCommentItem from './PostCommentItem';
 import PostComments from './PostComments';
 import PostReplyComments from './PostReplyComments';
+import {
+  CommentHandler,
+  PostHandler,
+  Post as PostModel,
+  Comment,
+  Profile,
+} from '../../types';
 
 const handleClickPhoto = action('photo click');
 
@@ -82,12 +89,14 @@ storiesOf('Post', module)
     );
   })
   .add('PostCommentEditor', () => {
-    const profile = {
+    const profile: Profile = {
       id: '2',
       thumbnail: 'http://placekitten.com/40/40',
+      username: 'tester',
     };
 
-    const comment = {
+    const comment: Comment = {
+      id: '923',
       profile: {
         id: '1',
         thumbnail: 'http://placekitten.com/40/40',
@@ -97,7 +106,8 @@ storiesOf('Post', module)
       content:
         '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
       likeCnt: '2',
-      comments: [],
+      replyComments: [],
+      isLike: 'true',
     };
 
     /**
@@ -133,7 +143,7 @@ storiesOf('Post', module)
     );
   })
   .add('PostCommentItem', () => {
-    const comment = {
+    const comment: Comment = {
       profile: {
         id: '2',
         username: '유주현',
@@ -161,27 +171,61 @@ storiesOf('Post', module)
       isLike: 'false',
     };
 
+    /**
+     * 댓글에 좋아요 처리
+     */
+    const handleToggleLike = ({ comment, isLike }: any) => {
+      console.group('handleToggleLike');
+      console.log(`Comment:`);
+      console.dir(comment);
+      console.log(`isLike: ${isLike}`);
+      console.groupEnd();
+    };
+    /**
+     * 답글 달기 클릭
+     */
+    const handleClickComment = ({ comment, parent }: any) => {
+      console.group('handleClickComment');
+      console.log(`comment:`);
+      console.dir(comment);
+      console.log(`parent: ${parent}`);
+      console.groupEnd();
+    };
+
     return (
       <div
         style={{ margin: '0 auto', width: '500px', backgroundColor: '#fff' }}
       >
         <h3>댓글 - 좋아요가 있는 경우</h3>
-        <PostCommentItem comment={comment} />
+        <PostCommentItem
+          comment={comment}
+          onClickReply={handleClickComment}
+          onToggleLike={handleToggleLike}
+        />
         <br />
         <h3>댓글 - 좋아요가 없는 경우</h3>
-        <PostCommentItem comment={commentWithoutLikeCnt} />
+        <PostCommentItem
+          comment={commentWithoutLikeCnt}
+          onClickReply={handleClickComment}
+          onToggleLike={handleToggleLike}
+        />
         <br />
         <h3>답글</h3>
-        <PostCommentItem comment={comment} reply />
+        <PostCommentItem
+          comment={comment}
+          reply
+          onClickReply={handleClickComment}
+          onToggleLike={handleToggleLike}
+        />
       </div>
     );
   })
   .add('PostReplyComments', () => {
-    const replyComments = [];
+    const replyComments: Comment[] = [];
     for (let i = 0; i < 5; i++) {
       replyComments.push({
         profile: {
-          id: i,
+          id: i.toString(),
           thumbnail: 'http://placekitten.com/40/40',
           username: '유주현',
         },
@@ -194,7 +238,8 @@ storiesOf('Post', module)
       });
     }
 
-    const commentHasReplyComments = {
+    const commentHasReplyComments: Comment = {
+      id: '32',
       profile: {
         id: '1',
         thumbnail: 'http://placekitten.com/40/40',
@@ -204,10 +249,12 @@ storiesOf('Post', module)
       content:
         '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
       likeCnt: '2',
-      comments: replyComments,
+      replyComments,
+      isLike: 'true',
     };
 
-    const commentNotHasReplyComments = {
+    const commentNotHasReplyComments: Comment = {
+      id: '83',
       profile: {
         id: '1',
         thumbnail: 'http://placekitten.com/40/40',
@@ -217,20 +264,34 @@ storiesOf('Post', module)
       content:
         '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
       likeCnt: '2',
-      comments: [],
+      replyComments: [],
+      isLike: 'true',
     };
 
     /**
      * 답글에 좋아요 처리
      */
-    const handleReplyCommentLikeToggleClick = ({
+    const handleToggleReplyCommentLike = ({
       comment: replyComment,
       isLike,
     }: any) => {
-      console.group('handleReplyCommentLikeToggleClick');
+      console.group('handleToggleReplyCommentLike');
       console.log(`replyComment:`);
       console.dir(replyComment);
       console.log(`isLike: ${isLike}`);
+      console.groupEnd();
+    };
+    /**
+     * 답글에 답글 달기 클릭
+     */
+    const handleClickReplyComment = ({
+      comment: replyComment,
+      parent,
+    }: any) => {
+      console.group('handleClickReplyComment');
+      console.log(`replyComment:`);
+      console.dir(replyComment);
+      console.log(`parent: ${parent}`);
       console.groupEnd();
     };
 
@@ -241,24 +302,26 @@ storiesOf('Post', module)
         <h3>답글이 있는 경우</h3>
         <PostReplyComments
           comment={commentHasReplyComments}
-          onLikeToggleClick={handleReplyCommentLikeToggleClick}
+          onLikeToggleClick={handleToggleReplyCommentLike}
+          onReplyClick={handleClickReplyComment}
         />
         <h3>답글이 없는 경우</h3>
         <PostReplyComments
           comment={commentNotHasReplyComments}
-          onLikeToggleClick={handleReplyCommentLikeToggleClick}
+          onLikeToggleClick={handleToggleReplyCommentLike}
+          onReplyClick={handleClickReplyComment}
         />
       </div>
     );
   })
   .add('PostComments', () => {
-    const comments = [];
+    const comments: Comment[] = [];
     for (let i = 0; i < 3; i++) {
-      const replyComments = [];
+      const replyComments: Comment[] = [];
       for (let j = 0; j < i + 1; j++) {
         replyComments.push({
           profile: {
-            id: j,
+            id: j.toString(),
             thumbnail: 'http://placekitten.com/40/40',
             username: '유주현',
           },
@@ -272,6 +335,7 @@ storiesOf('Post', module)
       }
 
       comments.push({
+        id: '28',
         profile: {
           id: i.toString(),
           thumbnail: 'http://placekitten.com/40/40',
@@ -281,12 +345,13 @@ storiesOf('Post', module)
         content:
           '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
         likeCnt: i.toString(),
-        comments: replyComments,
+        replyComments,
+        isLike: 'false',
       });
     }
 
     const profile = {
-      id: 233,
+      id: '233',
       username: '김유저',
       thumbnail: 'http://placekitten.com/40/40',
     };
@@ -294,7 +359,7 @@ storiesOf('Post', module)
     /**
      * 댓글에 좋아요 처리
      */
-    const handleCommentLikeToggleClick = ({ comment, isLike }: any) => {
+    const handleToggleCommentLike = ({ comment, isLike }: any) => {
       console.group('handleCommentLikeToggleClick');
       console.log(`comment:`);
       console.dir(comment);
@@ -305,7 +370,7 @@ storiesOf('Post', module)
     /**
      * 댓글에 value를 값으로 가진 답글을 새로 생성
      */
-    const handleReplyCommentSubmit = ({ parent: comment, value }: any) => {
+    const handleSubmitReplyComment = ({ parent: comment, value }: any) => {
       console.group('handleReplyCommentSubmit');
       console.log(`comment:`);
       console.log(comment);
@@ -316,7 +381,7 @@ storiesOf('Post', module)
     /**
      * 답글에 좋아요 처리
      */
-    const handleReplyCommentLikeToggleClick = ({
+    const handleToggleReplyCommentLike = ({
       comment: replyComment,
       isLike,
     }: any) => {
@@ -327,6 +392,12 @@ storiesOf('Post', module)
       console.groupEnd();
     };
 
+    const commentHandler: CommentHandler = {
+      onSubmitReplyComment: handleSubmitReplyComment,
+      onToggleCommentLike: handleToggleCommentLike,
+      onToggleReplyCommentLike: handleToggleReplyCommentLike,
+    };
+
     return (
       <div
         style={{ margin: '0 auto', width: '500px', backgroundColor: '#fff' }}
@@ -334,21 +405,19 @@ storiesOf('Post', module)
         <PostComments
           profile={profile}
           comments={comments}
-          onCommentLikeToggleClick={handleCommentLikeToggleClick}
-          onReplyCommentSubmit={handleReplyCommentSubmit}
-          onReplyCommentLikeToggleClick={handleReplyCommentLikeToggleClick}
+          commentHandler={commentHandler}
         />
       </div>
     );
   })
   .add('Post', () => {
-    const comments = [];
+    const comments: Comment[] = [];
     for (let i = 0; i < 3; i++) {
-      const replyComments = [];
+      const replyComments: Comment[] = [];
       for (let j = 0; j < i + 1; j++) {
-        replyComments.push({
+        const replyComment: Comment = {
           profile: {
-            id: j,
+            id: j.toString(),
             thumbnail: 'http://placekitten.com/40/40',
             username: '유주현',
           },
@@ -358,10 +427,11 @@ storiesOf('Post', module)
             '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
           likeCnt: j.toString(),
           isLike: (j % 2 === 0).toString(),
-        });
+        };
+        replyComments.push(replyComment);
       }
 
-      comments.push({
+      const comment: Comment = {
         profile: {
           id: i.toString(),
           thumbnail: 'http://placekitten.com/40/40',
@@ -372,11 +442,13 @@ storiesOf('Post', module)
         content:
           '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
         likeCnt: i.toString(),
-        comments: replyComments,
-      });
+        replyComments,
+        isLike: 'false',
+      };
+      comments.push(comment);
     }
 
-    const postHasComment = {
+    const postHasComment: PostModel = {
       content: `애플이 저명한 철학가를 풀타임 정규직으로 채용했다.
       스티브 잡스의 프로젝트에 여러 영감은 전한 것으로 전해지는 조슈아 코헨이
       최근 애플의 선임 연구원으로 정식 고용된 것이다.`,
@@ -390,7 +462,7 @@ storiesOf('Post', module)
       profile: {
         thumbnail: 'http://placekitten.com/40/40',
         username: '김유저',
-        id: 233,
+        id: '233',
       },
       createdAt: '2019-06-27T06:17:21.000Z',
       comments: comments,
@@ -398,7 +470,7 @@ storiesOf('Post', module)
       isLike: 'false',
     };
 
-    const postNotHasComment = {
+    const postNotHasComment: PostModel = {
       content: `애플이 저명한 철학가를 풀타임 정규직으로 채용했다.
       스티브 잡스의 프로젝트에 여러 영감은 전한 것으로 전해지는 조슈아 코헨이
       최근 애플의 선임 연구원으로 정식 고용된 것이다.`,
@@ -412,7 +484,7 @@ storiesOf('Post', module)
       profile: {
         thumbnail: 'http://placekitten.com/40/40',
         username: '김유저',
-        id: 233,
+        id: '233',
       },
       createdAt: '2019-06-27T06:17:21.000Z',
       comments: [],
@@ -423,8 +495,8 @@ storiesOf('Post', module)
     /**
      * 포스트에 좋아요 처리
      */
-    const handleLikeToggleClick = ({ post, isLike }: any) => {
-      console.group('handleLikeToggleClick');
+    const handleTogglePostLike = ({ post, isLike }: any) => {
+      console.group('handleTogglePostLike');
       console.log(`post:`);
       console.dir(post);
       console.log(`isLike: ${isLike}`);
@@ -434,8 +506,8 @@ storiesOf('Post', module)
     /**
      * 포스트에 value를 값으로 가진 댓글 생성
      */
-    const handleCommentSubmit = ({ parent: post, value }: any) => {
-      console.group('handleCommentSubmit');
+    const handleSubmitComment = ({ parent: post, value }: any) => {
+      console.group('handleSubmitComment');
       console.log(`post:`);
       console.log(post);
       console.log(`value: ${value}`);
@@ -445,8 +517,8 @@ storiesOf('Post', module)
     /**
      * 댓글에 좋아요 처리
      */
-    const handleCommentLikeToggleClick = ({ comment, isLike }: any) => {
-      console.group('handleCommentLikeToggleClick');
+    const handleToggleCommentLike = ({ comment, isLike }: any) => {
+      console.group('handleToggleCommentLike');
       console.log(`comment:`);
       console.dir(comment);
       console.log(`isLike: ${isLike}`);
@@ -456,8 +528,8 @@ storiesOf('Post', module)
     /**
      * 댓글에 value를 값으로 가진 답글을 새로 생성
      */
-    const handleReplyCommentSubmit = ({ parent: comment, value }: any) => {
-      console.group('handleReplyCommentSubmit');
+    const handleSubmitReplyComment = ({ parent: comment, value }: any) => {
+      console.group('handleSubmitReplyComment');
       console.log(`comment:`);
       console.log(comment);
       console.log(`value: ${value}`);
@@ -467,15 +539,33 @@ storiesOf('Post', module)
     /**
      * 답글에 좋아요 처리
      */
-    const handleReplyCommentLikeToggleClick = ({
+    const handleToggleReplyCommentLike = ({
       comment: replyComment,
       isLike,
     }: any) => {
-      console.group('handleReplyCommentLikeToggleClick');
+      console.group('handleToggleReplyCommentLike');
       console.log(`replyComment:`);
       console.dir(replyComment);
       console.log(`isLike: ${isLike}`);
       console.groupEnd();
+    };
+
+    const postHandler: PostHandler = {
+      onClickPhoto: handleClickPhoto,
+      onSubmitComment: handleSubmitComment,
+      onTogglePostLike: handleTogglePostLike,
+    };
+
+    const commentHandler: CommentHandler = {
+      onSubmitReplyComment: handleSubmitReplyComment,
+      onToggleCommentLike: handleToggleCommentLike,
+      onToggleReplyCommentLike: handleToggleReplyCommentLike,
+    };
+
+    const user: Profile = {
+      id: '2',
+      thumbnail: 'http://placekitten.com/40/40',
+      username: 'tester',
     };
 
     return (
@@ -484,22 +574,18 @@ storiesOf('Post', module)
       >
         <h3>댓글이 없는 포스트</h3>
         <Post
+          user={user}
           post={postNotHasComment}
-          onLikeToggleClick={handleLikeToggleClick}
-          onCommentSubmit={handleCommentSubmit}
-          onCommentLikeToggleClick={handleCommentLikeToggleClick}
-          onReplyCommentSubmit={handleReplyCommentSubmit}
-          onReplyCommentLikeToggleClick={handleReplyCommentLikeToggleClick}
+          postHandler={postHandler}
+          commentHandler={commentHandler}
         />
         <br />
         <h3>댓글이 있는 포스트</h3>
         <Post
+          user={user}
           post={postHasComment}
-          onLikeToggleClick={handleLikeToggleClick}
-          onCommentSubmit={handleCommentSubmit}
-          onCommentLikeToggleClick={handleCommentLikeToggleClick}
-          onReplyCommentSubmit={handleReplyCommentSubmit}
-          onReplyCommentLikeToggleClick={handleReplyCommentLikeToggleClick}
+          postHandler={postHandler}
+          commentHandler={commentHandler}
         />
       </div>
     );

@@ -1,5 +1,6 @@
 import express from 'express';
 import { Account } from '../../models/Account';
+import { Comment } from '../../models/Comment';
 import { Post } from '../../models/Post';
 import { PostImage } from '../../models/PostImage';
 
@@ -25,7 +26,21 @@ class UserController {
     next: express.NextFunction
   ) => {
     const posts = await Post.findAll({
-      include: [Account, PostImage],
+      include: [
+        Account,
+        PostImage,
+        {
+          association: 'comments',
+          attributes: ['id', 'createdAt', 'content'],
+          include: [
+            {
+              association: 'profile',
+              attributes: ['id', 'username', 'thumbnail'],
+              identifier: 'profile',
+            },
+          ],
+        },
+      ],
       order: [['createdAt', 'DESC']],
     });
     const data: any = [];
@@ -46,8 +61,8 @@ class UserController {
       include: [Account, PostImage],
       order: [['createdAt', 'DESC']],
       where: {
-        accountId: userId
-      }
+        accountId: userId,
+      },
     });
     const data: any = [];
     posts.forEach((post: any) => {
@@ -115,7 +130,27 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('댓글 작성');
+    const { id: postId } = req.params;
+    const {
+      content,
+      user: {
+        profile: { id },
+      },
+    } = req.body;
+    try {
+      const comment = await Comment.create({
+        accountId: parseInt(id, 10),
+        content,
+        postId: parseInt(postId, 10),
+      });
+      res.json({
+        content: comment.content,
+        createdAt: comment.createdAt,
+        id: comment.id,
+      });
+    } catch (error) {
+      next(error);
+    }
   };
 
   // 댓글 삭제
@@ -142,6 +177,16 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
+    const { id: commentId } = req.params;
+    const {
+      content,
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    console.log(commentId);
+    console.log(content);
+    console.log(userId);
     res.send('답글 작성');
   };
 

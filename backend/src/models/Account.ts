@@ -7,6 +7,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { generateToken } from '../lib/token';
+import { Comment } from './Comment';
 import { Follow } from './Follow';
 import { Post } from './Post';
 
@@ -41,6 +42,9 @@ export class Account extends Model<Account> {
 
   @HasMany(() => Post)
   posts?: Post[];
+
+  @HasMany(() => Comment)
+  comments?: Comment[];
 
   @HasMany(() => Follow)
   follows?: Follow[];
