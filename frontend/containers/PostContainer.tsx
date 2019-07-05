@@ -79,6 +79,9 @@ class PostContainer extends Component<IProps, IState> {
         ...data,
         profile: loggedInfo,
       };
+      if (!post.comments) {
+        post.comments = [];
+      }
       post.comments.push(comment);
       this.forceUpdate();
     } catch (error) {
