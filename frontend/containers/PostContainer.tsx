@@ -70,7 +70,9 @@ class PostContainer extends Component<IProps, IState> {
     value: string;
   }) => {
     const { parent: post, value: content } = commentData;
-    const { userStore: loggedInfo } = this.props;
+    const {
+      userStore: { loggedInfo },
+    } = this.props;
     try {
       const { data } = await PostAPI.writeComment(post.id, content);
       const comment = {
@@ -93,15 +95,20 @@ class PostContainer extends Component<IProps, IState> {
     value: string;
   }) => {
     const { parent: comment, value: content } = replyCommentData;
-    const { userStore: loggedInfo } = this.props;
+    const {
+      userStore: { loggedInfo },
+    } = this.props;
     try {
       const { data } = await PostAPI.writeReplyComment(comment.id, content);
-      // const replyComment = {
-      //   ...data,
-      //   profile: loggedInfo,
-      // };
-      // comment.replyComments.push(replyComment);
-      // this.forceUpdate();
+      const replyComment = {
+        ...data,
+        profile: loggedInfo,
+      };
+      if (!comment.replyComments) {
+        comment.replyComments = [];
+      }
+      comment.replyComments.push(replyComment);
+      this.forceUpdate();
     } catch (error) {
       toast.error('답글 달기 실패');
     }

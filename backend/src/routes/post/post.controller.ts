@@ -3,6 +3,7 @@ import { Account } from '../../models/Account';
 import { Comment } from '../../models/Comment';
 import { Post } from '../../models/Post';
 import { PostImage } from '../../models/PostImage';
+import { ReplyComment } from '../../models/ReplyComment';
 
 class UserController {
   // 이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답
@@ -37,6 +38,17 @@ class UserController {
               association: 'profile',
               attributes: ['id', 'username', 'thumbnail'],
               identifier: 'profile',
+            },
+            {
+              association: 'replyComments',
+              attributes: ['id', 'createdAt', 'content'],
+              include: [
+                {
+                  association: 'profile',
+                  attributes: ['id', 'username', 'thumbnail'],
+                  identifier: 'profile',
+                },
+              ],
             },
           ],
         },
@@ -86,8 +98,8 @@ class UserController {
     } = req.body;
     try {
       const post = await Post.create({
-        content,
         accountId: id,
+        content,
       });
       if (!!imgUrls) {
         for (const imgUrl of imgUrls) {
@@ -184,9 +196,20 @@ class UserController {
         profile: { id: userId },
       },
     } = req.body;
-    console.log(commentId);
-    console.log(content);
-    console.log(userId);
+    try {
+      const replyComment = await ReplyComment.create({
+        accountId: parseInt(userId, 10),
+        commentId: parseInt(commentId, 10),
+        content,
+      });
+      res.json({
+        content: replyComment.content,
+        createdAt: replyComment.createdAt,
+        id: replyComment.id,
+      });
+    } catch (error) {
+      next(error);
+    }
     res.send('답글 작성');
   };
 
