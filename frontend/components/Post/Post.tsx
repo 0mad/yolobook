@@ -110,7 +110,7 @@ const Post = (props: IProps) => {
                 onTogglePostLike({ post, isLike: !(isLike === 'true') });
               }}
             >
-              {isLike ? <FaThumbsUp /> : <FaRegThumbsUp />}
+              {isLike === 'true' ? <FaThumbsUp /> : <FaRegThumbsUp />}
               <span>좋아요</span>
             </li>
             <li
