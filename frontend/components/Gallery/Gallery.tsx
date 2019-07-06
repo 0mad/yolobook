@@ -1,18 +1,17 @@
 import classNames from 'classnames/bind';
 import { IoIosImages } from 'react-icons/io';
 import styles from './Gallery.scss';
-import Photo from './GalleryPhoto';
+import GalleryPhoto from './GalleryPhoto';
 
 const cx = classNames.bind(styles);
 
 interface IProps {
-  album: any;
+  pictureList: any;
+  onClickPhoto: any;
 }
 
 const Gallery = (props: IProps) => {
-  const {
-    album: { photoList },
-  } = props;
+  const { pictureList, onClickPhoto } = props;
   return (
     <div className={cx('gallery')}>
       <div className={cx('gallery-header')}>
@@ -20,9 +19,9 @@ const Gallery = (props: IProps) => {
         <span>사진</span>
       </div>
       <ul className={cx('album')}>
-        {photoList.map((photo, idx) => (
+        {pictureList.map((picture, idx) => (
           <li className={cx('photo-wrapper')} key={idx}>
-            <Photo photo={photo} />
+            <GalleryPhoto photo={picture} onClickPhoto={() => onClickPhoto(idx)}/>
           </li>
         ))}
       </ul>

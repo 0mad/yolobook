@@ -1,0 +1,17 @@
+.post-comments {
+  .open-reply-comments {
+    display: flex;
+    font-size: 13px;
+    color: $oc-violet-9;
+    cursor: pointer;
+    align-items: center;
+
+    svg + span {
+      margin-left: 6px;
+    }
+  }
+  .reply-comments {
+    padding-top: 8px;
+    padding-left: 54px;
+  }
+}

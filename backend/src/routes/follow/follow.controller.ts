@@ -1,6 +1,13 @@
 import express from 'express';
 import { Op } from "sequelize";
+import { Account } from '../../models/Account';
 import { Follow } from '../../models/Follow';
+
+const Status = {
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  REQUESTING: 'REQUESTING',
+}
 
 class FollowController {
 
@@ -11,17 +18,17 @@ class FollowController {
     next: express.NextFunction
   ) => {
     const { user: { profile } } = req.body;
-    const targetId = parseInt(req.params.targetId);
+    const userId = parseInt(req.params.userId);
     const me = profile.id;
-    if (me === targetId) {
+    if (me === userId) {
       res.sendStatus(500);
     }
     try {
       const existing = await Follow.findOne({
         where: {
           [Op.or]: [
-            { followingId: targetId, followerId: me },
-            { followingId: me, followerId: targetId },
+            { followingId: userId, followerId: me },
+            { followingId: me, followerId: userId },
           ]
         }
       });
@@ -33,15 +40,26 @@ class FollowController {
     }
 
     try {
-      await Follow.create({
+      const follow = await Follow.create({
         followerId: me,
-        followingId: targetId
+        followingId: userId
+      });
+      const following = await Account.findOne({
+        where: {
+          id: userId
+        }
+      });
+
+      res.json({
+        createdAt: follow.createdAt,
+        id: follow.id,
+        profile: following!.profile,
+        status: follow.status,
       });
     } catch (error) {
       next(error);
     }
-
-    return res.sendStatus(201);
+    return res;
   };
 
   // 팔로우 수락 
@@ -60,7 +78,7 @@ class FollowController {
         where: {
           followingId: me,
           id: followId,
-          status: "REQUESTING"
+          status: Status.REQUESTING
         }
       });
     } catch (error) {
@@ -73,7 +91,7 @@ class FollowController {
 
     try {
       follow.update({
-        status: 'ACCEPTED'
+        status: Status.ACCEPTED
       });
     } catch (error) {
       next(error);
@@ -106,7 +124,7 @@ class FollowController {
 
     try {
       follow.update({
-        status: 'REJECT'
+        status: Status.REJECTED
       });
     } catch (error) {
       next(error);
@@ -130,7 +148,7 @@ class FollowController {
         where: {
           followerId: me,
           id: followId,
-          status: 'REQUESTING'
+          status: Status.REQUESTING
         }
       });
     } catch (error) {
@@ -160,7 +178,6 @@ class FollowController {
             { followerId: profile.id },
             { followingId: profile.id }
           ],
-          status: 'REQUESTING'
         }
       });
     } catch (error) {
@@ -169,10 +186,15 @@ class FollowController {
 
     const followerList: any[] = [];
     const followingList: any[] = [];
+    const acceptedList: any[] = [];
 
     if (followList) {
       followList.forEach(follow => {
-        if (follow.follower.id === profile.id) {
+        if (follow.status === Status.ACCEPTED) {
+          acceptedList.push({
+            profile: follow.following.id === profile.id ? follow.follower : follow.following
+          });
+        } else if (follow.follower.id === profile.id) {
           followingList.push(follow);
         } else {
           followerList.push(follow);
@@ -181,8 +203,9 @@ class FollowController {
     }
 
     res.send({
+      acceptedList,
       followerList,
-      followingList
+      followingList,
     });
     return res;
   }

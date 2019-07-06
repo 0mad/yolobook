@@ -1,0 +1,53 @@
+.post-comment-editor {
+  display: flex;
+  padding: 4px 12px;
+  align-items: center;
+
+  .profile {
+    width: 32px;
+    height: 32px;
+    margin-right: 6px;
+    cursor: pointer;
+    border-radius: 100%;
+    &-reply {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .form {
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+    .textarea {
+      width: 100%;
+      min-height: 32px;
+      padding: 8px 10px;
+      margin-right: 6px;
+      font-size: 13px;
+      line-height: 13px;
+      background-color: $oc-gray-1;
+      border: 0;
+      border: solid 1px $oc-gray-4;
+      border-radius: 16px;
+      resize: none;
+    }
+
+    .submit {
+      width: 40px;
+      height: 30px;
+      padding:  3px;
+      font-size: 13px;
+      color: $oc-gray-6;
+      cursor: pointer;
+      background-color: $oc-gray-1;
+      border: 1px solid $oc-gray-4;
+      border-radius: 5px;
+      &:hover {
+        color: $oc-gray-7;
+        background-color: $oc-gray-3;
+      }
+    }
+  }
+}

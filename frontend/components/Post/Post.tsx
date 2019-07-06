@@ -1,70 +1,131 @@
 import className from 'classnames/bind';
-import { IoIosChatboxes, IoIosShareAlt, IoIosThumbsUp } from 'react-icons/io';
 import Link from 'next/link';
+import { useState } from 'react';
 import style from './Post.scss';
+import { IoIosThumbsUp } from 'react-icons/io';
+import {
+  FaThumbsUp,
+  FaRegThumbsUp,
+  FaRegComments,
+  FaRegShareSquare,
+} from 'react-icons/fa';
 import PostGallery from './PostGallery';
+import PostComments from './PostComments';
+import PostCommentEditor from './PostCommentEditor';
 import getCoolDate from '../../utils/getCoolDate';
+
+import {
+  CommentHandler,
+  PostHandler,
+  Post as PostModel,
+  Profile,
+} from '../../types';
 
 const cx = className.bind(style);
 
 interface IProps {
-  post: any;
-  onClickPhoto: any;
+  isLogged: boolean;
+  user: Profile;
+  post: PostModel;
+  postHandler: PostHandler;
+  commentHandler: CommentHandler;
 }
 
 const Post = (props: IProps) => {
+  const { isLogged, user, post, postHandler, commentHandler } = props;
   const {
-    post: {
-      content,
-      createdAt,
-      imgs,
-      user: { thumbnail, username, id }
-    },
-    onClickPhoto
-  } = props;
-  
+    content,
+    createdAt,
+    imgs,
+    profile,
+    comments = [],
+    likeCnt,
+    isLike,
+  } = post;
+  const { thumbnail, username, id: userId } = profile;
+  const { onClickPhoto, onSubmitComment, onTogglePostLike } = postHandler;
+
+  const [isShowComment, setIsShowComment] = useState(!!comments.length);
+
   return (
     <div className={cx('post')}>
-      <div className={cx('post-header')}>
-        <Link href={`/profile/timeline/${id}`}>
+      <div className={cx('header')}>
+        <Link href={`/profile/timeline/${userId}`}>
           <img className={cx('user-photo')} src={thumbnail} />
         </Link>
         <div className={cx('meta-data')}>
-          <Link href={`/profile/timeline/${id}`}>
+          <Link href={`/profile/timeline/${userId}`}>
             <p className={cx('user-name')}>{username}</p>
           </Link>
           <span className={cx('created-time')}>{getCoolDate(createdAt)}</span>
         </div>
       </div>
-      <div className={cx('post-body')}>
-        <pre className={cx('post-content')}>{content}</pre>
-        <PostGallery images={imgs} onClickPhoto={onClickPhoto} username={username}/>
+      <div className={cx('body')}>
+        <div className={cx('post-content')}>{content}</div>
+        <PostGallery
+          images={imgs}
+          onClickPhoto={onClickPhoto}
+          username={username}
+        />
       </div>
-
-      <div className={cx('post-footer')}>
-        <div className={cx('score-board')}>
-          <span className={cx('score-like')}>
-            <IoIosThumbsUp />
-            78명
-          </span>
-          <span className={cx('score-share')}>공유 7회</span>
-          <span className={cx('score-comment')}>댓글 81개</span>
+      <div className={cx('footer')}>
+        <div className={cx('score-info')}>
+          {!!parseInt(likeCnt) && (
+            <div className={cx('score-info-item', 'score-info-like')}>
+              <IoIosThumbsUp />
+              <span>{`${likeCnt}명`}</span>
+            </div>
+          )}
+          <div>
+            {false && <div className={cx('score-info-item')}>공유 7회</div>}
+            {!!comments.length && (
+              <div className={cx('score-info-item')}>
+                {`댓글 ${comments.length}개`}
+              </div>
+            )}
+          </div>
         </div>
-        <ul className={cx('interaction')}>
-          <li className={cx('button-like')}>
-            <IoIosThumbsUp />
-            좋아요
-          </li>
-          <li className={cx('button-comment')}>
-            <IoIosChatboxes />
-            댓글
-          </li>
-          <li className={cx('button-share')}>
-            <IoIosShareAlt />
-            공유하기
-          </li>
-        </ul>
+        {isLogged && (
+          <ul className={cx('more-list')}>
+            <li
+              className={cx('more-item', isLike === 'true' && 'like-did')}
+              onClick={() => {
+                onTogglePostLike({ post, isLike: !(isLike === 'true') });
+              }}
+            >
+              {isLike ? <FaThumbsUp /> : <FaRegThumbsUp />}
+              <span>좋아요</span>
+            </li>
+            <li
+              className={cx('more-item')}
+              onClick={() => setIsShowComment(true)}
+            >
+              <FaRegComments />
+              <span>댓글</span>
+            </li>
+            {false && (
+              <li className={cx('more-item')}>
+                <FaRegShareSquare />
+                <span>공유하기</span>
+              </li>
+            )}
+          </ul>
+        )}
       </div>
+      {isLogged && (
+        <div className={cx('comments', !isShowComment && 'comments-hide')}>
+          <PostComments
+            user={user}
+            comments={comments}
+            commentHandler={commentHandler}
+          />
+          <PostCommentEditor
+            user={user}
+            parent={post}
+            onSubmit={onSubmitComment}
+          />
+        </div>
+      )}
     </div>
   );
 };

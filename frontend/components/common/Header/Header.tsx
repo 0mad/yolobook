@@ -84,7 +84,7 @@ const LoginedHeader = (props: IProps) => {
             <img className={cx('logo')} src={Logo}/>
           </Link>
           <ul className={cx('user-menu')}>
-            <UserMenu href="/profile/timeline">
+            <UserMenu href={`/profile/timeline/${profile.id}`}>
               <img className={cx('user-photo')} src={profile.thumbnail} />
               <p className={cx('user-name')}>{profile.username}</p>
             </UserMenu>
@@ -93,12 +93,9 @@ const LoginedHeader = (props: IProps) => {
       )}
       {
         <ul className={cx('toggle-menu')}>
-          <ToggleMenu onClick={onLogout}>
-            <IoIosLogOut />
-          </ToggleMenu>
           {isMobileMode && (
             <>
-              <ToggleMenu>
+              <ToggleMenu href="/">
                 <IoIosFiling />
               </ToggleMenu>
               <ToggleMenu onClick={toggleSearch}>
@@ -108,6 +105,9 @@ const LoginedHeader = (props: IProps) => {
           )}
           <ToggleMenu href="/follow/follower">
             <IoIosContacts />
+          </ToggleMenu>
+          <ToggleMenu onClick={onLogout}>
+            <IoIosLogOut />
           </ToggleMenu>
         </ul>
       }

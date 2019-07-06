@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import React, { Component, ChangeEventHandler } from 'react';
 import Header from '../components/common/Header';
-import * as userAPI from '../api/user';
+import * as UserAPI from '../api/user';
 import Router from 'next/router';
 
 interface IProps {
@@ -16,7 +16,7 @@ class HeaderContainer extends Component<IProps> {
 
   async componentDidMount() {
     const { commonStore } = this.props;
-    const { data } = await userAPI.getUserSearchList('');
+    const { data } = await UserAPI.getUserSearchList('');
 
     commonStore.setUserList(data);
   }

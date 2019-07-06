@@ -1,34 +1,57 @@
 import classNames from 'classnames/bind';
-import Comment from '../Comment';
 import Post from '../Post';
 import styles from './PostWrapper.scss';
+import {
+  CommentHandler,
+  PostHandler,
+  Post as PostModel,
+  Profile,
+} from '../../types';
 
 const cx = classNames.bind(styles);
 
 interface IProps {
-  posts: any;
-  onClickPhoto: any;
+  isLogged: boolean;
+  user: Profile;
+  posts: PostModel[];
+  postHandler: PostHandler;
+  commentHandler: CommentHandler;
 }
 
-const renderPostItem = (data: { post: object, onClickPhoto: any}) => {
-  const { post, onClickPhoto } = data;
-  const { id, user } = post;
+interface IPostItemProps {
+  isLogged: boolean;
+  user: Profile;
+  post: PostModel;
+  postHandler: PostHandler;
+  commentHandler: CommentHandler;
+}
+
+const renderPostItem = (props: IPostItemProps) => {
+  const { isLogged, user, post, commentHandler, postHandler } = props;
+  const { id } = post;
   return (
     <li key={id} className={cx('post-item')}>
-      <Post post={post} onClickPhoto={onClickPhoto}/>
-      <Comment user={user} />
+      <Post
+        isLogged={isLogged}
+        user={user}
+        post={post}
+        commentHandler={commentHandler}
+        postHandler={postHandler}
+      />
     </li>
   );
 };
 
 const renderPostList = (props: IProps) => {
-  const { posts, onClickPhoto } = props;
+  const { isLogged, user, posts, postHandler, commentHandler } = props;
   if (!posts || posts.length === 0) {
     return false;
   }
   return (
     <ul className={cx('post-list')}>
-      {posts.map(post => renderPostItem({ post, onClickPhoto }))}
+      {posts.map(post =>
+        renderPostItem({ isLogged, user, post, postHandler, commentHandler })
+      )}
     </ul>
   );
 };

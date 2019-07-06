@@ -32,7 +32,31 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('나의 정보 수정');
+    const { user: { profile: { id } }, } = req.body;
+    let user;
+    try {
+      user = await Account.findOne({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw error;
+    }
+    if (!user) {
+      return next(new Error('Not exist account'));
+    }
+    ['user', 'snsId', 'provider', 'createdAt', 'updatedAt', 'email', 'id']
+      .forEach(property => delete req.body[property]);
+
+    try {
+      await user.update({
+        ...req.body
+      });
+      return res.json(user.profile);
+    } catch (error) {
+      return next(new Error('update fail'));
+    }
   };
 
   // 사용자의 프로필 리스트를 가져온다. 검색하기에 사용하는데, 현재는 모든 사용자를 가져온다.

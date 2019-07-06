@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import FriendList from '../components/Friend';
+import { inject, observer } from 'mobx-react';
 
-class FriendContainer extends Component{
+interface IProps {}
+
+interface IState {}
+
+@inject('followStore')
+@observer
+class FriendContainer extends Component<IProps, IState> {
+  state = {
+    friendList: []
+  }
+
   public render() {
-    const friendList = [];
-    for (let i = 0; i < 30; i++) {
-      friendList.push({
-        img: 'http://placekitten.com/1000/1000',
-        name: '문태민',
-        cnt: '1000',
-      });
-    }
-
+    const { followStore } = this.props;
+    const { friendList } = followStore;
     return <FriendList friendList={friendList} />;
   }
 }

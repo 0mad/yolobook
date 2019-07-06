@@ -1,7 +1,9 @@
 import express from 'express';
 import { Account } from '../../models/Account';
+import { Comment } from '../../models/Comment';
 import { Post } from '../../models/Post';
 import { PostImage } from '../../models/PostImage';
+import { ReplyComment } from '../../models/ReplyComment';
 
 class UserController {
   // 이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답
@@ -25,7 +27,30 @@ class UserController {
     next: express.NextFunction
   ) => {
     const posts = await Post.findAll({
-      include: [Account, PostImage],
+      include: [
+        Account,
+        PostImage,
+        {
+          association: 'comments',
+          attributes: ['id', 'createdAt', 'content'],
+          include: [
+            {
+              association: 'profile',
+              attributes: ['id', 'username', 'thumbnail'],
+            },
+            {
+              association: 'replyComments',
+              attributes: ['id', 'createdAt', 'content'],
+              include: [
+                {
+                  association: 'profile',
+                  attributes: ['id', 'username', 'thumbnail'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
       order: [['createdAt', 'DESC']],
     });
     const data: any = [];
@@ -36,12 +61,24 @@ class UserController {
   };
 
   // 특정 사용자 아이디의 게시글 리스트 가져오기
-  public getPost = async (
+  public getUserPosts = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('특정 사용자 아이디의 게시글 리스트 가져오기');
+    const { userId } = req.params;
+    const posts = await Post.findAll({
+      include: [Account, PostImage],
+      order: [['createdAt', 'DESC']],
+      where: {
+        accountId: userId,
+      },
+    });
+    const data: any = [];
+    posts.forEach((post: any) => {
+      data.push(post.info);
+    });
+    res.json(data);
   };
 
   // 게시글 작성
@@ -59,8 +96,8 @@ class UserController {
     } = req.body;
     try {
       const post = await Post.create({
-        content,
         accountId: id,
+        content,
       });
       if (!!imgUrls) {
         for (const imgUrl of imgUrls) {
@@ -103,7 +140,27 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('댓글 작성');
+    const { id: postId } = req.params;
+    const {
+      content,
+      user: {
+        profile: { id },
+      },
+    } = req.body;
+    try {
+      const comment = await Comment.create({
+        accountId: parseInt(id, 10),
+        content,
+        postId: parseInt(postId, 10),
+      });
+      res.json({
+        content: comment.content,
+        createdAt: comment.createdAt,
+        id: comment.id,
+      });
+    } catch (error) {
+      next(error);
+    }
   };
 
   // 댓글 삭제
@@ -130,6 +187,27 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
+    const { id: commentId } = req.params;
+    const {
+      content,
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const replyComment = await ReplyComment.create({
+        accountId: parseInt(userId, 10),
+        commentId: parseInt(commentId, 10),
+        content,
+      });
+      res.json({
+        content: replyComment.content,
+        createdAt: replyComment.createdAt,
+        id: replyComment.id,
+      });
+    } catch (error) {
+      next(error);
+    }
     res.send('답글 작성');
   };
 

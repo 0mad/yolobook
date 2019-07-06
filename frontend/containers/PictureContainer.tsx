@@ -1,38 +1,50 @@
+import { inject, observer } from 'mobx-react';
 import React, { Component } from 'react';
 import Gallery from '../components/Gallery';
+import * as PostAPI from '../api/post';
+import { toast } from 'react-toastify';
 
-interface IProps {}
+interface IProps {
+  userStore?: any;
+  viewerStore?: any;
+}
 
-class UserInfoContainer extends Component<IProps> {
+interface IState {
+  pictureList: any[];
+}
+
+@inject('userStore', 'viewerStore')
+@observer
+class UserInfoContainer extends Component<IProps, IState> {
+  state = {
+    pictureList: []
+  }
+
+  async componentDidMount() {
+    const { userStore: { loggedInfo } } = this.props;
+    let pictureList;
+    try {
+      const { data } = await PostAPI.getUserPosts(loggedInfo.id)
+      pictureList = data.reduce((accum, data) => accum.concat(data.imgs), [])
+    } catch (error) {
+      toast.error('친구 리스트를 가져오는데 실패했습니다.')
+    }
+    this.setState({
+      pictureList
+    })
+  }
+
   public render() {
-    const photoData = [
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957574-d1441b80-87db-11e9-8d2e-411a2619188b.jpg',
-      },
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957575-d1441b80-87db-11e9-956b-a69266304f9b.jpg',
-      },
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957578-d3a67580-87db-11e9-90c5-030eb934b070.jpg',
-      },
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957579-d3a67580-87db-11e9-8604-0fbe32babf1c.jpg',
-      },
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957581-d3a67580-87db-11e9-82de-1af94c850af6.jpg',
-      },
-      {
-        url:
-          'https://user-images.githubusercontent.com/11402468/58957582-d43f0c00-87db-11e9-92db-b4037d423b88.jpg',
-      },
-    ];
+    return <Gallery pictureList={this.state.pictureList} onClickPhoto={this.handleClickPhoto}/>;
+  }
 
-    return <Gallery album={{ photoList: photoData }} />;
+  public handleClickPhoto = (currentIndex: number) => {
+    const { viewerStore, userStore: { loggedInfo } } = this.props;
+    viewerStore.setViewerData({
+      currentIndex,
+      images: this.state.pictureList,
+      username: loggedInfo.username
+    })
   }
 }
 

@@ -1,5 +1,8 @@
 import { action, observable } from 'mobx';
 import * as PostAPI from '../../api/post';
+import {
+  Comment
+} from '../../types';
 
 class PostStore {
   @observable public editPostForm: any;
@@ -46,8 +49,19 @@ class PostStore {
   @action
   public addPost = (post: object) => {
     this.posts.unshift(post);
-    console.log(post);
   };
+
+  @action
+  public addComment = (data: { comment: Comment, parentId: string }) => {
+    const { comment, parentId } = data;
+    const post = this.posts.find(post => post.id === parentId);
+    post.comments.push(comment);
+  }
+
+  @action
+  public addReplyComment = (data: { comment: Comment, parentId: string }) => {
+    console.log('addReplyComment');
+  }
 
   @action
   public uploadImgs = async (imgs: any) => {

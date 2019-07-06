@@ -1,26 +1,34 @@
+import { withRouter, WithRouterProps } from 'next/router';
 import React, { Component } from 'react';
 import PostWrapper from '../components/PostWrapper';
 import { observer, inject } from 'mobx-react';
 import * as PostAPI from '../api/post';
+import { CommentHandler, PostHandler, Post, Comment } from '../types';
+import { toast } from 'react-toastify';
 
-interface IProps {
+interface IProps extends WithRouterProps {
+  userStore?: any;
   postStore?: any;
   viewerStore?: any;
 }
-interface IState {
-  user: any;
-  posts: any[];
-}
+interface IState {}
 
-@inject('postStore', 'viewerStore')
+@inject('userStore', 'postStore', 'viewerStore')
 @observer
 class PostContainer extends Component<IProps, IState> {
-
   async componentDidMount() {
-    const { postStore } = this.props;
+    const {
+      router: {
+        query: { userId },
+      },
+      postStore,
+    } = this.props;
+    const getPost = userId
+      ? () => PostAPI.getUserPosts(userId)
+      : PostAPI.getPosts;
     try {
-      const res = await PostAPI.getPosts();
-      postStore.setPosts(res.data);
+      const { data } = await getPost();
+      postStore.setPosts(data);
     } catch (error) {
       return false;
     }
@@ -29,20 +37,101 @@ class PostContainer extends Component<IProps, IState> {
   public render() {
     const {
       postStore: { posts },
+      userStore: { logged, loggedInfo },
     } = this.props;
-    return !!posts && !!posts.length 
-      ? (
-        <PostWrapper 
-          posts={posts} 
-          onClickPhoto={this.handleClickPhoto}
-        /> 
-      ) : false;
+    return !!posts && !!posts.length ? (
+      <PostWrapper
+        isLogged={logged}
+        user={loggedInfo}
+        posts={posts}
+        postHandler={this.postHandler}
+        commentHandler={this.commentHandler}
+      />
+    ) : (
+      false
+    );
   }
 
-  public handleClickPhoto = (data: { currentIndex: number, images: any[], username: string }) => {
+  private handleClickPhoto = (data: {
+    currentIndex: number;
+    images: any[];
+    username: string;
+  }) => {
     const { viewerStore } = this.props;
-    viewerStore.setViewerData(data)
-  }
+    viewerStore.setViewerData(data);
+  };
+
+  private handleTogglePostLike = () => {
+    console.log('toggle post like');
+  };
+
+  private handleSubmitComment = async (commentData: {
+    parent: Post;
+    value: string;
+  }) => {
+    const { parent: post, value: content } = commentData;
+    const {
+      userStore: { loggedInfo },
+    } = this.props;
+    try {
+      const { data } = await PostAPI.writeComment(post.id, content);
+      const comment = {
+        ...data,
+        profile: loggedInfo,
+      };
+      if (!post.comments) {
+        post.comments = [];
+      }
+      post.comments.push(comment);
+      this.forceUpdate();
+    } catch (error) {
+      toast.error('댓글 달기 실패');
+    }
+  };
+
+  private handleToggleCommentLike = () => {
+    console.log('toggle comment like');
+  };
+
+  private handleSubmitReplyComment = async (replyCommentData: {
+    parent: Comment;
+    value: string;
+  }) => {
+    const { parent: comment, value: content } = replyCommentData;
+    const {
+      userStore: { loggedInfo },
+    } = this.props;
+    try {
+      const { data } = await PostAPI.writeReplyComment(comment.id, content);
+      const replyComment = {
+        ...data,
+        profile: loggedInfo,
+      };
+      if (!comment.replyComments) {
+        comment.replyComments = [];
+      }
+      comment.replyComments.push(replyComment);
+      this.forceUpdate();
+    } catch (error) {
+      toast.error('답글 달기 실패');
+    }
+  };
+
+  private handleToggleReplyCommentLike = () => {
+    console.log('toggle reply like');
+  };
+
+  private postHandler: PostHandler = {
+    onClickPhoto: this.handleClickPhoto,
+    onSubmitComment: this.handleSubmitComment,
+    onTogglePostLike: this.handleTogglePostLike,
+  };
+
+  private commentHandler: CommentHandler = {
+    onToggleCommentLike: this.handleToggleCommentLike,
+    onSubmitReplyComment: this.handleSubmitReplyComment,
+    onToggleReplyCommentLike: this.handleSubmitReplyComment,
+  };
 }
 
-export default PostContainer;
+export default withRouter(PostContainer);
