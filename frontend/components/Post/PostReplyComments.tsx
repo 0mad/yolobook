@@ -3,12 +3,12 @@ import { Comment } from '../../types';
 
 interface IProps {
   comment: Comment;
-  onLikeToggleClick: Function;
+  onToggleLike: Function;
   onReplyClick: Function;
 }
 
 const PostReplyComments = (props: IProps) => {
-  const { comment, onLikeToggleClick, onReplyClick } = props;
+  const { comment, onToggleLike, onReplyClick } = props;
   const { replyComments=[] } = comment;
 
   return (
@@ -17,8 +17,8 @@ const PostReplyComments = (props: IProps) => {
         <li key={replyComment.id}>
           <PostCommentItem
             comment={replyComment}
-            onReplyClick={() => onReplyClick()}
-            onLikeToggleClick={onLikeToggleClick}
+            onClickReply={() => onReplyClick()}
+            onToggleLike={onToggleLike}
             reply
           />
         </li>

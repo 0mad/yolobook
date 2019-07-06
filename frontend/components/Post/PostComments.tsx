@@ -70,7 +70,7 @@ const PostComment = (props: IPostCommentProps) => {
               <PostReplyComments
                 comment={comment}
                 onReplyClick={handleShowReplyCommentEditor}
-                onLikeToggleClick={onToggleReplyCommentLike}
+                onToggleLike={onToggleReplyCommentLike}
               />
             )}
           </>

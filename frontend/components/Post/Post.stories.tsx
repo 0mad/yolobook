@@ -127,14 +127,14 @@ storiesOf('Post', module)
       >
         <h3>댓글 달기</h3>
         <PostCommentEditor
-          profile={profile}
+          user={profile}
           parent={comment}
           onSubmit={handleSubmit}
         />
         <br />
         <h3>댓글 달기</h3>
         <PostCommentEditor
-          profile={profile}
+          user={profile}
           parent={comment}
           onSubmit={handleSubmit}
           reply
@@ -155,9 +155,10 @@ storiesOf('Post', module)
         '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
       likeCnt: '2',
       isLike: 'true',
+      replyComments: []
     };
 
-    const commentWithoutLikeCnt = {
+    const commentWithoutLikeCnt: Comment = {
       profile: {
         id: '2',
         username: '유주현',
@@ -169,6 +170,7 @@ storiesOf('Post', module)
         '댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용 댓글 내용',
       likeCnt: '0',
       isLike: 'false',
+      replyComments: []
     };
 
     /**
@@ -235,6 +237,7 @@ storiesOf('Post', module)
           '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
         likeCnt: i.toString(),
         isLike: (i % 2 === 0).toString(),
+        replyComments: []
       });
     }
 
@@ -331,6 +334,7 @@ storiesOf('Post', module)
             '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
           likeCnt: j.toString(),
           isLike: (j % 2 === 0).toString(),
+          replyComments: []
         });
       }
 
@@ -403,7 +407,7 @@ storiesOf('Post', module)
         style={{ margin: '0 auto', width: '500px', backgroundColor: '#fff' }}
       >
         <PostComments
-          profile={profile}
+          user={profile}
           comments={comments}
           commentHandler={commentHandler}
         />
@@ -427,6 +431,7 @@ storiesOf('Post', module)
             '답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글 답글',
           likeCnt: j.toString(),
           isLike: (j % 2 === 0).toString(),
+          replyComments: []
         };
         replyComments.push(replyComment);
       }
@@ -574,6 +579,7 @@ storiesOf('Post', module)
       >
         <h3>댓글이 없는 포스트</h3>
         <Post
+          isLogged={true}
           user={user}
           post={postNotHasComment}
           postHandler={postHandler}
@@ -582,6 +588,7 @@ storiesOf('Post', module)
         <br />
         <h3>댓글이 있는 포스트</h3>
         <Post
+          isLogged={true}
           user={user}
           post={postHasComment}
           postHandler={postHandler}

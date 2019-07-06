@@ -37,7 +37,6 @@ class UserController {
             {
               association: 'profile',
               attributes: ['id', 'username', 'thumbnail'],
-              identifier: 'profile',
             },
             {
               association: 'replyComments',
@@ -46,7 +45,6 @@ class UserController {
                 {
                   association: 'profile',
                   attributes: ['id', 'username', 'thumbnail'],
-                  identifier: 'profile',
                 },
               ],
             },

@@ -23,7 +23,7 @@ const PostCommentItem = (props: IProps) => {
     profile: { id: userId, username, thumbnail },
     content,
     isLike,
-    likeCnt,
+    likeCnt='0',
     createdAt,
   } = comment;
 
