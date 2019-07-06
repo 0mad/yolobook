@@ -124,7 +124,6 @@ const Banner = ({
         )}
       </>
     )
-    return false;
   }
 
   return (
