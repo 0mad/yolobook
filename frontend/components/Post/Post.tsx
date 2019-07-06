@@ -50,13 +50,25 @@ const Post = (props: IProps) => {
   return (
     <div className={cx('post')}>
       <div className={cx('header')}>
-        <Link href={`/profile/timeline/${userId}`}>
-          <img className={cx('user-photo')} src={thumbnail} />
-        </Link>
-        <div className={cx('meta-data')}>
+        {isLogged ? (
           <Link href={`/profile/timeline/${userId}`}>
-            <p className={cx('user-name')}>{username}</p>
+            <img
+              className={cx('user-photo', 'user-photo-logged')}
+              src={thumbnail}
+            />
           </Link>
+        ) : (
+          <img className={cx('user-photo')} src={thumbnail} />
+        )}
+        <div className={cx('meta-data')}>
+          {isLogged ? (
+            <Link href={`/profile/timeline/${userId}`}>
+              <p className={cx('user-name', 'user-name-logged')}>{username}</p>
+            </Link>
+          ) : (
+            <p className={cx('user-name')}>{username}</p>
+          )}
+
           <span className={cx('created-time')}>{getCoolDate(createdAt)}</span>
         </div>
       </div>
