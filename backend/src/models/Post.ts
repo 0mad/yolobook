@@ -10,6 +10,7 @@ import {
 } from 'sequelize-typescript';
 import { Account } from './Account';
 import { Comment } from './Comment';
+import { LikePost } from './LikePost';
 import { PostImage } from './PostImage';
 
 @Table({
@@ -32,6 +33,9 @@ export class Post extends Model<Post> {
   @HasMany(() => Comment)
   comments?: Comment[];
 
+  @HasMany(() => LikePost)
+  likes?: LikePost[];
+
   public get info(): object {
     const { id: accountId, username, thumbnail } = this.account;
     const oldImgs: any = this.imgs;
@@ -48,6 +52,7 @@ export class Post extends Model<Post> {
       createdAt: this.createdAt,
       id: this.id,
       imgs: newImgs,
+      likes: this.likes,
       profile: {
         id: accountId,
         thumbnail,
@@ -55,4 +60,44 @@ export class Post extends Model<Post> {
       },
     };
   }
+
+  public static getPosts = async ({ where = {} } = {}) => (
+    await Post.findAll({
+      include: [
+        Account,
+        PostImage,
+        {
+          association: 'likes', attributes: ['id', 'accountId']
+        },
+        {
+          association: 'comments',
+          attributes: ['id', 'createdAt', 'content'],
+          include: [
+            {
+              association: 'profile',
+              attributes: ['id', 'username', 'thumbnail'],
+            },
+            {
+              association: 'replyComments',
+              attributes: ['id', 'createdAt', 'content'],
+              include: [
+                {
+                  association: 'profile',
+                  attributes: ['id', 'username', 'thumbnail'],
+                },
+                {
+                  association: 'likes', attributes: ['id', 'accountId']
+                },
+              ],
+            },
+            {
+              association: 'likes', attributes: ['id', 'accountId']
+            },
+          ],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+      where
+    })
+  );
 }

@@ -3,6 +3,9 @@ import { Account } from '../../models/Account';
 import { Comment } from '../../models/Comment';
 import { Post } from '../../models/Post';
 import { PostImage } from '../../models/PostImage';
+import { LikeComment } from '../../models/LikeComment';
+import { LikePost } from '../../models/LikePost';
+import { LikeReplyComment } from '../../models/LikeReplyComment';
 import { ReplyComment } from '../../models/ReplyComment';
 
 class UserController {
@@ -26,33 +29,7 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const posts = await Post.findAll({
-      include: [
-        Account,
-        PostImage,
-        {
-          association: 'comments',
-          attributes: ['id', 'createdAt', 'content'],
-          include: [
-            {
-              association: 'profile',
-              attributes: ['id', 'username', 'thumbnail'],
-            },
-            {
-              association: 'replyComments',
-              attributes: ['id', 'createdAt', 'content'],
-              include: [
-                {
-                  association: 'profile',
-                  attributes: ['id', 'username', 'thumbnail'],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      order: [['createdAt', 'DESC']],
-    });
+    const posts = await Post.getPosts();
     const data: any = [];
     posts.forEach((post: any) => {
       data.push(post.info);
@@ -67,12 +44,10 @@ class UserController {
     next: express.NextFunction
   ) => {
     const { userId } = req.params;
-    const posts = await Post.findAll({
-      include: [Account, PostImage],
-      order: [['createdAt', 'DESC']],
+    const posts = await Post.getPosts({
       where: {
         accountId: userId,
-      },
+      }
     });
     const data: any = [];
     posts.forEach((post: any) => {
@@ -208,7 +183,6 @@ class UserController {
     } catch (error) {
       next(error);
     }
-    res.send('답글 작성');
   };
 
   // 답글 삭제
@@ -238,22 +212,192 @@ class UserController {
     res.send('좋아요 갯수 가져오기');
   };
 
-  // 좋아요
-  public setLike = async (
+  //  게시물 좋아요
+  public likePost = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('좋아요');
+    const { postId } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const existingReplyComment = await LikePost.findOne({
+        where: {
+          accountId: parseInt(userId, 10),
+          postId: parseInt(postId, 10),
+        }
+      });
+
+      if (existingReplyComment) {
+        res.sendStatus(500);
+      } else {
+        const newLike = await LikePost.create({
+          accountId: parseInt(userId, 10),
+          postId: parseInt(postId, 10),
+        });
+        res.json({
+          accountId: newLike.accountId,
+          id: newLike.id,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
   };
 
-  // 좋아요 취소
-  public cancelLike = async (
+  // 게시글 좋아요 취소
+  public cancelLikePost = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.send('좋아요 취소');
+    const { id } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const result = await LikePost.destroy({
+        where: {
+          accountId: userId,
+          id,
+        }
+      });
+      res.sendStatus(result === 1 ? 200 : 500);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  //  댓글 좋아요
+  public likeComment = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const { commentId } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const existingComment = await LikeComment.findOne({
+        where: {
+          accountId: parseInt(userId, 10),
+          commentId: parseInt(commentId, 10),
+        }
+      });
+
+      if (existingComment) {
+        res.sendStatus(500);
+      } else {
+        const newLike = await LikeComment.create({
+          accountId: parseInt(userId, 10),
+          commentId: parseInt(commentId, 10),
+        });
+        res.json({
+          accountId: newLike.accountId,
+          id: newLike.id,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 댓글 좋아요 취소
+  public cancelLikeComment = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const { id } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const result = await LikeComment.destroy({
+        where: {
+          accountId: userId,
+          id,
+        }
+      });
+      res.sendStatus(result === 1 ? 200 : 500);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
+
+  //  답글 좋아요
+  public likeReplyComment = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const { replyCommentId } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const existingReplyComment = await LikeReplyComment.findOne({
+        where: {
+          accountId: parseInt(userId, 10),
+          replyCommentId: parseInt(replyCommentId, 10),
+        }
+      });
+
+      if (existingReplyComment) {
+        res.sendStatus(500);
+      } else {
+        const newLike = await LikeReplyComment.create({
+          accountId: parseInt(userId, 10),
+          replyCommentId: parseInt(replyCommentId, 10),
+        });
+        res.json({
+          accountId: newLike.accountId,
+          id: newLike.id,
+        });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 답글 좋아요 취소
+  public cancelLikeReplyComment = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const { id } = req.params;
+    const {
+      user: {
+        profile: { id: userId },
+      },
+    } = req.body;
+    try {
+      const result = await LikeReplyComment.destroy({
+        where: {
+          accountId: userId,
+          id,
+        }
+      });
+      res.sendStatus(result === 1 ? 200 : 500);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

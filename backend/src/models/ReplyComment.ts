@@ -4,11 +4,13 @@ import {
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { Account } from './Account';
 import { Comment } from './Comment';
+import { LikeReplyComment } from './LikeReplyComment';
 
 @Table({
   timestamps: true,
@@ -29,4 +31,7 @@ export class ReplyComment extends Model<ReplyComment> {
 
   @BelongsTo(() => Comment)
   comment?: Comment;
+
+  @HasMany(() => LikeReplyComment)
+  likes?: LikeReplyComment[];
 }

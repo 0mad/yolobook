@@ -21,8 +21,7 @@ export interface Comment {
   id: string;
   content: string;
   createdAt: string;
-  isLike?: string;
-  likeCnt?: string;
+  likes?: any;
   replyComments: Comment[];
 }
 
@@ -33,6 +32,5 @@ export interface Post {
   createdAt: string;
   imgs: any[];
   comments: Comment[];
-  likeCnt: string;
-  isLike: string;
+  likes?: any;
 }

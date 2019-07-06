@@ -61,15 +61,39 @@ class PostContainer extends Component<IProps, IState> {
     viewerStore.setViewerData(data);
   };
 
-  private handleTogglePostLike = () => {
-    console.log('toggle post like');
+  private handleTogglePostLike = async (args: { post: Post, isLike: boolean}) => {
+    const { post, isLike } = args;
+    if(isLike) {
+      try {
+        const { data } = await PostAPI.likePost(post.id);
+        if(!post.likes) {
+          post.likes = [];
+        }
+        post.likes.push(data);
+        this.forceUpdate();
+      } catch (error) {
+        console.error('좋아요 실패')
+      }
+    } else {
+      const { userStore: { loggedInfo }} = this.props;
+      const userLike = post.likes.find(like => like.accountId === loggedInfo.id);
+      try {
+        const { status } = await PostAPI.cancelLikePost(userLike.id);
+        if(status === 200) {
+          post.likes = post.likes.filter(like => like.id !== userLike.id);
+          this.forceUpdate();
+        }
+      } catch (error) {
+        console.error('좋아요 취소 실패')
+      }
+    }
   };
 
-  private handleSubmitComment = async (commentData: {
+  private handleSubmitComment = async (args: {
     parent: Post;
     value: string;
   }) => {
-    const { parent: post, value: content } = commentData;
+    const { parent: post, value: content } = args;
     const {
       userStore: { loggedInfo },
     } = this.props;
@@ -89,8 +113,33 @@ class PostContainer extends Component<IProps, IState> {
     }
   };
 
-  private handleToggleCommentLike = () => {
-    console.log('toggle comment like');
+  private handleToggleCommentLike = async (args: { comment: Comment, isLike: boolean}) => {
+    const { comment, isLike } = args;
+    if(isLike) {
+      try {
+        const { data } = await PostAPI.likeComment(comment.id);
+        if (!comment.likes) {
+          comment.likes = [];
+        }
+        comment.likes.push(data);
+        this.forceUpdate();
+      } catch (error) {
+        console.error('좋아요 실패')
+      }
+    } 
+    else {
+      const { userStore: { loggedInfo }} = this.props;
+      const userLike = comment.likes.find(like => like.accountId === loggedInfo.id);
+      try {
+        const { status } = await PostAPI.cancelLikeComment(userLike.id);
+        if(status === 200) {
+          comment.likes = comment.likes.filter(like => like.id !== userLike.id);
+          this.forceUpdate();
+        }
+      } catch (error) {
+        console.error('좋아요 취소 실패')
+      }
+    }
   };
 
   private handleSubmitReplyComment = async (replyCommentData: {
@@ -117,8 +166,32 @@ class PostContainer extends Component<IProps, IState> {
     }
   };
 
-  private handleToggleReplyCommentLike = () => {
-    console.log('toggle reply like');
+  private handleToggleReplyCommentLike = async (args: { comment: Comment, isLike: boolean}) => {
+    const { comment: replyComment, isLike } = args;
+    if(isLike) {
+      try {
+        const { data } = await PostAPI.likeReplyComment(replyComment.id);
+        if(!replyComment.likes) {
+          replyComment.likes = [];
+        }
+        replyComment.likes.push(data);
+        this.forceUpdate();
+      } catch (error) {
+        console.error('좋아요 실패')
+      }
+    } else {
+      const { userStore: { loggedInfo }} = this.props;
+      const userLike = replyComment.likes.find(like => like.accountId === loggedInfo.id);
+      try {
+        const { status } = await PostAPI.cancelLikeReplyComment(userLike.id);
+        if(status === 200) {
+          replyComment.likes = replyComment.likes.filter(like => like.id !== userLike.id);
+          this.forceUpdate();
+        }
+      } catch (error) {
+        console.error('좋아요 취소 실패')
+      }
+    }
   };
 
   private postHandler: PostHandler = {
@@ -130,7 +203,7 @@ class PostContainer extends Component<IProps, IState> {
   private commentHandler: CommentHandler = {
     onToggleCommentLike: this.handleToggleCommentLike,
     onSubmitReplyComment: this.handleSubmitReplyComment,
-    onToggleReplyCommentLike: this.handleSubmitReplyComment,
+    onToggleReplyCommentLike: this.handleToggleReplyCommentLike,
   };
 }
 

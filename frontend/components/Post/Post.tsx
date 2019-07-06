@@ -39,14 +39,13 @@ const Post = (props: IProps) => {
     imgs,
     profile,
     comments = [],
-    likeCnt,
-    isLike,
+    likes = [],
   } = post;
   const { thumbnail, username, id: userId } = profile;
   const { onClickPhoto, onSubmitComment, onTogglePostLike } = postHandler;
 
   const [isShowComment, setIsShowComment] = useState(!!comments.length);
-
+  const isLike = `${!!likes.find((like: any) => like.accountId === user.id)}`;
   return (
     <div className={cx('post')}>
       <div className={cx('header')}>
@@ -88,10 +87,10 @@ const Post = (props: IProps) => {
       </div>
       <div className={cx('footer')}>
         <div className={cx('score-info')}>
-          {!!parseInt(likeCnt) && (
+          {!!parseInt(likes.length) && (
             <div className={cx('score-info-item', 'score-info-like')}>
               <IoIosThumbsUp />
-              <span>{`${likeCnt}명`}</span>
+              <span>{`${likes.length}명`}</span>
             </div>
           )}
           <div>
@@ -111,7 +110,7 @@ const Post = (props: IProps) => {
                 onTogglePostLike({ post, isLike: !(isLike === 'true') });
               }}
             >
-              {isLike ? <FaThumbsUp /> : <FaRegThumbsUp />}
+              {isLike === 'true' ? <FaThumbsUp /> : <FaRegThumbsUp />}
               <span>좋아요</span>
             </li>
             <li
