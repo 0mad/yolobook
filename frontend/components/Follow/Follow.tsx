@@ -21,30 +21,45 @@ interface IProps extends IFollowItemProps {
 }
 
 export const FollowItem = (props: IFollowItemProps) => {
-  const { id, profile, type, onAccept, onReject , onCancel } = props;
+  const { id, profile, type, onAccept, onReject, onCancel } = props;
   return (
     <li className={cx('follow-item')} key={id}>
       <Link href={`/profile/timeline/${profile.id}`}>
-        <div className={cx('thumbnail')}>
-          <img src={profile.thumbnail} />
-        </div>
+        <a>
+          <div className={cx('thumbnail')}>
+            <img src={profile.thumbnail} />
+          </div>
+        </a>
       </Link>
       <div className={cx('content')}>
         <Link href={`/profile/timeline/${profile.id}`}>
-          <div className={cx('name')}>{profile.username}</div>
+          <a>
+            <div className={cx('name')}>{profile.username}</div>
+          </a>
         </Link>
         <div className={cx('more-btn')}>
           {type === 'follower' ? (
             <>
-              <Button inline={true} theme="blue" style={{ flex: '1' }} onClick={() => onAccept(id)}>
+              <Button
+                inline={true}
+                theme="blue"
+                style={{ flex: '1' }}
+                onClick={() => onAccept(id)}
+              >
                 수락
               </Button>
-              <Button inline={true} style={{ flex: '1' }} onClick={() => onReject(id)}>
+              <Button
+                inline={true}
+                style={{ flex: '1' }}
+                onClick={() => onReject(id)}
+              >
                 요청 삭제
               </Button>
             </>
           ) : (
-            <Button inline={true} onClick={() => onCancel(id)}>친구 요청 취소</Button>
+            <Button inline={true} onClick={() => onCancel(id)}>
+              친구 요청 취소
+            </Button>
           )}
         </div>
       </div>
@@ -52,20 +67,30 @@ export const FollowItem = (props: IFollowItemProps) => {
   );
 };
 
-const Follow = ({ followList, type, onAccept, onReject , onCancel }: IProps) => {
+const Follow = ({ followList, type, onAccept, onReject, onCancel }: IProps) => {
   return (
     <div className={cx('follow')}>
       <div className={cx('follow-header')}>
         <h2 className={cx('follow-title')}>친구 요청</h2>
         <p className={cx('toggle')}>
-          <Link href={type === 'follower' ? '/follow/following' :  '/follow/follower'}>
-            <span>{type === 'follower' ? `전송한 요청 보기` : '수신한 요청 보기'}</span>
+          <Link
+            href={
+              type === 'follower' ? '/follow/following' : '/follow/follower'
+            }
+          >
+            <a>
+              <span>
+                {type === 'follower' ? `전송한 요청 보기` : '수신한 요청 보기'}
+              </span>
+            </a>
           </Link>
         </p>
       </div>
       <ul className={cx('follow-list')}>
         {followList &&
-          followList.map(follow => FollowItem({ ...follow, type, onAccept, onReject , onCancel }))}
+          followList.map(follow =>
+            FollowItem({ ...follow, type, onAccept, onReject, onCancel })
+          )}
       </ul>
     </div>
   );

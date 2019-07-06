@@ -4,9 +4,7 @@ import { IoIosThumbsUp } from 'react-icons/io';
 import getCoolDate from '../../utils/getCoolDate';
 
 import styles from './PostCommentItem.scss';
-import {
-  Comment
-} from '../../types';
+import { Comment } from '../../types';
 
 const cx = classNames.bind(styles);
 
@@ -18,12 +16,12 @@ interface IProps {
 }
 
 const PostCommentItem = (props: IProps) => {
-  const { reply=false, comment, onClickReply, onToggleLike } = props;
+  const { reply = false, comment, onClickReply, onToggleLike } = props;
   const {
     profile: { id: userId, username, thumbnail },
     content,
     isLike,
-    likeCnt='0',
+    likeCnt = '0',
     createdAt,
   } = comment;
 
@@ -31,16 +29,20 @@ const PostCommentItem = (props: IProps) => {
     <div className={cx('post-comment-item')}>
       <div>
         <Link href={`/profile/timeline/${userId}`}>
-          <img
-            className={cx('profile', reply && 'profile-reply')}
-            src={thumbnail}
-          />
+          <a>
+            <img
+              className={cx('profile', reply && 'profile-reply')}
+              src={thumbnail}
+            />
+          </a>
         </Link>
       </div>
       <div className={cx('wrap-content')}>
         <div className={cx('content')}>
           <Link href={`/profile/timeline/${userId}`}>
-            <span className={cx('username')}>{username}</span>
+            <a>
+              <span className={cx('username')}>{username}</span>
+            </a>
           </Link>
           <span>{content}</span>
           <div

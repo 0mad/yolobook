@@ -10,10 +10,17 @@ interface IProps {
   username: string;
 }
 
-const Photo = (props: { img: string, id: number, isOdd: boolean, children: any, onClickPhoto: any, index: number }) => {
-  const { img = '', id, children, onClickPhoto, index } = props;
+const Photo = (props: {
+  img: string;
+  id: number;
+  isOdd: boolean;
+  children: any;
+  onClickPhoto: any;
+  index: number;
+}) => {
+  const { img = '', children, onClickPhoto, index } = props;
   return (
-    <li className={cx('photo-wrapper')} key={id} onClick={() => onClickPhoto(index)}>
+    <li className={cx('photo-wrapper')} onClick={() => onClickPhoto(index)}>
       <img className={cx('photo')} src={img} />
       {children}
     </li>
@@ -29,15 +36,21 @@ const PostGallery = (props: IProps) => {
       {images
         .filter((_, index) => index < 5)
         .map((photo, index) => (
-          <Photo { ...photo} index={index} onClickPhoto={(currentIndex: number) => onClickPhoto({ currentIndex, images, username })}>
+          <Photo
+            {...photo}
+            key={index}
+            index={index}
+            onClickPhoto={(currentIndex: number) =>
+              onClickPhoto({ currentIndex, images, username })
+            }
+          >
             {index === 4 && overCount > 0 && (
               <Link href="">
                 <a className={cx('rest')}>{`${overCount}장+`}</a>
-              </Link> 
+              </Link>
             )}
           </Photo>
-        )
-      )}
+        ))}
     </ul>
   );
 };

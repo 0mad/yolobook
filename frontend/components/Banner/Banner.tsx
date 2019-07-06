@@ -21,7 +21,7 @@ interface IProps {
   onCoverImgsChange?: void;
   onThumbnailImgsChange?: void;
   userId: number;
-  friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED'
+  friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED';
 }
 
 const Banner = ({
@@ -37,7 +37,7 @@ const Banner = ({
   onCoverImgsChange,
   onThumbnailImgsChange,
   userId,
-  friendShip
+  friendShip,
 }: IProps) => {
   let cameraEl: any;
   let profileEl: any;
@@ -72,12 +72,14 @@ const Banner = ({
     uploadThumbnailImgEl.click();
   };
 
-  const renderFriendShipButton = (friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED') => {
+  const renderFriendShipButton = (
+    friendShip: 'NOTHING' | 'FOLLOWING' | 'FOLLOWER' | 'ACCEPTED'
+  ) => {
     const defaultButtonObj = {
       onClick: () => null,
       text: '',
       disable: false,
-    }
+    };
     let buttonMetaObj = {};
 
     if (userId === -1 || isMyProfile || friendShip === 'REJECTED') {
@@ -85,47 +87,56 @@ const Banner = ({
     } else if (friendShip === 'NOTHING') {
       buttonMetaObj = {
         onClick: onClickFollow,
-        text: '친구 추가'
+        text: '친구 추가',
       };
     } else if (friendShip === 'ACCEPTED') {
       buttonMetaObj = {
         disable: true,
-        text: '친구'
+        text: '친구',
       };
     } else if (friendShip === 'FOLLOWER') {
       buttonMetaObj = {
         onClick: onClickAcceptFollow,
-        text: '친구 승인'
+        text: '친구 승인',
       };
     } else if (friendShip === 'FOLLOWING') {
       buttonMetaObj = {
         onClick: onClickCancelFollow,
-        text: '친구 요청 취소'
+        text: '친구 요청 취소',
       };
     }
     buttonMetaObj = {
       ...defaultButtonObj,
-      ...buttonMetaObj
-    }
+      ...buttonMetaObj,
+    };
     return (
       <>
         <div className={cx('friendship-button')}>
-          <Button inline disabled={buttonMetaObj.disable} onClick={buttonMetaObj.onClick} href={buttonMetaObj.href}>
+          <Button
+            inline
+            disabled={buttonMetaObj.disable}
+            onClick={buttonMetaObj.onClick}
+            href={buttonMetaObj.href}
+          >
             <IoIosPersonAdd />
             <span>{buttonMetaObj.text}</span>
           </Button>
         </div>
         {friendShip === 'FOLLOWER' && (
           <div className={cx('friendship-reject-button')}>
-            <Button inline theme='pink' onClick={onClickRejectFollow} style={{height: '38px'}}>
+            <Button
+              inline
+              theme="pink"
+              onClick={onClickRejectFollow}
+              style={{ height: '38px' }}
+            >
               <span>친구 거절</span>
             </Button>
           </div>
         )}
       </>
-    )
-    return false;
-  }
+    );
+  };
 
   return (
     <div
@@ -206,16 +217,24 @@ const Banner = ({
         <nav className={cx('nav')}>
           <ul>
             <li>
-              <Link href={`/profile/timeline/${userId}`}>타임라인</Link>
+              <Link href={`/profile/timeline/${userId}`}>
+                <a>타임라인</a>
+              </Link>
             </li>
             <li>
-              <Link href={`/profile/info/${userId}`}>정보</Link>
+              <Link href={`/profile/info/${userId}`}>
+                <a>정보</a>
+              </Link>
             </li>
             <li>
-              <Link href={`/profile/friend/${userId}`}>친구</Link>
+              <Link href={`/profile/friend/${userId}`}>
+                <a>친구</a>
+              </Link>
             </li>
             <li>
-              <Link href={`/profile/picture/${userId}`}>사진</Link>
+              <Link href={`/profile/picture/${userId}`}>
+                <a>사진</a>
+              </Link>
             </li>
           </ul>
         </nav>

@@ -37,14 +37,20 @@ interface IToggleMenuProps {
 
 interface IUserMenuProps {
   children: any;
-  href: string;
+  href?: string;
 }
 
 const ToggleMenu = (props: IToggleMenuProps) => {
   const { children, href, onClick } = props;
   return (
     <li className={cx('toggle-menu-item')} onClick={onClick}>
-      <Link href={href}>{children}</Link>
+      {!!href ? (
+        <Link href={href}>
+          <a>{children}</a>
+        </Link>
+      ) : (
+        children
+      )}
     </li>
   );
 };
@@ -71,6 +77,13 @@ const LoginedHeader = (props: IProps) => {
   } = props;
   return (
     <>
+      {!isMobileMode && (
+        <Link href="/">
+          <a>
+            <img className={cx('logo')} src={Logo} />
+          </a>
+        </Link>
+      )}
       <HeaderSearchBar
         isMobileMode={isMobileMode}
         searchActive={searchActive}
@@ -79,23 +92,18 @@ const LoginedHeader = (props: IProps) => {
         onInputChange={onSearchTextChange}
       />
       {!isMobileMode && (
-        <>
-          <Link href="/">
-            <img className={cx('logo')} src={Logo}/>
-          </Link>
-          <ul className={cx('user-menu')}>
-            <UserMenu href={`/profile/timeline/${profile.id}`}>
-              <img className={cx('user-photo')} src={profile.thumbnail} />
-              <p className={cx('user-name')}>{profile.username}</p>
-            </UserMenu>
-          </ul>
-        </>
+        <ul className={cx('user-menu')}>
+          <UserMenu href={`/profile/timeline/${profile.id}`}>
+            <img className={cx('user-photo')} src={profile.thumbnail} />
+            <p className={cx('user-name')}>{profile.username}</p>
+          </UserMenu>
+        </ul>
       )}
       {
         <ul className={cx('toggle-menu')}>
           {isMobileMode && (
             <>
-              <ToggleMenu href="/">
+              <ToggleMenu href={'/'}>
                 <IoIosFiling />
               </ToggleMenu>
               <ToggleMenu onClick={toggleSearch}>
@@ -103,7 +111,7 @@ const LoginedHeader = (props: IProps) => {
               </ToggleMenu>
             </>
           )}
-          <ToggleMenu href="/follow/follower">
+          <ToggleMenu href={'/follow/follower'}>
             <IoIosContacts />
           </ToggleMenu>
           <ToggleMenu onClick={onLogout}>
@@ -120,12 +128,16 @@ const UnLoginedHeader = (props: { isMobileMode: boolean }) => {
   return (
     <div className={cx('unlogined-header', isMobileMode)}>
       <Link href="/">
-        <img className={cx('logo')} src={Logo}/>
+        <a>
+          <img className={cx('logo')} src={Logo} />
+        </a>
       </Link>
       <Link href="/login">
-        <Button inline={true} style={{ height: '100%' }}>
-          로그인
-        </Button>
+        <a>
+          <Button inline={true} style={{ height: '100%' }}>
+            로그인
+          </Button>
+        </a>
       </Link>
     </div>
   );

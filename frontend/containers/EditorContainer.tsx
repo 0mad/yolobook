@@ -70,7 +70,7 @@ class EditorContainer extends Component<IProps> {
     const {
       userStore: { loggedInfo },
       postStore: {
-        editPostForm: { content },
+        editPostForm: { content, imgUrls },
       },
     } = this.props;
 
@@ -80,6 +80,7 @@ class EditorContainer extends Component<IProps> {
         onImgsChange={this.handleImgsChange}
         onSubmit={this.handleSubmit}
         content={content}
+        imgUrls={imgUrls}
         profile={loggedInfo}
       />
     );

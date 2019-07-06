@@ -13,6 +13,7 @@ interface IProps {
   onSubmit: void;
   content: any;
   profile: any;
+  imgUrls: any;
   onTextChange: (event: React.ChangeEvent<Element>) => void;
   onImgsChange: (event: React.ChangeEvent<Element>) => void;
 }
@@ -24,6 +25,7 @@ const Editor = ({
   onSubmit,
   content,
   profile,
+  imgUrls,
 }: IProps) => {
   let uploadImgEl: any;
 
@@ -73,6 +75,15 @@ const Editor = ({
             </Button>
           </div>
         </div>
+        {!!imgUrls.length && (
+          <ul className={cx('preview')}>
+            {imgUrls.map(({ url }: { url: string }) => (
+              <li className={cx('img-item')}>
+                <img src={url} />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className={cx('footer')}>
         {isBrowser && (

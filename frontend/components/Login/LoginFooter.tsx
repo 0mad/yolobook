@@ -13,7 +13,9 @@ const LoginFooter = (props: IProps) => {
       <p className={cx('footer-content')}>
         Provided By&nbsp;
         <Link href="https://github.com/0mad/yolobook">
-          <span className={cx('github')}>0mad</span>
+          <a>
+            <span className={cx('github')}>0mad</span>
+          </a>
         </Link>
       </p>
     </div>
