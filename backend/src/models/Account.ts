@@ -9,6 +9,9 @@ import {
 import { generateToken } from '../lib/token';
 import { Comment } from './Comment';
 import { Follow } from './Follow';
+import { LikeComment } from './LikeComment';
+import { LikePost } from './LikePost';
+import { LikeReplyComment } from './LikeReplyComment';
 import { Post } from './Post';
 
 @Table({
@@ -48,6 +51,15 @@ export class Account extends Model<Account> {
 
   @HasMany(() => Follow)
   follows?: Follow[];
+
+  @HasMany(() => LikePost)
+  likePosts?: LikePost;
+
+  @HasMany(() => LikeComment)
+  likeComments?: LikeComment;
+
+  @HasMany(() => LikeReplyComment)
+  likeReplyComments?: LikeReplyComment;
 
   public get profile(): object {
     return {

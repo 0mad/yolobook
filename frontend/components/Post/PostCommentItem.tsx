@@ -20,10 +20,10 @@ const PostCommentItem = (props: IProps) => {
   const {
     profile: { id: userId, username, thumbnail },
     content,
-    isLike,
-    likeCnt = '0',
+    likes=[],
     createdAt,
   } = comment;
+  const isLike = `${!!likes.find((like: any) => like.accountId === userId)}`;
 
   return (
     <div className={cx('post-comment-item')}>
@@ -48,11 +48,11 @@ const PostCommentItem = (props: IProps) => {
           <div
             className={cx(
               'like-badge',
-              !Number.parseInt(likeCnt) && 'like-badge-hide'
+              !Number.parseInt(likes.length) && 'like-badge-hide'
             )}
           >
             <IoIosThumbsUp />
-            <span>{likeCnt}</span>
+            <span>{likes.length}</span>
           </div>
         </div>
 

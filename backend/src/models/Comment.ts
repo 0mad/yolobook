@@ -9,6 +9,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Account } from './Account';
+import { LikeComment } from './LikeComment';
 import { Post } from './Post';
 import { ReplyComment } from './ReplyComment';
 
@@ -34,4 +35,7 @@ export class Comment extends Model<Comment> {
 
   @HasMany(() => ReplyComment)
   replyComments?: ReplyComment[];
+
+  @HasMany(() => LikeComment)
+  likes?: LikeComment[];
 }
