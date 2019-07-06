@@ -52,10 +52,12 @@ const Post = (props: IProps) => {
       <div className={cx('header')}>
         {isLogged ? (
           <Link href={`/profile/timeline/${userId}`}>
-            <img
-              className={cx('user-photo', 'user-photo-logged')}
-              src={thumbnail}
-            />
+            <a>
+              <img
+                className={cx('user-photo', 'user-photo-logged')}
+                src={thumbnail}
+              />
+            </a>
           </Link>
         ) : (
           <img className={cx('user-photo')} src={thumbnail} />
@@ -63,7 +65,11 @@ const Post = (props: IProps) => {
         <div className={cx('meta-data')}>
           {isLogged ? (
             <Link href={`/profile/timeline/${userId}`}>
-              <p className={cx('user-name', 'user-name-logged')}>{username}</p>
+              <a>
+                <p className={cx('user-name', 'user-name-logged')}>
+                  {username}
+                </p>
+              </a>
             </Link>
           ) : (
             <p className={cx('user-name')}>{username}</p>

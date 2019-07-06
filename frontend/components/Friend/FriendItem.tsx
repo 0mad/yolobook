@@ -16,22 +16,34 @@ export interface IProps {
   isMobileMode: boolean;
 }
 
-const FriendItem = ({ thumbnail, username, cnt, isMobileMode, userId }: IProps) => {
+const FriendItem = ({
+  thumbnail,
+  username,
+  cnt,
+  isMobileMode,
+  userId,
+}: IProps) => {
   return (
     <div className={cx('friend-item')}>
       <Link href={`/profile/timeline/${userId}`}>
-        <div className={cx('thumbnail')}>
-          <img src={thumbnail} />
-        </div>
+        <a>
+          <div className={cx('thumbnail')}>
+            <img src={thumbnail} />
+          </div>
+        </a>
       </Link>
       <div className={cx('content')}>
         <div className={cx('info')}>
           <Link href={`/profile/timeline/${userId}`}>
-            <div className={cx('name')}>{username}</div>
+            <a>
+              <div className={cx('name')}>{username}</div>
+            </a>
           </Link>
-          {cnt && (<div className={cx('friend-cnt')}>
-            {isMobileMode ? `함께 아는 친구 ${cnt}명` : `친구 ${cnt}명`}
-          </div>)}
+          {cnt && (
+            <div className={cx('friend-cnt')}>
+              {isMobileMode ? `함께 아는 친구 ${cnt}명` : `친구 ${cnt}명`}
+            </div>
+          )}
         </div>
         <div className={cx('more-btn')}>
           {isMobileMode ? (

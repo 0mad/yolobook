@@ -44,7 +44,9 @@ const ToggleMenu = (props: IToggleMenuProps) => {
   const { children, href, onClick } = props;
   return (
     <li className={cx('toggle-menu-item')} onClick={onClick}>
-      <Link href={href}>{children}</Link>
+      <Link href={href}>
+        <a>{children}</a>
+      </Link>
     </li>
   );
 };
@@ -81,7 +83,9 @@ const LoginedHeader = (props: IProps) => {
       {!isMobileMode && (
         <>
           <Link href="/">
-            <img className={cx('logo')} src={Logo}/>
+            <a>
+              <img className={cx('logo')} src={Logo} />
+            </a>
           </Link>
           <ul className={cx('user-menu')}>
             <UserMenu href={`/profile/timeline/${profile.id}`}>
@@ -120,12 +124,16 @@ const UnLoginedHeader = (props: { isMobileMode: boolean }) => {
   return (
     <div className={cx('unlogined-header', isMobileMode)}>
       <Link href="/">
-        <img className={cx('logo')} src={Logo}/>
+        <a>
+          <img className={cx('logo')} src={Logo} />
+        </a>
       </Link>
       <Link href="/login">
-        <Button inline={true} style={{ height: '100%' }}>
-          로그인
-        </Button>
+        <a>
+          <Button inline={true} style={{ height: '100%' }}>
+            로그인
+          </Button>
+        </a>
       </Link>
     </div>
   );

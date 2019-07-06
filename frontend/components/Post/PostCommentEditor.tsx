@@ -20,10 +20,12 @@ const PostCommentEditor = (props: IProps) => {
   return (
     <div className={cx('post-comment-editor')}>
       <Link href={`/profile/timeline/${userId}`}>
-        <img
-          className={cx('profile', reply && 'profile-reply')}
-          src={thumbnail}
-        />
+        <a>
+          <img
+            className={cx('profile', reply && 'profile-reply')}
+            src={thumbnail}
+          />
+        </a>
       </Link>
       <div className={cx('form')}>
         <textarea

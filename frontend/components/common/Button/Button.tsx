@@ -11,7 +11,9 @@ const Div: React.FunctionComponent = ({ children, ...rest }) => (
 
 const Link: React.FunctionComponent = ({ children, href, ...rest }) => (
   <LinkElement href={href}>
-    <a {...rest}>{children}</a>
+    <a href={href} {...rest}>
+      {children}
+    </a>
   </LinkElement>
 );
 

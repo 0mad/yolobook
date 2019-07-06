@@ -4,12 +4,14 @@ import styles from './LoginHeader.scss';
 
 const cx = classNames.bind(styles);
 
-interface IProps {}
-
-const LoginHeader = (props: IProps) => {
+const LoginHeader = () => {
   return (
     <div className={cx('login-header')}>
-      <Link href={'/'}><span>yolobook</span></Link>
+      <Link href={'/'}>
+        <a>
+          <span>yolobook</span>
+        </a>
+      </Link>
     </div>
   );
 };
