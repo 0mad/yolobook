@@ -87,10 +87,10 @@ const Post = (props: IProps) => {
       </div>
       <div className={cx('footer')}>
         <div className={cx('score-info')}>
-          {!!parseInt(likes.lnegth) && (
+          {!!parseInt(likes.length) && (
             <div className={cx('score-info-item', 'score-info-like')}>
               <IoIosThumbsUp />
-              <span>{`${likes.lnegth}명`}</span>
+              <span>{`${likes.length}명`}</span>
             </div>
           )}
           <div>

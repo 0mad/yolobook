@@ -66,6 +66,9 @@ class PostContainer extends Component<IProps, IState> {
     if(isLike) {
       try {
         const { data } = await PostAPI.likePost(post.id);
+        if(!post.likes) {
+          post.likes = [];
+        }
         post.likes.push(data);
         this.forceUpdate();
       } catch (error) {
@@ -115,6 +118,9 @@ class PostContainer extends Component<IProps, IState> {
     if(isLike) {
       try {
         const { data } = await PostAPI.likeComment(comment.id);
+        if (!comment.likes) {
+          comment.likes = [];
+        }
         comment.likes.push(data);
         this.forceUpdate();
       } catch (error) {
@@ -165,6 +171,9 @@ class PostContainer extends Component<IProps, IState> {
     if(isLike) {
       try {
         const { data } = await PostAPI.likeReplyComment(replyComment.id);
+        if(!replyComment.likes) {
+          replyComment.likes = [];
+        }
         replyComment.likes.push(data);
         this.forceUpdate();
       } catch (error) {

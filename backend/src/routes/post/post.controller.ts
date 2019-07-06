@@ -212,7 +212,7 @@ class UserController {
     res.send('좋아요 갯수 가져오기');
   };
 
-  //  게시물 좋아요 좋아요
+  //  게시물 좋아요
   public likePost = async (
     req: express.Request,
     res: express.Response,
