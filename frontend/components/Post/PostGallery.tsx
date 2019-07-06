@@ -20,10 +20,10 @@ const Photo = (props: {
 }) => {
   const { img = '', children, onClickPhoto, index } = props;
   return (
-    <div className={cx('photo-wrapper')} onClick={() => onClickPhoto(index)}>
+    <li className={cx('photo-wrapper')} onClick={() => onClickPhoto(index)}>
       <img className={cx('photo')} src={img} />
       {children}
-    </div>
+    </li>
   );
 };
 
@@ -36,21 +36,20 @@ const PostGallery = (props: IProps) => {
       {images
         .filter((_, index) => index < 5)
         .map((photo, index) => (
-          <li key={photo.id}>
-            <Photo
-              {...photo}
-              index={index}
-              onClickPhoto={(currentIndex: number) =>
-                onClickPhoto({ currentIndex, images, username })
-              }
-            >
-              {index === 4 && overCount > 0 && (
-                <Link href="">
-                  <a className={cx('rest')}>{`${overCount}장+`}</a>
-                </Link>
-              )}
-            </Photo>
-          </li>
+          <Photo
+            {...photo}
+            key={index}
+            index={index}
+            onClickPhoto={(currentIndex: number) =>
+              onClickPhoto({ currentIndex, images, username })
+            }
+          >
+            {index === 4 && overCount > 0 && (
+              <Link href="">
+                <a className={cx('rest')}>{`${overCount}장+`}</a>
+              </Link>
+            )}
+          </Photo>
         ))}
     </ul>
   );
