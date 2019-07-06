@@ -17,26 +17,20 @@ const ResultItem = ({ profile }) => {
   return (
     <li className={cx('result-item')} key={profile.id}>
       <a href={`/profile/timeline/${profile.id}`}>
-        <img src={profile.thumbnail}/>
+        <img src={profile.thumbnail} />
         <span className={cx('username')}>{profile.username}</span>
       </a>
     </li>
   );
-}
+};
 
 const HeaderSearchBar = (props: IProps) => {
-  const { 
-    search, 
-    userList, 
-    onInputChange, 
-    isMobileMode, 
-    searchActive, 
-  } = props;
-  if(isMobileMode && !searchActive) {
+  const { search, userList, onInputChange, isMobileMode, searchActive } = props;
+  if (isMobileMode && !searchActive) {
     return <></>;
   }
   return (
-    <form className={cx('searchbar', {isMobileMode})}>
+    <form className={cx('searchbar', { isMobileMode })}>
       <input
         className={cx('input')}
         type="text"
@@ -46,16 +40,19 @@ const HeaderSearchBar = (props: IProps) => {
         onChange={onInputChange}
         autoComplete="off"
       />
-      { false /** 비활성 처리 */ && (
+      {false /** 비활성 처리 */ && (
         <button className={cx('button')} onSubmit={() => {}}>
           <IoMdSearch />
         </button>
       )}
       <ul className={cx('search-result')}>
-        {userList && userList.map(profile => <ResultItem profile={profile}/>)}
+        {userList &&
+          userList.map(profile => (
+            <ResultItem key={profile.id} profile={profile} />
+          ))}
       </ul>
     </form>
   );
-}
+};
 
 export default HeaderSearchBar;

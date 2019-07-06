@@ -41,8 +41,11 @@
   grid-template-columns: repeat(4, 1fr);
 
   .photo-wrapper {
+    @include media("<boundary") {
+      height: calc(24vw);
+    }
     width: 100%;
-    height: calc(24vw);
+    height: 206px;
     border: 1px solid $oc-gray-3;
   }
 }
