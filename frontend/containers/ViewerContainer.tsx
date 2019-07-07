@@ -18,7 +18,7 @@ class ViewerContainer extends Component<IProps> {
       const img = `${oldImg.substring(
         0,
         oldImg.lastIndexOf('-')
-      )}-xls${oldImg.substring(oldImg.lastIndexOf('.'))}`;
+      )}-xlg${oldImg.substring(oldImg.lastIndexOf('.'))}`;
       return {
         ...image,
         img,
@@ -28,7 +28,7 @@ class ViewerContainer extends Component<IProps> {
     return imageList.length > 0 ? (
       <Viewer
         isMobileMode={true}
-        images={imageList}
+        images={xlgImageList}
         currentIndex={currentIndex}
         onMoveNext={this.handleMoveNextPhoto}
         onMovePrev={this.handleMovePrevPhoto}
