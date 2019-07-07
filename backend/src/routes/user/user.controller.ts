@@ -1,5 +1,7 @@
 import express from 'express';
+import { resizeImage } from '../../lib/ResizeImage';
 import { setCookie } from '../../lib/token';
+import { seperateFilename } from '../../lib/utils';
 import { Account } from '../../models/Account';
 
 class UserController {
@@ -32,7 +34,11 @@ class UserController {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const { user: { profile: { id } }, } = req.body;
+    const {
+      user: {
+        profile: { id },
+      },
+    } = req.body;
     let user;
     try {
       user = await Account.findOne({
@@ -46,12 +52,19 @@ class UserController {
     if (!user) {
       return next(new Error('Not exist account'));
     }
-    ['user', 'snsId', 'provider', 'createdAt', 'updatedAt', 'email', 'id']
-      .forEach(property => delete req.body[property]);
+    [
+      'user',
+      'snsId',
+      'provider',
+      'createdAt',
+      'updatedAt',
+      'email',
+      'id',
+    ].forEach(property => delete req.body[property]);
 
     try {
       await user.update({
-        ...req.body
+        ...req.body,
       });
       return res.json(user.profile);
     } catch (error) {
@@ -93,6 +106,10 @@ class UserController {
       return next(new Error('Not exist cover image'));
     }
 
+    const { path, filename: filenameWithExt } = coverImg;
+    const { filename, ext } = seperateFilename(filenameWithExt);
+    const filenames = await resizeImage(path, filename, ext, ['xlg']);
+
     try {
       let user: Account | null;
       user = await Account.findOne({
@@ -104,7 +121,7 @@ class UserController {
         return next(new Error('Not exist account'));
       }
       user.update({
-        coverImg: `/img/${coverImg.filename}`,
+        coverImg: `/img/${filenames.xlg}`,
       });
       const token = await user.generateToken();
       setCookie(res, token);
@@ -126,6 +143,10 @@ class UserController {
       return next(new Error('Not exist cover image'));
     }
 
+    const { path, filename: filenameWithExt } = thumbnailImg;
+    const { filename, ext } = seperateFilename(filenameWithExt);
+    const filenames = await resizeImage(path, filename, ext, ['sm']);
+
     try {
       let user: Account | null;
       user = await Account.findOne({
@@ -137,7 +158,7 @@ class UserController {
         return next(new Error('Not exist account'));
       }
       user.update({
-        thumbnail: `/img/${thumbnailImg.filename}`,
+        thumbnail: `/img/${filenames.sm}`,
       });
       const token = await user.generateToken();
       setCookie(res, token);

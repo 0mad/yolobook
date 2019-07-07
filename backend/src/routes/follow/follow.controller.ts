@@ -209,6 +209,46 @@ class FollowController {
     });
     return res;
   }
+
+  public getAcceptFollowList = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const userId = parseInt(req.params.userId);
+    let followList;
+    try {
+      followList = await Follow.findAll({
+        attributes: ['id', 'status', 'createdAt'],
+        include: [
+          { association: 'following', attributes: ['id', 'username', 'thumbnail'] },
+          { association: 'follower', attributes: ['id', 'username', 'thumbnail'] }
+        ],
+        where: {
+          [Op.or]: [
+            { followerId: userId },
+            { followingId: userId }
+          ],
+          status: Status.ACCEPTED
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+
+    const acceptedList: any[] = [];
+
+    if (followList) {
+      followList.forEach(follow => {
+        acceptedList.push(
+          follow.following.id === userId ? follow.follower : follow.following
+        );
+      });
+    }
+
+    res.send(acceptedList);
+    return res;
+  }
 }
 
 export default new FollowController();

@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/0mad/yolobook#readme",
   "dependencies": {
+    "@types/sharp": "^0.22.2",
     "app-root-path": "^2.2.1",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.0.0",
@@ -43,6 +44,7 @@
     "rimraf": "^2.6.3",
     "sequelize": "^5.8.7",
     "sequelize-typescript": "^1.0.0-alpha.9",
+    "sharp": "^0.22.1",
     "winston": "^3.2.1"
   },
   "devDependencies": {

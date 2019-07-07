@@ -4,7 +4,6 @@
   z-index: 100;
   width: 100%;
   height: $header-height;
-  max-height: $header-height;
   background-color: $oc-violet-9;
 
   .header {
@@ -13,9 +12,7 @@
     }
     display: flex;
     height: $header-height;
-    max-width: 63rem;
-    max-height: inherit;
-    min-width: 52rem;
+    max-width: 1024px;
     padding: .35rem 0;
     margin: 0 auto;
 
@@ -104,25 +101,14 @@
 
     .unlogined-header {
       position: relative;
+      display: flex;
       width: 100%;
-      max-width: 63rem;
-      padding-right: 1rem;
-      text-align: right;
-      & > * {
-        position: absolute;
-        right: 0;
-        margin-right: .6rem;
-      }
-      & > img {
-        @include media("<boundary") {
-          width: 28px;
-          height: 28px;
-          margin-top: 2px;
-        }
-        position: absolute;
-        left: 0;
+      padding: 0 12px;
+      justify-content: space-between;
+      .logo {
         width: 32px;
         height: 32px;
+        margin: 0;
       }
     }
   }

@@ -57,11 +57,6 @@ class PostStore {
   };
 
   @action
-  public addReplyComment = (data: { comment: Comment; parentId: string }) => {
-    console.log('addReplyComment');
-  };
-
-  @action
   public uploadImgs = async (imgs: any) => {
     if (imgs.length < 1) {
       throw new Error('The size of the array is 0');

@@ -3,6 +3,7 @@ import App, { Container } from 'next/app';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import BeforeMountComponent from '../containers/BeforeMountComponent';
+import YoloHelmet from '../components/common/YoloHelmet';
 import createStore from '../stores';
 import '../styles/base.scss';
 
@@ -47,6 +48,7 @@ class YoloBookApp extends App {
     return (
       <Provider {...this.mobxStore}>
         <Container>
+          <YoloHelmet />
           <BeforeMountComponent />
           {process.env.NODE_ENV !== 'production' && <LoadStyleNoCache />}
           <Component {...pageProps} />
