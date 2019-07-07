@@ -25,30 +25,38 @@ class UserInfoContainer extends Component<IProps, IState> {
       username: '',
       id: '-1',
       thumbnail: '',
-    }
-  }
+    },
+  };
 
   componentDidMount = async () => {
-    const { 
+    const {
       router: {
         query: { userId },
       },
     } = this.props;
     try {
-      const { data: posts } = await PostAPI.getUserPosts(userId)
-      const pictureList = posts.reduce((accum, data) => accum.concat(data.imgs), [])
+      const { data: posts } = await PostAPI.getUserPosts(userId);
+      const pictureList = posts.reduce(
+        (accum, data) => accum.concat(data.imgs),
+        []
+      );
       const { data: userInfo } = await UserAPI.getUserInfo(userId);
       this.setState({
         pictureList,
-        profile: userInfo
-      })
+        profile: userInfo,
+      });
     } catch (error) {
-      toast.error('친구 정보를 가져오는데 실패했습니다.')
+      toast.error('친구 정보를 가져오는데 실패했습니다.');
     }
-  }
+  };
 
   public render() {
-    return <Gallery pictureList={this.state.pictureList} onClickPhoto={this.handleClickPhoto}/>;
+    return (
+      <Gallery
+        pictureList={this.state.pictureList}
+        onClickPhoto={this.handleClickPhoto}
+      />
+    );
   }
 
   public handleClickPhoto = (currentIndex: number) => {
@@ -57,9 +65,9 @@ class UserInfoContainer extends Component<IProps, IState> {
     viewerStore.setViewerData({
       currentIndex,
       images: pictureList,
-      username: profile.username
-    })
-  }
+      username: profile.username,
+    });
+  };
 }
 
 export default withRouter(UserInfoContainer);

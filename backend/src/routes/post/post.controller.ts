@@ -1,25 +1,30 @@
 import express from 'express';
+import { resizeImage } from '../../lib/resizeImage';
+import { seperateFilename } from '../../lib/utils';
 import { Account } from '../../models/Account';
 import { Comment } from '../../models/Comment';
-import { Post } from '../../models/Post';
-import { PostImage } from '../../models/PostImage';
 import { LikeComment } from '../../models/LikeComment';
 import { LikePost } from '../../models/LikePost';
 import { LikeReplyComment } from '../../models/LikeReplyComment';
+import { Post } from '../../models/Post';
+import { PostImage } from '../../models/PostImage';
 import { ReplyComment } from '../../models/ReplyComment';
 
-class UserController {
+class PostController {
   // 이미지를 업로드하고 이미지를 얻을 수 있는 주소를 json으로 응답
   public uploadImg = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const imgs: any = req.files;
     const data: Array<object> = [];
-    imgs.map((img: any) => {
-      data.push({ url: `/img/${img.filename}` });
-    });
+    const imgs: any = req.files;
+    for (const img of imgs) {
+      const { path, filename: filenameWithExt } = img;
+      const { filename, ext } = seperateFilename(filenameWithExt);
+      const filenames = await resizeImage(path, filename, ext, ['md', 'xlg']);
+      data.push({ url: `/img/${filenames.md}` });
+    }
     res.json(data);
   };
 
@@ -47,7 +52,7 @@ class UserController {
     const posts = await Post.getPosts({
       where: {
         accountId: userId,
-      }
+      },
     });
     const data: any = [];
     posts.forEach((post: any) => {
@@ -229,7 +234,7 @@ class UserController {
         where: {
           accountId: parseInt(userId, 10),
           postId: parseInt(postId, 10),
-        }
+        },
       });
 
       if (existingReplyComment) {
@@ -266,7 +271,7 @@ class UserController {
         where: {
           accountId: userId,
           id,
-        }
+        },
       });
       res.sendStatus(result === 1 ? 200 : 500);
     } catch (error) {
@@ -291,7 +296,7 @@ class UserController {
         where: {
           accountId: parseInt(userId, 10),
           commentId: parseInt(commentId, 10),
-        }
+        },
       });
 
       if (existingComment) {
@@ -328,15 +333,13 @@ class UserController {
         where: {
           accountId: userId,
           id,
-        }
+        },
       });
       res.sendStatus(result === 1 ? 200 : 500);
     } catch (error) {
       next(error);
     }
   };
-
-
 
   //  답글 좋아요
   public likeReplyComment = async (
@@ -355,7 +358,7 @@ class UserController {
         where: {
           accountId: parseInt(userId, 10),
           replyCommentId: parseInt(replyCommentId, 10),
-        }
+        },
       });
 
       if (existingReplyComment) {
@@ -392,7 +395,7 @@ class UserController {
         where: {
           accountId: userId,
           id,
-        }
+        },
       });
       res.sendStatus(result === 1 ? 200 : 500);
     } catch (error) {
@@ -401,4 +404,4 @@ class UserController {
   };
 }
 
-export default new UserController();
+export default new PostController();
