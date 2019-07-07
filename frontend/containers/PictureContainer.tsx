@@ -1,10 +1,11 @@
-import { inject, observer } from 'mobx-react';
+import { withRouter, WithRouterProps } from 'next/router';
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { toast } from 'react-toastify';
 import Gallery from '../components/Gallery';
 import * as PostAPI from '../api/post';
-import { toast } from 'react-toastify';
 
-interface IProps {
+interface IProps extends WithRouterProps {
   userStore?: any;
   viewerStore?: any;
 }
@@ -13,18 +14,22 @@ interface IState {
   pictureList: any[];
 }
 
-@inject('userStore', 'viewerStore')
+@inject('viewerStore')
 @observer
 class UserInfoContainer extends Component<IProps, IState> {
   state = {
     pictureList: []
   }
 
-  async componentDidMount() {
-    const { userStore: { loggedInfo } } = this.props;
+  componentDidMount = async () => {
+    const { 
+      router: {
+        query: { userId },
+      },
+    } = this.props;
     let pictureList;
     try {
-      const { data } = await PostAPI.getUserPosts(loggedInfo.id)
+      const { data } = await PostAPI.getUserPosts(userId)
       pictureList = data.reduce((accum, data) => accum.concat(data.imgs), [])
     } catch (error) {
       toast.error('친구 리스트를 가져오는데 실패했습니다.')
@@ -48,4 +53,4 @@ class UserInfoContainer extends Component<IProps, IState> {
   }
 }
 
-export default UserInfoContainer;
+export default withRouter(UserInfoContainer);
