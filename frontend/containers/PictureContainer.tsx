@@ -1,37 +1,50 @@
-import { inject, observer } from 'mobx-react';
+import { withRouter, WithRouterProps } from 'next/router';
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { toast } from 'react-toastify';
 import Gallery from '../components/Gallery';
 import * as PostAPI from '../api/post';
-import { toast } from 'react-toastify';
+import * as UserAPI from '../api/user';
+import { Profile } from '../types';
 
-interface IProps {
-  userStore?: any;
+interface IProps extends WithRouterProps {
   viewerStore?: any;
 }
 
 interface IState {
   pictureList: any[];
+  profile: Profile;
 }
 
-@inject('userStore', 'viewerStore')
+@inject('viewerStore')
 @observer
 class UserInfoContainer extends Component<IProps, IState> {
   state = {
-    pictureList: []
+    pictureList: [],
+    profile: {
+      username: '',
+      id: '-1',
+      thumbnail: '',
+    }
   }
 
-  async componentDidMount() {
-    const { userStore: { loggedInfo } } = this.props;
-    let pictureList;
+  componentDidMount = async () => {
+    const { 
+      router: {
+        query: { userId },
+      },
+    } = this.props;
     try {
-      const { data } = await PostAPI.getUserPosts(loggedInfo.id)
-      pictureList = data.reduce((accum, data) => accum.concat(data.imgs), [])
+      const { data: posts } = await PostAPI.getUserPosts(userId)
+      const pictureList = posts.reduce((accum, data) => accum.concat(data.imgs), [])
+      const { data: userInfo } = await UserAPI.getUserInfo(userId);
+      this.setState({
+        pictureList,
+        profile: userInfo
+      })
     } catch (error) {
-      toast.error('친구 리스트를 가져오는데 실패했습니다.')
+      toast.error('친구 정보를 가져오는데 실패했습니다.')
     }
-    this.setState({
-      pictureList
-    })
   }
 
   public render() {
@@ -39,13 +52,14 @@ class UserInfoContainer extends Component<IProps, IState> {
   }
 
   public handleClickPhoto = (currentIndex: number) => {
-    const { viewerStore, userStore: { loggedInfo } } = this.props;
+    const { viewerStore } = this.props;
+    const { pictureList, profile } = this.state;
     viewerStore.setViewerData({
       currentIndex,
-      images: this.state.pictureList,
-      username: loggedInfo.username
+      images: pictureList,
+      username: profile.username
     })
   }
 }
 
-export default UserInfoContainer;
+export default withRouter(UserInfoContainer);
