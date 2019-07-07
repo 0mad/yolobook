@@ -4,7 +4,6 @@
   z-index: 100;
   width: 100%;
   height: $header-height;
-  max-height: $header-height;
   background-color: $oc-violet-9;
 
   .header {
@@ -13,9 +12,6 @@
     }
     display: flex;
     height: $header-height;
-    max-width: 63rem;
-    max-height: inherit;
-    min-width: 52rem;
     padding: .35rem 0;
     margin: 0 auto;
 

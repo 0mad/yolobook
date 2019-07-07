@@ -62,9 +62,12 @@
       display: flex;
       min-height: 18px;
       padding: 10px 0;
-      border-bottom: 1px solid $oc-gray-3;
       align-items: center;
       justify-content: space-between;
+
+      &-logged {
+        border-bottom: 1px solid $oc-gray-3;
+      }
 
       .score-info-item {
         display: inline-flex;

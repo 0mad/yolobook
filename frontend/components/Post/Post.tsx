@@ -33,14 +33,7 @@ interface IProps {
 
 const Post = (props: IProps) => {
   const { isLogged, user, post, postHandler, commentHandler } = props;
-  const {
-    content,
-    createdAt,
-    imgs,
-    profile,
-    comments = [],
-    likes = [],
-  } = post;
+  const { content, createdAt, imgs, profile, comments = [], likes = [] } = post;
   const { thumbnail, username, id: userId } = profile;
   const { onClickPhoto, onSubmitComment, onTogglePostLike } = postHandler;
 
@@ -78,7 +71,7 @@ const Post = (props: IProps) => {
         </div>
       </div>
       <div className={cx('body')}>
-        <div className={cx('post-content')}>{content}</div>
+        <pre className={cx('post-content')}>{content}</pre>
         <PostGallery
           images={imgs}
           onClickPhoto={onClickPhoto}
@@ -86,7 +79,7 @@ const Post = (props: IProps) => {
         />
       </div>
       <div className={cx('footer')}>
-        <div className={cx('score-info')}>
+        <div className={cx('score-info', isLogged && 'score-info-logged')}>
           {!!parseInt(likes.length) && (
             <div className={cx('score-info-item', 'score-info-like')}>
               <IoIosThumbsUp />
