@@ -1,5 +1,5 @@
 import express from 'express';
-import { resizeImage } from '../../lib/ResizeImage';
+import { resizeImage } from '../../lib/resizeImage';
 import { setCookie } from '../../lib/token';
 import { seperateFilename } from '../../lib/utils';
 import { Account } from '../../models/Account';
