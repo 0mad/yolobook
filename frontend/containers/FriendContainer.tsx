@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, WithRouterProps  } from 'next/router';
+import { withRouter, WithRouterProps } from 'next/router';
 import { inject, observer } from 'mobx-react';
 import FriendList from '../components/Friend';
 import * as FollowAPI from '../api/follow';
@@ -17,47 +17,44 @@ interface IState {
 @observer
 class FriendContainer extends Component<IProps, IState> {
   state = {
-    friendList: []
-  }
+    friendList: [],
+  };
 
   componentDidMount = async () => {
-    const { 
+    const {
       router: {
         query: { userId },
       },
-      userStore: {
-        loggedInfo
-      }, 
+      userStore: { loggedInfo },
     } = this.props;
+    console.log(userId);
     let friendList = [];
     if (parseInt(userId, 10) !== loggedInfo.id) {
       try {
         const { data } = await FollowAPI.getAcceptedFollowList(userId);
         friendList = data;
-      } catch(error) {
+      } catch (error) {
         console.error(error);
       }
       this.setState({
-        friendList
-      })
+        friendList,
+      });
     }
-  }
+  };
 
   public render() {
-    const { 
+    const {
       router: {
         query: { userId },
       },
-      userStore: {
-        loggedInfo
-      }, 
-      followStore
+      userStore: { loggedInfo },
+      followStore,
     } = this.props;
     let friendList = [];
     if (parseInt(userId, 10) === loggedInfo.id) {
-      friendList = followStore.friendList
+      friendList = followStore.friendList;
     } else {
-      friendList = this.state.friendList
+      friendList = this.state.friendList;
     }
     return <FriendList friendList={friendList} />;
   }
