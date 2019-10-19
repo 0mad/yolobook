@@ -27,7 +27,6 @@ class FriendContainer extends Component<IProps, IState> {
       },
       userStore: { loggedInfo },
     } = this.props;
-    console.log(userId);
     let friendList = [];
     if (parseInt(userId, 10) !== loggedInfo.id) {
       try {
