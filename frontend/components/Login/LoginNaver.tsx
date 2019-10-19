@@ -1,16 +1,11 @@
-import classNames from 'classnames/bind';
-import { withRouter, WithRouterProps } from 'next/router';
 import React from 'react';
-import styles from './LoginNaver.scss';
-import { toast } from 'react-toastify';
 
-const cx = classNames.bind(styles);
+const NAVER_ID_SDK_URL = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js';
 
-interface IProps extends WithRouterProps {
+interface IProps {
   clientId: string;
   callbackUrl: string;
-  isPopup?: boolean;
-  render: () => React.ComponentElement<any, any> | Element | JSX.Element;
+  render: (props) => React.ComponentElement<any, any> | Element | JSX.Element;
   onSuccess: (result: any) => void;
   onFailure: (result: any) => void;
 }
@@ -21,20 +16,17 @@ interface IState {}
  * @param props 
  */
 const initLoginButton = (props: IProps) => {
-  if(true || !process.browser) {
+  if(!process.browser) {
     return;
   }
-  const { clientId, callbackUrl, onSuccess, isPopup=false } = props;
-  const { pathname, hash } = window.location;
-  if(!pathname.startsWith('/login')) {
-    return;
-  }
+  const { clientId, callbackUrl} = props;
+  const { hash } = window.location;
 
   const naverLogin = new window.naver.LoginWithNaverId(
     {
       callbackUrl,
       clientId,
-      isPopup,
+      isPopup: true,
       loginButton: {color: "green", type: 3, height: 60},
     }
   );
@@ -42,64 +34,77 @@ const initLoginButton = (props: IProps) => {
   naverLogin.init();
   let tryCount = 0;
   const initLoop = setInterval(() => {
-    if(tryCount > 10) {
+    if(tryCount > 30) {
       clearInterval(initLoop);
     }
     naverLogin.getLoginStatus(status => {
       if (!status || hash.indexOf('#access_token') === -1) {
          return;
       }
-      if(isPopup) {
-        window.opener.postMessage({...naverLogin.user, naver: true}, window.location.origin);
-        window.close();
-      } else {
-        clearInterval(initLoop);
-        onSuccess(naverLogin.user);
-      }
+      window.opener.naver.successCallback(naverLogin.user);
+      window.close();
     })
     tryCount++;
   }, 100);
-
-  window.addEventListener("message", ({ data }) => {
-    if(data.naver) {
-      onSuccess(data);
-    }
-  }, { once: true });
 };
 
-class LoginNaver extends React.Component<IProps, IState> {
-  private ref: any;
-
-   componentDidMount() {
-    if(process.browser) {
-      const script = document.createElement('script');
-      script.src = "https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js";
-      this.ref.appendChild(script);
-      let tryCount = 0;
-      const initLoop = setInterval(() => {
-        if (tryCount > 10) {
-          clearInterval(initLoop);
-          return;
-        }
-        
-        if('naver' in window) {
-          initLoginButton(this.props)
-          clearInterval(initLoop);
-        }
-        tryCount++;
-      }, 100);
-    }
+const loadScript = () => {
+  if (document.querySelectorAll('#naver-login-sdk').length === 0) {
+    const script = document.createElement('script');
+    script.id = 'naver-login-sdk';
+    script.src = NAVER_ID_SDK_URL;
+    document.head.appendChild(script);
   }
+}
+const appendNaverButton = () => {
+  if (document.querySelectorAll('#naverIdLogin').length === 0) {
+    const naverId = document.createElement('div');
+    naverId.id = 'naverIdLogin';
+    naverId.style.position =  'absolute';
+    naverId.style.top = '-10000px';
+    document.body.appendChild(naverId);
+  }
+}
+
+class LoginNaver extends React.Component<IProps, IState> {
+   componentDidMount() {
+    if(!process.browser) {
+      return;
+    }
+    
+    loadScript()
+    appendNaverButton();
+
+    let tryCount = 0;
+    const initLoop = setInterval(() => {
+      if (tryCount > 30) {
+        clearInterval(initLoop);
+        return;
+      }
+      
+      if('naver' in window) {
+        window.naver.successCallback = (data) => this.props.onSuccess(data);
+        initLoginButton(this.props)
+        // 구글 로그인이랑 같이 사용하면 한 번에 초기화 안되는 버그가 있다.
+        setTimeout(() => initLoginButton(this.props), 1000)
+        clearInterval(initLoop);
+      }
+      tryCount++;
+    }, 100);
+    
+  }
+    
 
   public render() {
     const { render } = this.props;
     return (
-      <div className={cx('naver-login')} onClick={() => toast.info('네이버 로그인은 준비 중 입니다.')}>
-        <div ref={el => (this.ref = el)} id="naverIdLogin"/>
-        {render && render()}
-      </div>
+      render && render({ 
+        onClick: () => { 
+          document && document.querySelector('#naverIdLogin').firstChild && document.querySelector('#naverIdLogin').firstChild.click()
+        }
+      })
     )
   }
 }
 
-export default withRouter(LoginNaver);
+export default LoginNaver;

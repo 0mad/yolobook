@@ -51,7 +51,7 @@ const Login = (props: IProps) => {
             <LoginNaver
               clientId={process.env.REACT_APP_NAVER_ID || ''}
               callbackUrl={process.env.REACT_APP_NAVER_REDIRECT || ''}
-              render={() => <LoginButton provider="naver"/>}
+              render={(props) => <LoginButton provider="naver" onClick={props.onClick} />}
               onSuccess={(result: any) => onLoginNaver(result)}
               onFailure={(result: any) => console.log(result)}
             />

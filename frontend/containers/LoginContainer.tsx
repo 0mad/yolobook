@@ -27,7 +27,8 @@ class LoginContainer extends Component<IProps> {
     );
   }
 
-  public handleLoginGoogle = async ({ profileObj }) => {
+  public handleLoginGoogle = async (args) => {
+    const { profileObj } = args;
     const { userStore } = this.props;
     const userProfile = {
       email: profileObj.email,
@@ -46,7 +47,8 @@ class LoginContainer extends Component<IProps> {
     }
   };
 
-  public handleLoginKakao = async ({ profile }) => {
+  public handleLoginKakao = async (args) => {
+    const { profile } = args;
     const { properties } = profile;
     const { userStore } = this.props;
     const userProfile = {
