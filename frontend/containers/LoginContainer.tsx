@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as AuthAPI from '../api/auth';
 import Login from '../components/Login';
+import { NaverUser } from 'react-naver-login';
 
 interface IProps {
   userStore?: any;
@@ -66,7 +67,7 @@ class LoginContainer extends Component<IProps> {
       console.error('로그인 실패');
     }
   };
-  public handleLoginNaver = async (profile: object) => {
+  public handleLoginNaver = async (profile: NaverUser) => {
     const { userStore } = this.props;
     const userProfile = {
       email: profile.email,
