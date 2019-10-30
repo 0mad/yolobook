@@ -37,6 +37,7 @@
     "react-helmet": "^5.2.1",
     "react-icons": "^3.7.0",
     "react-kakao-login": "^1.1.1",
+    "react-naver-login": "^0.1.2-alpha3",
     "react-sizes": "^2.0.0",
     "react-toastify": "^5.2.1"
   },

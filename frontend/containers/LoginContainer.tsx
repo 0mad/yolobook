@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import * as AuthAPI from '../api/auth';
 import Login from '../components/Login';
+import { NaverUser } from 'react-naver-login';
 
 interface IProps {
   userStore?: any;
@@ -27,7 +28,8 @@ class LoginContainer extends Component<IProps> {
     );
   }
 
-  public handleLoginGoogle = async ({ profileObj }) => {
+  public handleLoginGoogle = async (args) => {
+    const { profileObj } = args;
     const { userStore } = this.props;
     const userProfile = {
       email: profileObj.email,
@@ -46,7 +48,8 @@ class LoginContainer extends Component<IProps> {
     }
   };
 
-  public handleLoginKakao = async ({ profile }) => {
+  public handleLoginKakao = async (args) => {
+    const { profile } = args;
     const { properties } = profile;
     const { userStore } = this.props;
     const userProfile = {
@@ -64,7 +67,7 @@ class LoginContainer extends Component<IProps> {
       console.error('로그인 실패');
     }
   };
-  public handleLoginNaver = async (profile: object) => {
+  public handleLoginNaver = async (profile: NaverUser) => {
     const { userStore } = this.props;
     const userProfile = {
       email: profile.email,

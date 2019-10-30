@@ -4,14 +4,14 @@ import KakaoLogin from 'react-kakao-login';
 import Button from '../common/Button';
 import style from './Login.scss';
 import LoginButton from './LoginButton';
-import LoginNaver from './LoginNaver';
+import NaverLogin, { NaverUser } from 'react-naver-login';
 
 const cx = className.bind(style);
 
 interface IProps {
   onLoginGoogle: (profile: any) => Promise<void>;
   onLoginKakao: (profile: any) => Promise<void>;
-  onLoginNaver: (profile: any) => Promise<void>;
+  onLoginNaver: (profile: NaverUser) => Promise<void>;
 }
 
 const lookAroundStyle = {
@@ -48,11 +48,11 @@ const Login = (props: IProps) => {
             />
           </li>
           <li>
-            <LoginNaver
+            <NaverLogin
               clientId={process.env.REACT_APP_NAVER_ID || ''}
               callbackUrl={process.env.REACT_APP_NAVER_REDIRECT || ''}
-              render={() => <LoginButton provider="naver"/>}
-              onSuccess={(result: any) => onLoginNaver(result)}
+              render={(props) => <LoginButton provider="naver" onClick={props.onClick} />}
+              onSuccess={(result: NaverUser) => onLoginNaver(result)}
               onFailure={(result: any) => console.log(result)}
             />
           </li>

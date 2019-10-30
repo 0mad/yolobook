@@ -28,10 +28,10 @@ const twitterTags = {
 const YoloHelmet = () => {
   return (
     <Helmet 
-      title={`YoloBook`}
+      title={`Yolobook`}
       meta={[
         ...Object.keys(ogTags).map(key => ({ property: key, content: ogTags[key] })),
-        ...Object.keys(twitterTags).map(key => ({ name: key, content: ogTags[key] })),
+        ...Object.keys(twitterTags).map(key => ({ name: key, content: twitterTags[key] })),
 
       ]}
       link={[
