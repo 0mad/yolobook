@@ -65,7 +65,7 @@
     "include-media": "^1.4.9",
     "loader-utils": "^1.2.3",
     "next-compose-plugins": "^2.2.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "normalize-path": "^3.0.0",
     "normalize.css": "^8.0.1",
     "open-color": "^1.6.3",
