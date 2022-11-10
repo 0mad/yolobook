@@ -63,7 +63,7 @@
     "classnames": "^2.2.6",
     "cssesc": "^3.0.0",
     "include-media": "^1.4.9",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^1.4.1",
     "next-compose-plugins": "^2.2.0",
     "node-sass": "^4.12.0",
     "normalize-path": "^3.0.0",
