@@ -33,7 +33,7 @@
     "app-root-path": "^2.2.1",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^3.18.0",
     "hpp": "^0.2.2",
     "joi": "^14.3.1",
